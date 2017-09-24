@@ -1,6 +1,6 @@
 -- Generated from template
 
-require('main')
+local main = require('reloaded.reloaded')
 
 function Precache( context )
 	--[[
@@ -14,5 +14,5 @@ end
 
 -- Create the game mode when we activate
 function Activate()
-	org.klesun.Main()
+	main()
 end
