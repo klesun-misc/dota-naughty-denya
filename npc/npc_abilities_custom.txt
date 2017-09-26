@@ -69,7 +69,7 @@
                 "ScriptFile"			"abilities.lua"
                 "Function"				"UronitjShkaf"
                 "Target"                "POINT"
-                "AoERadiusVal"          "%AoERadius"
+                "AoERadiusVal"          "%AbilityDamage"
             }
         }
 	}

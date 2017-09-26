@@ -33,7 +33,8 @@ local UronitjShkaf = function(event)
     klesun.lang.Log('keys', keys)
 
     local caster = event.caster
-    local aoe = event.AoERadius
+    --local aoe = event.AoERadiusVal
+    local aoe = 500
     local spellPoint = t_vec(event.target_points[1])
     print('Ronjaem Cabriolet Alexa hujalexa!')
     klesun.lang.Log('point x', spellPoint.x)

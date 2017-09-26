@@ -57,12 +57,15 @@ local InterpretCode = (function()
 
     local getFreshCode = function(fileName)
         local result = {thn = function(resp) end}
-        local url = 'http://midiana.lv/unversioned/gits/dota-naughty-denya/vscripts/reloaded/' .. fileName .. '.lua'
-        -- don't use GET, steam caches it for couple of minutes
-        local rq = CreateHTTPRequestScriptVM('POST', url)
+        local url = 'http://localhost/vscripts/reloaded/' .. fileName .. '.lua?rndom=' .. math.random()
+        local rq = CreateHTTPRequestScriptVM('GET', url)
+
+        print('Requesting url: ' .. url)
+
         ---@param resp t_http_rs
         rq:Send(function(resp)
-            print('got reloaded code of ' .. fileName .. ' \n' .. resp.Body)
+
+            print('got reloaded code of ' .. fileName .. ' \n' .. resp.Body:sub(15000))
             result.thn(resp.Body)
         end)
         return result
