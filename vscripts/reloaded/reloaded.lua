@@ -1,26 +1,38 @@
 
-local json = require('libs.json')
-
 -- vars that are kept after code reload
-if org == nil then org = {} end
-if org.klesun == nil then org.klesun = {} end
-if org.klesun.eventToFunc == nil then org.klesun.eventToFunc = {} end
+if klesun == nil then klesun = {} end
+if klesun.eventToFunc == nil then klesun.eventToFunc = {} end
+
+-- put files that contain code you want to be reloaded on "reload code" here
+klesun.filesToReload = {
+    'json', 'abil_impl', 'lang',
+}
+
+if klesun.loadedModules == nil then
+    -- first time this script is loaded
+    klesun.loadedModules = {}
+    for key,fileName in pairs(klesun.filesToReload) do
+        klesun.loadedModules[fileName] = require('reloaded.' .. fileName)
+    end
+end
+
+local modules = klesun.loadedModules
 
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
-    if org.klesun.eventToFunc[eventName] == nil then
+    if klesun.eventToFunc[eventName] == nil then
         ListenToGameEvent(eventName, function(e)
-            org.klesun.eventToFunc[eventName](e)
+            klesun.eventToFunc[eventName](e)
         end, nil)
     end
-    org.klesun.eventToFunc[eventName] = func
+    klesun.eventToFunc[eventName] = func
 end
 
 local Log = function(text, data)
     print(text)
     DebugDrawScreenTextLine(100, 100, 0, text, 255, 255, 0, 255, 10)
     if data ~= nil then
-        local jsonText = json.stringify(data)
+        local jsonText = modules.json.stringify(data)
         print(jsonText)
         DebugDrawScreenTextLine(100, 200, 0, jsonText, 127, 127, 255, 255, 10)
     end
@@ -43,6 +55,19 @@ local InterpretCode = (function()
         end
     end
 
+    local getFreshCode = function(fileName)
+        local result = {thn = function(resp) end}
+        local url = 'http://midiana.lv/unversioned/gits/dota-naughty-denya/vscripts/reloaded/' .. fileName .. '.lua'
+        -- don't use GET, steam caches it for couple of minutes
+        local rq = CreateHTTPRequestScriptVM('POST', url)
+        ---@param resp t_http_rs
+        rq:Send(function(resp)
+            print('got reloaded code of ' .. fileName .. ' \n' .. resp.Body)
+            result.thn(resp.Body)
+        end)
+        return result
+    end
+
     ---@param event  t_chat_event
     return function(event)
         local msg = event.text
@@ -63,16 +88,15 @@ local InterpretCode = (function()
         elseif isTakingCode then
             chunkedCode = chunkedCode .. "\n" .. msg
         elseif event.text == 'reload code' then
-            local url = 'http://midiana.lv/unversioned/gits/dota-naughty-denya/vscripts/reloaded/reloaded.lua'
-            -- don't use GET, steam caches it for couple of minutes
-            local rq = CreateHTTPRequestScriptVM('POST', url)
-            ---@param resp t_http_rs
-            local sending = rq:Send(function(resp)
-                local code = resp.Body
-                print('got reloaded code \n' .. code)
-                local module = eval(code)
-                if module ~= nil then module() end
-            end)
+            getFreshCode('reloaded').thn = function(code)
+                eval(code)()
+                -- will be updated by eval
+                for key,fileName in pairs(klesun.filesToReload) do
+                    getFreshCode(fileName).thn = function(code)
+                        klesun.loadedModules[fileName] = eval(code)
+                    end
+                end
+            end
         end
     end
 end)()
@@ -86,8 +110,8 @@ local OnEntityKilled = function(event)
 end
 
 -- here goes logic of my trigger spells
----@param event t_ability_event
----@class t_ability_event
+---@param event t_ability_brief_event
+---@class t_ability_brief_event
 ---@field     caster_entindex   number
 ---@field     abilityname       string
 ---@field     PlayerID          number
@@ -95,6 +119,9 @@ end
 local OnAbilityUsed = function(event)
     if event.abilityname == 'uronitj_shkaf' then
         Log('An ability was used!', event)
+        local caster = EntIndexToHScript(event.caster_entindex)
+        local abil = caster:FindAbilityByName(event.abilityname)
+        Log('GetCastPoint', abil:GetCastPoint())
     end
 end
 
@@ -119,8 +146,9 @@ local OnPlayerChat = function(event)
 end
 
 return function()
-    GameRules:SetHeroSelectionTime(15)
-    GameRules:SetPreGameTime(10)
+    GameRules:SetHeroSelectionTime(0)
+    -- how many seconds before Kenarius says "Let's the battle begin!"
+    GameRules:SetPreGameTime(0)
 
     Relisten('entity_killed', OnEntityKilled)
     Relisten('dota_player_pick_hero', OnHeroPicked)

@@ -55,7 +55,22 @@
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityDamage"					"500 501 502 503 504"
-		"AoERadius"						"1000"
-		"AbilityCastRange"				"2000"
+		"AoERadius"						"500 501 502 503 504"
+		"AbilityCastRange"				"1000"
+        "OnSpellStart"
+        {
+            "FireSound"
+            {
+                "EffectName"			"Hero_Mirana.ArrowCast"
+                "Target"				"CASTER"
+            }
+            "RunScript"
+            {
+                "ScriptFile"			"abilities.lua"
+                "Function"				"UronitjShkaf"
+                "Target"                "POINT"
+                "AoERadiusVal"          "%AoERadius"
+            }
+        }
 	}
 }
