@@ -8,6 +8,9 @@ klesun.filesToReload = {
     'json', 'abil_impl', 'lang',
 }
 
+---@debug
+print('executing reloaded.lua')
+
 if klesun.loadedModules == nil then
     -- first time this script is loaded
     klesun.loadedModules = {}
@@ -57,14 +60,13 @@ local InterpretCode = (function()
 
     local getFreshCode = function(fileName)
         local result = {thn = function(resp) end}
+        -- `math.random` because stean caches GET requests otherwise
         local url = 'http://localhost/vscripts/reloaded/' .. fileName .. '.lua?rndom=' .. math.random()
         local rq = CreateHTTPRequestScriptVM('GET', url)
 
         print('Requesting url: ' .. url)
-
         ---@param resp t_http_rs
         rq:Send(function(resp)
-
             print('got reloaded code of ' .. fileName .. ' \n' .. resp.Body:sub(15000))
             result.thn(resp.Body)
         end)

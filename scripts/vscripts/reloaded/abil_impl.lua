@@ -56,9 +56,12 @@ local UronitjShkaf = function(event)
     for _,offset in pairs(offsets) do
         local creepPoint = spellPoint + offset
         local spawnedCreep = CreateUnitByName(
-            "npc_dota_creature_gnoll_assassin", creepPoint,
+            "npc_dota_mother_tower", creepPoint,
             false, caster, caster, creepTeam
         )
+        spawnedCreep:SetInvulnCount(0)
+        spawnedCreep:AddAbility('uronitj_shkaf')
+        spawnedCreep:Attribute_SetIntValue('AttackRange', 400)
     end
 end
 
