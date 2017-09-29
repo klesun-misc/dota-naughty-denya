@@ -106,7 +106,7 @@ local InterpretCode = (function()
     end
 end)()
 
-local OnEntityKilled = function(event)
+local entity_killed = function(event)
     print('Unit lost!')
     -- none of these works for some reason
     DebugDrawScreenTextLine(100, 100, 0, 'Denya Uronil Shkaf na ekran!', 255, 127, 127, 255, 10)
@@ -114,14 +114,14 @@ local OnEntityKilled = function(event)
     DeepPrintTable(event)
 end
 
--- here goes logic of my trigger spells
+-- pretty useles event, it don't even provide the point where skill was cast
 ---@param event t_ability_brief_event
 ---@class t_ability_brief_event
 ---@field     caster_entindex   number
 ---@field     abilityname       string
 ---@field     PlayerID          number
 ---@field     splitscreenplayer number
-local OnAbilityUsed = function(event)
+local dota_unit_used_ability = function(event)
     if event.abilityname == 'uronitj_shkaf' then
         Log('An ability was used!', event)
         local caster = EntIndexToHScript(event.caster_entindex)
@@ -130,7 +130,7 @@ local OnAbilityUsed = function(event)
     end
 end
 
-local OnHeroPicked = function(event)
+local dota_player_pick_hero = function(event)
     local hero = EntIndexToHScript(event.heroindex)
     if hero:HasRoomForItem("item_blink", true, true) then
         local dagger = CreateItem("item_blink", hero, hero)
@@ -146,18 +146,72 @@ end
 ---@field     teamonly          number
 ---@field     userid            number
 ---@field     splitscreenplayer number
-local OnPlayerChat = function(event)
+local player_chat = function(event)
     InterpretCode(event)
 end
 
+-- happens when you see the "TEAM SELECT" screen
+---@param event t_player_connected_full_event
+---@class t_player_connected_full_event
+---@field     PlayerID          number
+---@field     index             number
+---@field     userid            number
+---@field     splitscreenplayer number
+local player_connect_full = function(event)
+    local player = PlayerResource:GetPlayer(event.PlayerID)
+    DeepPrintTable(event)
+    player:MakeRandomHeroSelection()
+    ---@debug
+    print('Player connected - ' .. PlayerResource:GetPlayerName(event.PlayerID))
+    PlayerResource:ReplaceHeroWith(event.PlayerID, 'npc_dota_hero_templar_assassin', 0, 0)
+    --PlayerResource:SetHasRandomed(event.PlayerID)
+    --PlayerResource:SetOverrideSelectionEntity(event.PlayerID, ...)
+end
+
+-- happens when you see the "TEAM SELECT" screen
+---@param event t_player_team_event
+---@class t_player_team_event
+---@field     isbot             number
+---@field     silent            number
+---@field     splitscreenplayer number
+---@field     autoteam          number
+---@field     team              number
+---@field     oldteam           number
+---@field     userid            number
+---@field     name              string
+---@field     disconnect        number
+local player_team = function(event)
+    print('OnPlayerTeam')
+    DeepPrintTable(event)
+end
+
+local game_rules_state_change = function(_)
+    print('game_rules_state_change - ' .. GameRules:State_Get())
+    if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
+        local playerId = 0 -- 0 = debug player id
+        local player = PlayerResource:GetPlayer(playerId)
+        player:MakeRandomHeroSelection()
+    end
+end
+
 return function()
+    -- how much time on "TEAM SELECT" screen
+    GameRules:SetCustomGameSetupAutoLaunchDelay(0)
+    -- how many seconds before you start losing gold for not picking a hero
     GameRules:SetHeroSelectionTime(0)
+    -- the 30 seconds to buy wards after hero pick
+    GameRules:SetStrategyTime(0)
+    -- Set the duration of the 'radiant versus dire' showcase screen
+    GameRules:SetShowcaseTime(0)
     -- how many seconds before Kenarius says "Let's the battle begin!"
     GameRules:SetPreGameTime(0)
 
-    Relisten('entity_killed', OnEntityKilled)
-    Relisten('dota_player_pick_hero', OnHeroPicked)
-    Relisten('dota_player_used_ability', OnAbilityUsed)
-    Relisten('dota_non_player_used_ability', OnAbilityUsed)
-    Relisten('player_chat', OnPlayerChat)
+    Relisten('entity_killed', entity_killed)
+    Relisten('dota_player_pick_hero', dota_player_pick_hero)
+    Relisten('dota_player_used_ability', dota_unit_used_ability)
+    Relisten('dota_non_player_used_ability', dota_unit_used_ability)
+    Relisten('player_chat', player_chat)
+    Relisten('player_connect_full', player_connect_full)
+    Relisten('player_team', player_team)
+    Relisten('game_rules_state_change', game_rules_state_change)
 end
