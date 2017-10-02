@@ -1,25 +1,10 @@
 
+require('libs.timers')
+local json = require('reloaded.json')
+
 -- vars that are kept after code reload
 if klesun == nil then klesun = {} end
 if klesun.eventToFunc == nil then klesun.eventToFunc = {} end
-
--- put files that contain code you want to be reloaded on "reload code" here
-klesun.filesToReload = {
-    'json', 'abil_impl', 'lang',
-}
-
----@debug
-print('executing reloaded.lua')
-
-if klesun.loadedModules == nil then
-    -- first time this script is loaded
-    klesun.loadedModules = {}
-    for key,fileName in pairs(klesun.filesToReload) do
-        klesun.loadedModules[fileName] = require('reloaded.' .. fileName)
-    end
-end
-
-local modules = klesun.loadedModules
 
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
@@ -35,7 +20,7 @@ local Log = function(text, data)
     print(text)
     DebugDrawScreenTextLine(100, 100, 0, text, 255, 255, 0, 255, 10)
     if data ~= nil then
-        local jsonText = modules.json.stringify(data)
+        local jsonText = json.stringify(data)
         print(jsonText)
         DebugDrawScreenTextLine(100, 200, 0, jsonText, 127, 127, 255, 255, 10)
     end
@@ -92,26 +77,16 @@ local InterpretCode = (function()
             chunkedCode = ''
         elseif isTakingCode then
             chunkedCode = chunkedCode .. "\n" .. msg
-        elseif event.text == 'reload code' then
-            getFreshCode('reloaded').thn = function(code)
-                eval(code)()
-                -- will be updated by eval
-                for key,fileName in pairs(klesun.filesToReload) do
-                    getFreshCode(fileName).thn = function(code)
-                        klesun.loadedModules[fileName] = eval(code)
-                    end
-                end
-            end
         end
     end
 end)()
 
 local entity_killed = function(event)
-    print('Unit lost!')
-    -- none of these works for some reason
-    DebugDrawScreenTextLine(100, 100, 0, 'Denya Uronil Shkaf na ekran!', 255, 127, 127, 255, 10)
-    GameRules:SendCustomMessage('Denya Uronil Shkaf v chat!', DOTA_TEAM_FIRST, 0)
-    DeepPrintTable(event)
+    --print('Unit lost!')
+    ---- none of these works for some reason
+    --DebugDrawScreenTextLine(100, 100, 0, 'Denya Uronil Shkaf na ekran!', 255, 127, 127, 255, 10)
+    --GameRules:SendCustomMessage('Denya Uronil Shkaf v chat!', DOTA_TEAM_FIRST, 0)
+    --DeepPrintTable(event)
 end
 
 -- pretty useles event, it don't even provide the point where skill was cast
@@ -163,7 +138,6 @@ local player_connect_full = function(event)
     player:MakeRandomHeroSelection()
     ---@debug
     print('Player connected - ' .. PlayerResource:GetPlayerName(event.PlayerID))
-    PlayerResource:ReplaceHeroWith(event.PlayerID, 'npc_dota_hero_templar_assassin', 0, 0)
     --PlayerResource:SetHasRandomed(event.PlayerID)
     --PlayerResource:SetOverrideSelectionEntity(event.PlayerID, ...)
 end
@@ -193,6 +167,54 @@ local game_rules_state_change = function(_)
         player:MakeRandomHeroSelection()
     end
 end
+
+Timers:RemoveTimers(true)
+Timers:CreateTimer(function()
+    --print('Executing code in a timer! Game Time - ' .. GameRules:GetGameTime() .. ' Server Time - ' .. Time())
+
+    -- spawning a golem at a certain point
+    local spawnMark = Entities:FindByName(nil, 'huj123')
+    local goalMark = Entities:FindByName(nil, 'pizda456')
+    --local spawnMark = Entities:FindByTarget(nil, 'spawn_point_golem')
+    --local goalMark = Entities:FindByTarget(nil, 'castle_to_defend')
+    local point = spawnMark:GetAbsOrigin()
+    local goal = goalMark:GetAbsOrigin()
+
+    local seconds = GameRules:GetGameTime();
+    local hp = 50 + seconds;
+    local dmg = 15 + seconds / 20;
+
+    if seconds > 60 then cnt = cnt + 1 end
+    if seconds > 180 then cnt = cnt + 1 end
+    if seconds > 540 then cnt = cnt + 1 end
+    if seconds > 1620 then cnt = cnt + 1 end
+
+    for i = 1,cnt,1 do
+        local golem = CreateUnitByName(
+        'npc_dota_creature_gnoll_assassin',
+        point + RandomVector(RandomInt(100, 200)),
+        true, nill, nill, DOTA_TEAM_BADGUYS
+        )
+        golem:SetBaseAttackTime(1)
+        golem:SetBaseDamageMin(dmg)
+        golem:SetBaseDamageMax(dmg)
+        golem:SetBaseMaxHealth(hp)
+        golem:SetBaseHealthRegen(5)
+        golem:SetBaseMoveSpeed(500)
+
+        -- need to apply any modifier to update npc gui numbers
+        golem:AddNewModifier(nil, nil, "modifier_stunned", {duration = 2.0})
+        GameRules:SendCustomMessage('Creep spawned with hp: ' .. math.floor(hp) ..' dmg: ' .. math.floor(dmg), DOTA_TEAM_FIRST, 0)
+
+        ExecuteOrderFromTable({
+            UnitIndex = golem:GetEntityIndex(),
+            OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+            Position = goal, Queue = true
+        })
+    end
+
+    return 5.0
+end)
 
 return function()
     -- how much time on "TEAM SELECT" screen

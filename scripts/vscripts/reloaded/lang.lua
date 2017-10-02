@@ -1,11 +1,9 @@
 
-if klesun == nil then klesun = {} end
-
-local json = klesun.loadedModules.json
+local json = require('reloaded.json')
 
 -- this module provides functions to extends Lua's functionality
 
-klesun.lang = {
+return {
     Keys = function(tbl)
         local keys = {}
         local i = 1

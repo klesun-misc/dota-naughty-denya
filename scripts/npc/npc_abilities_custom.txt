@@ -55,21 +55,94 @@
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityDamage"					"500 501 502 503 504"
-		"AoERadius"						"500 501 502 503 504"
+		"AoERadius"						"130"
 		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"0"
         "OnSpellStart"
         {
-            "FireSound"
-            {
-                "EffectName"			"Hero_Mirana.ArrowCast"
-                "Target"				"CASTER"
-            }
             "RunScript"
             {
                 "ScriptFile"			"abilities.lua"
                 "Function"				"UronitjShkaf"
                 "Target"                "POINT"
                 "AoERadiusVal"          "%AbilityDamage"
+            }
+        }
+	}
+	"build_anti_army_tower"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"denis_army128"
+		"MaxLevel" 						"5"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AoERadius"						"130"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"25"
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"			"abilities.lua"
+                "Function"				"BuildAntiArmyTower"
+                "Target"                "POINT"
+            }
+        }
+	}
+	"build_healing_tower"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"denis128_healing"
+		"MaxLevel" 						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AoERadius"						"130"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"15"
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"			"abilities.lua"
+                "Function"				"BuildHealingTower"
+                "Target"                "POINT"
+            }
+        }
+	}
+	"build_prison_tower"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"denis128_prison"
+		"MaxLevel" 						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AoERadius"						"130"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"5"
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"			"abilities.lua"
+                "Function"				"BuildPrisonTower"
+                "Target"                "POINT"
+            }
+        }
+	}
+	"build_spawning_tower"
+	{
+		"BaseClass"             		"ability_datadriven"
+		"AbilityTextureName"			"denis128_spawning"
+		"MaxLevel" 						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AoERadius"						"130"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"20"
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"			"abilities.lua"
+                "Function"				"BuildSpawningTower"
+                "Target"                "POINT"
             }
         }
 	}

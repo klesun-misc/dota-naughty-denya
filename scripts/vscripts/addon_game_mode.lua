@@ -16,6 +16,3 @@ end
 function Activate()
 	main()
 end
-
----@debug
-print('executing addon_game_mode.lua')
