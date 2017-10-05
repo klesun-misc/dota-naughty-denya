@@ -169,13 +169,35 @@ local game_rules_state_change = function(_)
     end
 end
 
+---@param event t_entity_event
+---@class t_entity_event
+---@field     entindex          number
+---@field     splitscreenplayer number
+local npc_spawned = function(event)
+    ---@debug
+    local unit = EntIndexToHScript(event.entindex)
+    local datadrivenName = unit:GetUnitName()
+    if datadrivenName == 'npc_dota_dark_troll_warlord_skeleton_warrior' then
+        -- a hack needed till we stop using built-in ability
+        -- order _any_ spawned skeleton to go to nearest enemy
+        local nearestEnemy = Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
+        if nearestEnemy ~= nil then
+            ExecuteOrderFromTable({
+                UnitIndex = unit:GetEntityIndex(),
+                OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+                Position = nearestEnemy:GetAbsOrigin(), Queue = true
+            })
+        end
+    end
+end
+
 Timers:RemoveTimers(true)
 Timers:CreateTimer(function()
     local pause = wave.Spawn()
     return pause
 end)
 
-return function()
+local Main = function()
     -- how much time on "TEAM SELECT" screen
     GameRules:SetCustomGameSetupAutoLaunchDelay(0)
     -- how many seconds before you start losing gold for not picking a hero
@@ -195,4 +217,7 @@ return function()
     Relisten('player_connect_full', player_connect_full)
     Relisten('player_team', player_team)
     Relisten('game_rules_state_change', game_rules_state_change)
+    Relisten('npc_spawned', npc_spawned)
 end
+
+Main()

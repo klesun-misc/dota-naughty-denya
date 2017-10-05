@@ -15,7 +15,7 @@ local Spawn = function()
             true, nill, nill, DOTA_TEAM_BADGUYS
         )
         -- need to apply any modifier to update npc gui hp numbers
-        unit:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 2.0})
+        unit:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.05})
 
         ExecuteOrderFromTable({
             UnitIndex = unit:GetEntityIndex(),
@@ -46,7 +46,7 @@ local Spawn = function()
     local SpawnBoss = function()
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
-        local hp = 3000 + seconds * 30;
+        local hp = 3000 + seconds * 20;
         local dmg = 15 + seconds / 3
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)
@@ -67,7 +67,7 @@ local Spawn = function()
     if seconds > 1620 then cnt = cnt + 1 end
 
     local wave = math.floor(GameRules:GetGameTime() / waveInterval)
-    if wave > 0 and wave % 15 == 0 then
+    if wave > 0 and wave % 20 == 0 then
         SpawnBoss()
     end
     for i = 1,cnt,1 do

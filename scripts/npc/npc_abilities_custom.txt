@@ -154,7 +154,7 @@
             }
         }
 		"AbilityManaCost"               "30"
-		"AbilityGoldCost"               "200"
+		"AbilityGoldCost"               "300"
 	}
 	"build_lua_test_tower"
 	{

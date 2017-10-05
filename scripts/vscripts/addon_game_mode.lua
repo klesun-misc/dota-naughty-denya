@@ -1,6 +1,6 @@
 -- Generated from template
 
-local main = require('reloaded.reloaded')
+require('reloaded.reloaded')
 
 function Precache( context )
 	--[[
@@ -14,5 +14,5 @@ end
 
 -- Create the game mode when we activate
 function Activate()
-	main()
+	--main()
 end
