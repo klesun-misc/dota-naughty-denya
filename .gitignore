@@ -1,2 +1,3 @@
 /.idea/
-/scripts/vscripts/libs/dota-lua-typedefs/
+/scripts/dota-lua-typedefs
+/maps/*.vpk

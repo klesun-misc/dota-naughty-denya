@@ -24,10 +24,16 @@ local NormalizeTowerPoint = function(castPoint, hullRadius)
     local yRest = castPoint.y % (hullRadius * 2)
 
     return Vector(
-        castPoint.x - xRest + (xRest > hullRadius / 2 and hullRadius or 0),
-        castPoint.y - yRest + (yRest > hullRadius / 2 and hullRadius or 0),
+        castPoint.x - xRest + (xRest > hullRadius and hullRadius * 2 or 0),
+        castPoint.y - yRest + (yRest > hullRadius and hullRadius * 2 or 0),
         castPoint.z
     )
+end
+
+---@param castPoint t_vec | Vector
+---@param caster CDOTA_BaseNPC
+local BuildTower = function(castPoint, objectName, caster)
+
 end
 
 ---@param event t_ability_event | t_uronitj_shkaf_event
@@ -36,17 +42,21 @@ end
 ---@field     huj Vector
 UronitjShkaf = function(event)
     local caster = event.caster
-    local hullRadius = 130
+    local hullRadius = 60
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
-    obstaclesInHull = false -- TODO: implement
-    if obstaclesInHull then
-        print('Нельзя сотворить здесь')
+    local obstacles = Entities:FindAllInSphere(spellPoint, hullRadius)
+    if next(obstacles) ~= nil then
+        FireGameEvent('custom_error_show', {
+            player_ID = caster:GetPlayerID(),
+            _error = 'Can not build here'}
+        )
+        caster:Interrupt()
+        return
     end
 
-    local creepPoint = spellPoint
     local spawnedCreep = CreateUnitByName(
-        'npc_dota_anti_boss_tower', creepPoint,
+        'npc_dota_anti_boss_tower', spellPoint,
         false, caster, caster, caster:GetTeam()
     )
     spawnedCreep:SetInvulnCount(0)
@@ -79,7 +89,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildAntiArmyTower = function(event)
     local caster = event.caster
-    local hullRadius = 130
+    local hullRadius = 60
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement
@@ -99,7 +109,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildPrisonTower = function(event)
     local caster = event.caster
-    local hullRadius = 130
+    local hullRadius = 60
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement
@@ -120,7 +130,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildHealingTower = function(event)
     local caster = event.caster
-    local hullRadius = 130
+    local hullRadius = 60
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement
@@ -135,7 +145,7 @@ BuildHealingTower = function(event)
     )
     spawnedCreep:SetInvulnCount(0)
     spawnedCreep:SetControllableByPlayer(caster:GetPlayerID(), true)
-    spawnedCreep:SetRenderColor(255,255,64)
+    spawnedCreep:SetRenderColor(192,128,0)
     local spell = spawnedCreep:FindAbilityByName("forest_troll_high_priest_heal")
     if spell ~= nil then
         spell:ToggleAutoCast()
@@ -145,7 +155,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildSpawningTower = function(event)
     local caster = event.caster
-    local hullRadius = 130
+    local hullRadius = 60
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement

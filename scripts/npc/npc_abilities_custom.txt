@@ -55,7 +55,7 @@
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityDamage"					"500 501 502 503 504"
-		"AoERadius"						"130"
+		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"0"
         "OnSpellStart"
@@ -68,6 +68,8 @@
                 "AoERadiusVal"          "%AbilityDamage"
             }
         }
+		"AbilityManaCost"               "30"
+		"AbilityGoldCost"               "150"
 	}
 	"build_anti_army_tower"
 	{
@@ -76,7 +78,7 @@
 		"MaxLevel" 						"5"
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"130"
+		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"25"
         "OnSpellStart"
@@ -88,6 +90,8 @@
                 "Target"                "POINT"
             }
         }
+		"AbilityManaCost"               "30"
+		"AbilityGoldCost"               "600"
 	}
 	"build_healing_tower"
 	{
@@ -95,7 +99,7 @@
 		"AbilityTextureName"			"denis128_healing"
 		"MaxLevel" 						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"130"
+		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"15"
         "OnSpellStart"
@@ -107,6 +111,8 @@
                 "Target"                "POINT"
             }
         }
+		"AbilityManaCost"               "30"
+		"AbilityGoldCost"               "120"
 	}
 	"build_prison_tower"
 	{
@@ -114,7 +120,7 @@
 		"AbilityTextureName"			"denis128_prison"
 		"MaxLevel" 						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"130"
+		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"5"
         "OnSpellStart"
@@ -126,6 +132,8 @@
                 "Target"                "POINT"
             }
         }
+		"AbilityManaCost"               "30"
+		"AbilityGoldCost"               "80"
 	}
 	"build_spawning_tower"
 	{
@@ -133,7 +141,7 @@
 		"AbilityTextureName"			"denis128_spawning"
 		"MaxLevel" 						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"130"
+		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"20"
         "OnSpellStart"
@@ -145,5 +153,19 @@
                 "Target"                "POINT"
             }
         }
+		"AbilityManaCost"               "30"
+		"AbilityGoldCost"               "200"
+	}
+	"build_lua_test_tower"
+	{
+		"BaseClass"             		"ability_lua"
+        "ScriptFile"					"abilities/build_lua_test_tower.lua"
+		"AbilityTextureName"			"denis128_random"
+		"MaxLevel" 						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"3"
+		"AbilityManaCost"               "30"
+		"AbilityGoldCost"               "10"
 	}
 }

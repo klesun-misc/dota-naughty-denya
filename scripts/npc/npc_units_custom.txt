@@ -44,9 +44,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"24"		// Experience earn.
-		"BountyGoldMin"				"21"		// Gold earned min.
-		"BountyGoldMax"				"29"		// Gold earned max.
+		"BountyXP"					"10"		// Experience earn.
+		"BountyGoldMin"				"10"		// Gold earned min.
+		"BountyGoldMax"				"15"		// Gold earned max.
 
 		// Movement
 		//----------------------------------------------------------------
@@ -86,6 +86,38 @@
 			"XPGain"					"15"
 		}
 	}
+	"npc_dota_creature_gnoll_boss"
+	{
+		"ModelScale"				"2.0"
+		"Model"						"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll_frost.vmdl"	// Model.
+		"BaseClass"					"npc_dota_creature"
+		"SoundSet"					"n_creep_Ranged"
+		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
+		"Level"						"1"
+		"ArmorPhysical"				"5"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"RingRadius"				"80"
+		"HealthBarOffset"			"170"
+		"BountyXP"					"150"		// Experience earn.
+		"BountyGoldMin"				"200"		// Gold earned min.
+		"BountyGoldMax"				"200"		// Gold earned max.
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"150"		// Speed.
+		"Creature"
+		{
+			//Level Up
+			"HPGain"					"50"
+			"DamageGain"				"2"
+			"ArmorGain"					"0.25"
+			"MagicResistGain"			"0.1"
+			"MoveSpeedGain"				"1"
+			"BountyGain"				"3"
+			"XPGain"					"15"
+		}
+	}
 
 	// attacks a lot but missiles are extremely slow, so it takes
 	// some time before attacks are delivered - effective only when target
@@ -94,22 +126,22 @@
 	{
 		// General
 		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
 		"Model"						"models/props_structures/tower_good.vmdl"	// Model.
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"20" 		// Damage range min.
-		"AttackDamageMax"			"20"		// Damage range max.
+		"AttackDamageMin"			"40" 		// Damage range min.
+		"AttackDamageMax"			"40"		// Damage range max.
         "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.25"		// Speed of attack.
 		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
 		"AttackRange"				"1200"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"100"		// Speed of projectile.
-		"RingRadius"				"120"
 		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
+		"RingRadius"				"60"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"400"		// Base health.
 	}
@@ -119,24 +151,24 @@
 	{
 		// General
 		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
 		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"100" 		// Damage range min.
-		"AttackDamageMax"			"10"		// Damage range max.
+		"AttackDamageMin"			"75" 		// Damage range min.
+		"AttackDamageMax"			"75"		// Damage range max.
         "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2"		// Speed of attack.
 		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"RingRadius"				"120"
 		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
+		"RingRadius"				"60"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"StatusHealth"				"800"		// Base health.
+		"StatusHealth"				"600"		// Base health.
 		"Ability1"                  "black_dragon_splash_attack"
 	}
 
@@ -150,6 +182,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
 		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
@@ -157,10 +190,9 @@
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"RingRadius"				"120"
 		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
+		"RingRadius"				"60"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"800"		// Base health.
 	}
@@ -169,6 +201,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
 		"Model"						"models/props_structures/tower_good.vmdl"	// Model.
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
@@ -176,10 +209,9 @@
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"RingRadius"				"120"
 		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
+		"RingRadius"				"60"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"600"		// Base health.
 		"StatusMana"				"800"		// Base health.
@@ -190,6 +222,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
 		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
@@ -197,10 +230,9 @@
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"RingRadius"				"120"
 		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"130"
+		"RingRadius"				"60"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"600"		// Base health.
 		"StatusMana"				"800"		// Base health.

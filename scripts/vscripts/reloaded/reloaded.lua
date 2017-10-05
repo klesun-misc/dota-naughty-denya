@@ -1,6 +1,7 @@
 
 require('libs.timers')
 local json = require('reloaded.json')
+local wave = require('wave')
 
 -- vars that are kept after code reload
 if klesun == nil then klesun = {} end
@@ -170,50 +171,8 @@ end
 
 Timers:RemoveTimers(true)
 Timers:CreateTimer(function()
-    --print('Executing code in a timer! Game Time - ' .. GameRules:GetGameTime() .. ' Server Time - ' .. Time())
-
-    -- spawning a golem at a certain point
-    local spawnMark = Entities:FindByName(nil, 'huj123')
-    local goalMark = Entities:FindByName(nil, 'pizda456')
-    --local spawnMark = Entities:FindByTarget(nil, 'spawn_point_golem')
-    --local goalMark = Entities:FindByTarget(nil, 'castle_to_defend')
-    local point = spawnMark:GetAbsOrigin()
-    local goal = goalMark:GetAbsOrigin()
-
-    local seconds = GameRules:GetGameTime();
-    local hp = 50 + seconds;
-    local dmg = 15 + seconds / 20;
-
-    if seconds > 60 then cnt = cnt + 1 end
-    if seconds > 180 then cnt = cnt + 1 end
-    if seconds > 540 then cnt = cnt + 1 end
-    if seconds > 1620 then cnt = cnt + 1 end
-
-    for i = 1,cnt,1 do
-        local golem = CreateUnitByName(
-        'npc_dota_creature_gnoll_assassin',
-        point + RandomVector(RandomInt(100, 200)),
-        true, nill, nill, DOTA_TEAM_BADGUYS
-        )
-        golem:SetBaseAttackTime(1)
-        golem:SetBaseDamageMin(dmg)
-        golem:SetBaseDamageMax(dmg)
-        golem:SetBaseMaxHealth(hp)
-        golem:SetBaseHealthRegen(5)
-        golem:SetBaseMoveSpeed(500)
-
-        -- need to apply any modifier to update npc gui numbers
-        golem:AddNewModifier(nil, nil, "modifier_stunned", {duration = 2.0})
-        GameRules:SendCustomMessage('Creep spawned with hp: ' .. math.floor(hp) ..' dmg: ' .. math.floor(dmg), DOTA_TEAM_FIRST, 0)
-
-        ExecuteOrderFromTable({
-            UnitIndex = golem:GetEntityIndex(),
-            OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-            Position = goal, Queue = true
-        })
-    end
-
-    return 5.0
+    local pause = wave.Spawn()
+    return pause
 end)
 
 return function()
