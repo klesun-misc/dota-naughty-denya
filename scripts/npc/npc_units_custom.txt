@@ -139,9 +139,8 @@
 		"AttackRange"				"1200"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"100"		// Speed of projectile.
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"60"
+		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"400"		// Base health.
 	}
@@ -164,9 +163,8 @@
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"60"
+		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"600"		// Base health.
 		"Ability1"                  "black_dragon_splash_attack"
@@ -182,7 +180,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"ModelScale"				"0.5"
+		"ModelScale"				"0.75"
 		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
@@ -190,9 +188,8 @@
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"60"
+		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"800"		// Base health.
 	}
@@ -209,9 +206,8 @@
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"60"
+		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"600"		// Base health.
 		"StatusMana"				"800"		// Base health.
@@ -230,9 +226,8 @@
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"			// Hull type used for navigation/locomotion.
 		"ProjectileCollisionSize"	"50"
-		"RingRadius"				"60"
+		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"600"		// Base health.
 		"StatusMana"				"800"		// Base health.

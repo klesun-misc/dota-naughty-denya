@@ -164,8 +164,8 @@
 		"MaxLevel" 						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"3"
-		"AbilityManaCost"               "30"
-		"AbilityGoldCost"               "10"
+		"AbilityCooldown"				"1"
+		"AbilityManaCost"               "5"
+		"AbilityGoldCost"               "5"
 	}
 }

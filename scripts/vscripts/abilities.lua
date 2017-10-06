@@ -42,7 +42,7 @@ end
 ---@field     huj Vector
 UronitjShkaf = function(event)
     local caster = event.caster
-    local hullRadius = 60
+    local hullRadius = 64
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     local obstacles = Entities:FindAllInSphere(spellPoint, hullRadius)
@@ -89,7 +89,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildAntiArmyTower = function(event)
     local caster = event.caster
-    local hullRadius = 60
+    local hullRadius = 64
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement
@@ -109,7 +109,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildPrisonTower = function(event)
     local caster = event.caster
-    local hullRadius = 60
+    local hullRadius = 64
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement
@@ -130,7 +130,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildHealingTower = function(event)
     local caster = event.caster
-    local hullRadius = 60
+    local hullRadius = 64
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement
@@ -155,7 +155,7 @@ end
 ---@param event t_ability_event | t_uronitj_shkaf_event
 BuildSpawningTower = function(event)
     local caster = event.caster
-    local hullRadius = 60
+    local hullRadius = 64
     local spellPoint = NormalizeTowerPoint(event.target_points[1], hullRadius)
 
     obstaclesInHull = false -- TODO: implement

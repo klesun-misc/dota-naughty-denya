@@ -197,6 +197,16 @@ Timers:CreateTimer(function()
     return pause
 end)
 
+Relisten('entity_killed', entity_killed)
+Relisten('dota_player_pick_hero', dota_player_pick_hero)
+Relisten('dota_player_used_ability', dota_unit_used_ability)
+Relisten('dota_non_player_used_ability', dota_unit_used_ability)
+Relisten('player_chat', player_chat)
+Relisten('player_connect_full', player_connect_full)
+Relisten('player_team', player_team)
+Relisten('game_rules_state_change', game_rules_state_change)
+Relisten('npc_spawned', npc_spawned)
+
 local Main = function()
     -- how much time on "TEAM SELECT" screen
     GameRules:SetCustomGameSetupAutoLaunchDelay(0)
@@ -208,16 +218,6 @@ local Main = function()
     GameRules:SetShowcaseTime(0)
     -- how many seconds before Kenarius says "Let's the battle begin!"
     GameRules:SetPreGameTime(0)
-
-    Relisten('entity_killed', entity_killed)
-    Relisten('dota_player_pick_hero', dota_player_pick_hero)
-    Relisten('dota_player_used_ability', dota_unit_used_ability)
-    Relisten('dota_non_player_used_ability', dota_unit_used_ability)
-    Relisten('player_chat', player_chat)
-    Relisten('player_connect_full', player_connect_full)
-    Relisten('player_team', player_team)
-    Relisten('game_rules_state_change', game_rules_state_change)
-    Relisten('npc_spawned', npc_spawned)
 end
 
-Main()
+return Main
