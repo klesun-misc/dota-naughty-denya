@@ -1,11 +1,4 @@
 
-
----@debug
-print('redefining code of build_lua_test_tower')
-print(build_lua_test_tower)
-
-local zalupa = 'zvxzv '
-
 ---@class CDOTABaseAbility
 build_lua_test_tower = {}
 
@@ -31,7 +24,7 @@ function build_lua_test_tower:CastFilterResultLocation(point)
     local floatError = point.z % 128
     if floatError > 0.01 and 128 - floatError > 0.01 then
         -- when trying to build on a wall
-        return UF_FAIL_INVALID_LOCATION
+        return UF_FAIL_CUSTOM
     end
 
     local ent = Entities:First()
@@ -40,12 +33,16 @@ function build_lua_test_tower:CastFilterResultLocation(point)
         if entRad > 0 then
             local dv = point - ent:GetAbsOrigin()
             if (math.abs(dv.x) - entRad < towerRadius) and (math.abs(dv.y) - entRad < towerRadius) then
-                return UF_FAIL_INVALID_LOCATION
+                return UF_FAIL_CUSTOM
             end
         end
         ent = Entities:Next(ent)
     end
     return UF_SUCCESS
+end
+
+function build_lua_test_tower:GetCustomCastErrorLocation(point)
+    return 'I can\' build there'
 end
 
 ---@param event t_ability_event
