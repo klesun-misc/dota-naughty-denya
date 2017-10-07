@@ -131,8 +131,8 @@
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"40" 		// Damage range min.
-		"AttackDamageMax"			"40"		// Damage range max.
+		"AttackDamageMin"			"60" 		// Damage range min.
+		"AttackDamageMax"			"60"		// Damage range max.
         "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.25"		// Speed of attack.
 		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.

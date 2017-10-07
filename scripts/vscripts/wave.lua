@@ -46,7 +46,7 @@ local Spawn = function()
     local SpawnBoss = function()
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
-        local hp = 3000 + seconds * 20;
+        local hp = 1000 + seconds * 15;
         local dmg = 15 + seconds / 3
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)

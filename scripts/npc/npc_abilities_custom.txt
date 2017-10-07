@@ -47,9 +47,10 @@
 		}
 	}
 
-	"uronitj_shkaf"
+	"build_anti_boss_tower"
 	{
-		"BaseClass"             		"ability_datadriven"
+		"BaseClass"             		"ability_lua"
+        "ScriptFile"					"abilities/build_anti_boss_tower.lua"
 		"AbilityTextureName"			"denis128"
 		"MaxLevel" 						"5"
 
@@ -58,22 +59,13 @@
 		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"0"
-        "OnSpellStart"
-        {
-            "RunScript"
-            {
-                "ScriptFile"			"abilities.lua"
-                "Function"				"UronitjShkaf"
-                "Target"                "POINT"
-                "AoERadiusVal"          "%AbilityDamage"
-            }
-        }
 		"AbilityManaCost"               "30"
 		"AbilityGoldCost"               "150"
 	}
 	"build_anti_army_tower"
 	{
-		"BaseClass"             		"ability_datadriven"
+		"BaseClass"             		"ability_lua"
+        "ScriptFile"					"abilities/build_anti_army_tower.lua"
 		"AbilityTextureName"			"denis_army128"
 		"MaxLevel" 						"5"
 
@@ -81,21 +73,13 @@
 		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"25"
-        "OnSpellStart"
-        {
-            "RunScript"
-            {
-                "ScriptFile"			"abilities.lua"
-                "Function"				"BuildAntiArmyTower"
-                "Target"                "POINT"
-            }
-        }
 		"AbilityManaCost"               "30"
 		"AbilityGoldCost"               "600"
 	}
 	"build_healing_tower"
 	{
-		"BaseClass"             		"ability_datadriven"
+		"BaseClass"             		"ability_lua"
+        "ScriptFile"					"abilities/build_healing_tower.lua"
 		"AbilityTextureName"			"denis128_healing"
 		"MaxLevel" 						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
@@ -137,22 +121,14 @@
 	}
 	"build_spawning_tower"
 	{
-		"BaseClass"             		"ability_datadriven"
+		"BaseClass"             		"ability_lua"
+        "ScriptFile"					"abilities/build_spawning_tower.lua"
 		"AbilityTextureName"			"denis128_spawning"
 		"MaxLevel" 						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"20"
-        "OnSpellStart"
-        {
-            "RunScript"
-            {
-                "ScriptFile"			"abilities.lua"
-                "Function"				"BuildSpawningTower"
-                "Target"                "POINT"
-            }
-        }
 		"AbilityManaCost"               "30"
 		"AbilityGoldCost"               "300"
 	}
