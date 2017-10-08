@@ -6,3 +6,4 @@ Unlike other "Castle Defense"-type maps, here you can also build towers (i suppo
 
 Unlike other "Tower Wars"-type maps, here each player has a hero, that takes part in the siege/defence and creeps don't ignore towers - they have to first defeat the defenders before they can go further.
 
+![green_envy_xmas_defense_cover](https://user-images.githubusercontent.com/30558426/31322188-d567d23c-ac9b-11e7-8161-ced532485982.png)
