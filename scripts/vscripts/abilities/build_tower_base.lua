@@ -63,11 +63,11 @@ local MakeAbility = function(params)
         if tower.SetInvulnCount ~= nil then
             tower:SetInvulnCount(0)
         end
-        tower:SetControllableByPlayer(caster:GetPlayerID(), true)
+        tower:SetIdleAcquire(true) -- auto-attack ON
+        --tower:SetControllableByPlayer(caster:GetPlayerID(), false)
         tower:SetHullRadius(towerRadius)
-        OnCreated(tower)
 
-        tower:SetRenderColor(192,128,0)
+        OnCreated(tower)
     end
 
     function build_tower_base:GetAOERadius(event)
