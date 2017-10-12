@@ -1,4 +1,6 @@
 
+local types = require('types')
+
 ---@param castPoint t_vec | Vector
 local NormalizeTowerPoint = function(castPoint, hullRadius)
     local xRest = castPoint.x % (hullRadius * 2)
@@ -30,4 +32,21 @@ BuildPrisonTower = function(event)
     spawnedCreep:SetInvulnCount(0)
     spawnedCreep:SetControllableByPlayer(caster:GetPlayerID(), true)
     spawnedCreep:SetRenderColor(128,128,192)
+end
+
+---@param event t_ability_event
+HealAutocast = function(event)
+    local caster = event.caster
+    local target = event.target -- victim of the attack
+    local ability = event.ability
+
+    if ability:GetAutoCastState() then
+        if ability:IsCooldownReady() then
+            if not ability:IsChanneling() then
+                if target:GetHealth() < target:GetMaxHealth() then
+                    caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
+                end
+            end
+        end
+    end
 end

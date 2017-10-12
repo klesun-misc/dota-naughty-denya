@@ -59,7 +59,7 @@
 		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"               "30"
+		"AbilityManaCost"               "60"
 		"AbilityGoldCost"               "150"
 	}
 	"build_anti_army_tower"
@@ -73,7 +73,7 @@
 		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"25"
-		"AbilityManaCost"               "30"
+		"AbilityManaCost"               "60"
 		"AbilityGoldCost"               "600"
 	}
 	"build_healing_tower"
@@ -95,8 +95,8 @@
                 "Target"                "POINT"
             }
         }
-		"AbilityManaCost"               "30"
-		"AbilityGoldCost"               "120"
+		"AbilityManaCost"               "60"
+		"AbilityGoldCost"               "200"
 	}
 	"build_prison_tower"
 	{
@@ -116,7 +116,7 @@
                 "Target"                "POINT"
             }
         }
-		"AbilityManaCost"               "30"
+		"AbilityManaCost"               "60"
 		"AbilityGoldCost"               "80"
 	}
 	"build_spawning_tower"
@@ -129,7 +129,7 @@
 		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"20"
-		"AbilityManaCost"               "30"
+		"AbilityManaCost"               "90"
 		"AbilityGoldCost"               "300"
 	}
 	"build_lua_test_tower"
@@ -143,5 +143,78 @@
 		"AbilityCooldown"				"1"
 		"AbilityManaCost"               "5"
 		"AbilityGoldCost"               "5"
+	}
+
+	"tower_heal"
+	{
+	    "BaseClass"				        "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AURA"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+        "AbilityCastRange"				"900"
+        "AbilityCooldown"				"1"
+        "AbilityManaCost"				"5"
+        "AbilityTextureName"			"dazzle_shadow_wave"
+        "OnSpellStart"
+        {
+            "FireSound"
+            {
+                "EffectName"	"Hero_Dazzle.Shadow_Wave"
+                "Target" 		"CASTER"
+            }
+
+            "FireEffect"
+            {
+                "EffectName"        "particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
+                "EffectAttachType"  "start_at_customorigin"
+
+                "ControlPointEntities"
+                {
+                    "CASTER"	"attach_attack1"
+                    "TARGET"	"follow_origin"
+                }
+            }
+
+            "Heal"
+            {
+                "Target"        "TARGET"
+                "HealAmount"	"25"
+            }
+        }
+
+        "precache"
+        {
+            "soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+            "particle"			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
+        }
+
+        "Modifiers"
+        {
+            "modifier_frost_armor_autocast_aura"
+            {
+                "Passive"	"1"
+                "IsHidden"	"1"
+
+                "Aura" 				"modifier_tower_heal_autocast_potential_target"
+                "Aura_Radius" 		"900"
+                "Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            }
+
+            "modifier_tower_heal_autocast_potential_target"
+            {
+                "IsHidden"	"1"
+			    "Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+                "ThinkInterval" "0.1"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"    "abilities.lua"
+                        "Function"      "HealAutocast"
+                    }
+                }
+            }
+        }
 	}
 }

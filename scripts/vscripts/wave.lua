@@ -3,8 +3,9 @@
 
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
-    local spawnMark = Entities:FindByName(nil, 'huj123')
-    local goalMark = Entities:FindByName(nil, 'pizda456')
+    local expoMult = 1.1
+    local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
+    local goalMark = Entities:FindByName(nil, 'creep_goal_mark')
     local point = spawnMark:GetAbsOrigin()
     local goal = goalMark:GetAbsOrigin()
 
@@ -29,8 +30,8 @@ local Spawn = function()
     local SpawnCreep = function(wave)
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_assassin')
-        local hp = 50 + seconds;
-        local dmg = 15 + seconds / 30
+        local hp = 50 + math.pow(seconds, expoMult) * 0.8
+        local dmg = 15 + math.pow(seconds, expoMult) / 35
         golem:SetBaseAttackTime(1)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -46,14 +47,31 @@ local Spawn = function()
     local SpawnBoss = function()
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
-        local hp = 1000 + seconds * 15;
-        local dmg = 15 + seconds / 3
+        local hp = 1000 + math.pow(seconds, expoMult) * 12
+        local dmg = 15 + math.pow(seconds, expoMult) / 4
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
         golem:SetBaseMaxHealth(hp)
         golem:SetBaseHealthRegen(10)
         golem:SetBaseMoveSpeed(200)
+        golem:SetMana(200)
+
+        GameRules:SendCustomMessage('Boss spawned with hp: ' .. math.floor(hp) ..' dmg: ' .. math.floor(dmg), DOTA_TEAM_FIRST, 0)
+    end
+
+    local SpawnDragon = function()
+        local seconds = GameRules:GetGameTime()
+        local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
+        local hp = 300 + math.pow(seconds, expoMult) * 1.5
+        local dmg = 15 + math.pow(seconds, expoMult) / 5
+        unit:SetBaseAttackTime(2)
+        unit:SetBaseDamageMin(dmg)
+        unit:SetBaseDamageMax(dmg)
+        unit:SetBaseMaxHealth(hp)
+        unit:SetBaseHealthRegen(5)
+        unit:SetBaseMoveSpeed(350)
+        unit:SetMana(200)
 
         GameRules:SendCustomMessage('Boss spawned with hp: ' .. math.floor(hp) ..' dmg: ' .. math.floor(dmg), DOTA_TEAM_FIRST, 0)
     end
@@ -67,8 +85,11 @@ local Spawn = function()
     if seconds > 1620 then cnt = cnt + 1 end
 
     local wave = math.floor(GameRules:GetGameTime() / waveInterval)
-    if wave > 0 and wave % 20 == 0 then
+    if wave > 20 and wave % 20 == 0 then
         SpawnBoss()
+    end
+    if wave > 15 and wave % 15 == 0 then
+        SpawnDragon()
     end
     for i = 1,cnt,1 do
         SpawnCreep(wave)
@@ -78,5 +99,9 @@ local Spawn = function()
 end
 
 return {
-    Spawn = Spawn
+    Spawn = function()
+        ---@debug
+        --return 100
+        return Spawn()
+    end
 }
