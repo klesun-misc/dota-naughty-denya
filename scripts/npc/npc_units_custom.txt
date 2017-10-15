@@ -193,6 +193,7 @@
 		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"800"		// Base health.
+		"Ability1"					"prison_tether"
 	}
 
 	"npc_dota_healing_tower"

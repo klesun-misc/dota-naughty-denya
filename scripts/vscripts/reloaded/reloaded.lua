@@ -211,13 +211,15 @@ local Main = function()
     -- how much time on "TEAM SELECT" screen
     GameRules:SetCustomGameSetupAutoLaunchDelay(0)
     -- how many seconds before you start losing gold for not picking a hero
-    GameRules:SetHeroSelectionTime(0)
+    GameRules:SetHeroSelectionTime(10)
     -- the 30 seconds to buy wards after hero pick
     GameRules:SetStrategyTime(0)
     -- Set the duration of the 'radiant versus dire' showcase screen
     GameRules:SetShowcaseTime(0)
     -- how many seconds before Kenarius says "Let's the battle begin!"
     GameRules:SetPreGameTime(0)
+	-- same hero selection enabled
+	GameRules:SetSameHeroSelectionEnabled(true)
 end
 
 return Main

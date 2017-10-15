@@ -217,4 +217,18 @@
             }
         }
 	}
+	
+	"prison_tether"	
+	{
+		"BaseClass"					"ability_lua"
+		"MaxLevel"					"1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"		
+		"AbilityTextureName"		"crystal_maiden_freezing_field"
+		"AbilityCastRange"			"800"
+		"AbilityCastPoint"			"0.2"
+		"AbilityCooldown"			"10"
+		"ScriptFile"				"abilities/prison_tether"
+	}
 }
