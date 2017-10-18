@@ -19,5 +19,11 @@ return {
         if (data ~= nil) then
             print(json.stringify(data):sub(1,200))
         end
-    end
+    end,
+
+    Size = function(tbl)
+        local count = 0
+        for _ in pairs(tbl) do count = count + 1 end
+        return count
+    end,
 }

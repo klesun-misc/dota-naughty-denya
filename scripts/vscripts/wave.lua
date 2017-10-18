@@ -30,7 +30,7 @@ local Spawn = function()
     local SpawnCreep = function(wave)
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_assassin')
-        local hp = 50 + math.pow(seconds, expoMult) * 0.8
+        local hp = 50 + math.pow(seconds, expoMult) * 0.7
         local dmg = 15 + math.pow(seconds, expoMult) / 35
         golem:SetBaseAttackTime(1)
         golem:SetBaseDamageMin(dmg)
@@ -47,7 +47,7 @@ local Spawn = function()
     local SpawnBoss = function()
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
-        local hp = 1000 + math.pow(seconds, expoMult) * 12
+        local hp = 1000 + math.pow(seconds, expoMult) * 10
         local dmg = 15 + math.pow(seconds, expoMult) / 4
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)
@@ -63,7 +63,7 @@ local Spawn = function()
     local SpawnDragon = function()
         local seconds = GameRules:GetGameTime()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
-        local hp = 300 + math.pow(seconds, expoMult) * 1.5
+        local hp = 300 + math.pow(seconds, expoMult) * 1.25
         local dmg = 15 + math.pow(seconds, expoMult) / 5
         unit:SetBaseAttackTime(2)
         unit:SetBaseDamageMin(dmg)
@@ -88,7 +88,7 @@ local Spawn = function()
     if wave > 20 and wave % 20 == 0 then
         SpawnBoss()
     end
-    if wave > 15 and wave % 15 == 0 then
+    if wave > 16 and wave % 16 == 0 then
         SpawnDragon()
     end
     for i = 1,cnt,1 do

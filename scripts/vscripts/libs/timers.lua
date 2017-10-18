@@ -163,10 +163,6 @@ function Timers:HandleEventError(name, event, err)
 end
 
 function Timers:CreateTimer(name, args)
-
-    ---@debug
-    print('huj timer func type ' .. type(name))
-
     if type(name) == "function" then
         args = {callback = name}
         name = DoUniqueString("timer")
