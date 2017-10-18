@@ -2,10 +2,16 @@
 require('libs.timers')
 local json = require('reloaded.json')
 local wave = require('wave')
+local lang = require('reloaded.lang')
 
 -- vars that are kept after code reload
 if klesun == nil then klesun = {} end
 if klesun.eventToFunc == nil then klesun.eventToFunc = {} end
+if klesun.playerIdToRole == nil then klesun.playerIdToRole = {} end
+if klesun.playerIdUserId == nil then klesun.playerIdUserId = {} end
+
+local SETUP_MAX_TIME = 15;
+local setupStartTime = nil
 
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
@@ -13,6 +19,15 @@ local Relisten = function(eventName, func)
         ListenToGameEvent(eventName, function(e)
             klesun.eventToFunc[eventName](e)
         end, nil)
+    end
+    klesun.eventToFunc[eventName] = func
+end
+
+local RelistenCust = function(eventName, func)
+    if klesun.eventToFunc[eventName] == nil then
+        CustomGameEventManager:RegisterListener(eventName, function(s, e)
+            klesun.eventToFunc[eventName](s, e)
+        end)
     end
     klesun.eventToFunc[eventName] = func
 end
@@ -139,8 +154,13 @@ local player_connect_full = function(event)
     player:MakeRandomHeroSelection()
     ---@debug
     print('Player connected - ' .. PlayerResource:GetPlayerName(event.PlayerID))
-    --PlayerResource:SetHasRandomed(event.PlayerID)
-    --PlayerResource:SetOverrideSelectionEntity(event.PlayerID, ...)
+    klesun.playerIdUserId[event.PlayerID] = event.userid
+
+    -- default team/role if player does not choose something
+    local defaultRole = math.random() < 0.5 and 'builder' or 'hero'
+    local defaultTeam = DOTA_TEAM_GOODGUYS
+    PlayerResource:SetCustomTeamAssignment(event.PlayerID, defaultTeam)
+    klesun.playerIdToRole[event.PlayerID] = defaultRole
 end
 
 -- happens when you see the "TEAM SELECT" screen
@@ -162,10 +182,27 @@ end
 
 local game_rules_state_change = function(_)
     print('game_rules_state_change - ' .. GameRules:State_Get())
-    if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
-        local playerId = 0 -- 0 = debug player id
-        local player = PlayerResource:GetPlayer(playerId)
-        player:MakeRandomHeroSelection()
+    if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		setupStartTime = GameRules:GetGameTime()
+    elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
+        for playerId, role in pairs(klesun.playerIdToRole) do
+            if role == 'builder' then
+                local player = PlayerResource:GetPlayer(playerId)
+                player:MakeRandomHeroSelection()
+            end
+        end
+    elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+        -- dota does not allow rplacing hero instantly, "player has no current hero to replace"
+        Timers:CreateTimer({
+            endTime = 2,
+            callback = function()
+                for playerId, role in pairs(klesun.playerIdToRole) do
+                    if role == 'builder' then
+                        PlayerResource:ReplaceHeroWith(playerId, 'npc_dota_hero_templar_assassin', 800, 0)
+                    end
+                end
+            end,
+        })
     end
 end
 
@@ -191,10 +228,45 @@ local npc_spawned = function(event)
     end
 end
 
+---@param event t_klesun_event_js_to_lua
+---@class t_klesun_event_js_to_lua
+---@field     type          string
+---@field     PlayerID      number
+---@field     fraction      string|'radiant'|'dire'
+---@field     role          string|'hero'|'builder'
+local klesun_event_js_to_lua = function(status, event)
+    if event.type == 'role_selected' then
+        local team = event.fraction == 'radiant' and DOTA_TEAM_GOODGUYS or DOTA_TEAM_BADGUYS
+        local playerId = event.PlayerID
+        PlayerResource:SetCustomTeamAssignment(playerId, team)
+        klesun.playerIdToRole[playerId] = event.role
+        if lang.Size(klesun.playerIdToRole) == lang.Size(klesun.playerIdUserId) then
+            -- everyone have chosen his role
+            GameRules:SetCustomGameSetupRemainingTime(0)
+        end
+    else
+        print('Unepxected klesun_event_js_to_lua event format!')
+        DeepPrintTable(event)
+    end
+
+	--DeepPrintTable(event.type)
+	CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
+		type = 'response_message', value = 'Player #' .. event.PlayerID .. ' said that he likes you!'
+	})
+end
+
 Timers:RemoveTimers(true)
 Timers:CreateTimer(function()
     local pause = wave.Spawn()
     return pause
+end)
+Timers:CreateTimer(function()
+	CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
+		type = 'second_passed', 
+		setupTimeLeft = GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP 
+			and setupStartTime - GameRules:GetGameTime() + SETUP_MAX_TIME or nil,
+	})
+    return 1
 end)
 
 Relisten('entity_killed', entity_killed)
@@ -207,9 +279,13 @@ Relisten('player_team', player_team)
 Relisten('game_rules_state_change', game_rules_state_change)
 Relisten('npc_spawned', npc_spawned)
 
+RelistenCust('klesun_event_js_to_lua', klesun_event_js_to_lua)
+
 local Main = function()
+	-- how many seconds users can spend on page defined by <CustomUIElement type="GameSetup" layoutfile="..." />
+	GameRules:SetCustomGameSetupTimeout(SETUP_MAX_TIME)
     -- how much time on "TEAM SELECT" screen
-    GameRules:SetCustomGameSetupAutoLaunchDelay(0)
+    GameRules:SetCustomGameSetupAutoLaunchDelay(10)
     -- how many seconds before you start losing gold for not picking a hero
     GameRules:SetHeroSelectionTime(10)
     -- the 30 seconds to buy wards after hero pick

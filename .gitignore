@@ -1,3 +1,6 @@
 /.idea/
 /scripts/dota-lua-typedefs
 /maps/*.vpk
+*.vjs_c
+*.vxml_c
+*.vcss_c
