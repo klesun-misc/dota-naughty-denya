@@ -1,6 +1,6 @@
 ### Setup
 
-- Create an empty project using Dota 2 workshop (let's assume, you called it green-envy-xmas-defense)
+- Create an empty project using Dota 2 workshop (let's assume, you called it green_envy_xmas_defense)
 - Copy contents of this repository (including .git preferably) to:
 
 `C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota_addons\green_envy_xmas_defense`

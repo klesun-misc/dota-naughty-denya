@@ -214,18 +214,6 @@ local npc_spawned = function(event)
     ---@debug
     local unit = EntIndexToHScript(event.entindex)
     local datadrivenName = unit:GetUnitName()
-    if datadrivenName == 'npc_dota_dark_troll_warlord_skeleton_warrior' then
-        -- a hack needed till we stop using built-in ability
-        -- order _any_ spawned skeleton to go to nearest enemy
-        local nearestEnemy = Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
-        if nearestEnemy ~= nil then
-            ExecuteOrderFromTable({
-                UnitIndex = unit:GetEntityIndex(),
-                OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-                Position = nearestEnemy:GetAbsOrigin(), Queue = true
-            })
-        end
-    end
 end
 
 ---@param event t_klesun_event_js_to_lua

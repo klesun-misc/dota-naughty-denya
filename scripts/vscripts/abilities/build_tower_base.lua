@@ -60,6 +60,7 @@ local MakeAbility = function(params)
             datadrivenName, spellPoint,
             false, caster, caster, caster:GetTeam()
         )
+        tower.huj = caster ---@debug
         if tower.SetInvulnCount ~= nil then
             tower:SetInvulnCount(0)
         end
@@ -67,7 +68,7 @@ local MakeAbility = function(params)
         --tower:SetControllableByPlayer(caster:GetPlayerID(), false)
         tower:SetHullRadius(towerRadius)
 
-        OnCreated(tower)
+        OnCreated(tower, self)
     end
 
     function build_tower_base:GetAOERadius(event)

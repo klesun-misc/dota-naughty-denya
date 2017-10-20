@@ -18,10 +18,20 @@
 ---@field     ScriptFile string
 ---@field     Function string
 
-return {
-    ---@return Vector | t_vec
-    t_vec = function(userdata) return userdata end,
-    ---@return CDOTABaseAbility
-    t_abil = function(v) return v end
+---@class t_spawn_event
+---@field target CDOTA_BaseNPC
+---@field caster CDOTA_BaseNPC
+---@field caster_entindex
+---@field ScriptFile
+---@field Function
+---@field ability CDOTABaseAbility
 
-}
+local self = {}
+
+---@return CDOTABaseAbility
+function self:t_abil(v) return v end
+
+---@return Vector | t_vec
+function self:t_vec(v) return v end
+
+return self

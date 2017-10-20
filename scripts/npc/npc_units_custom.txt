@@ -10,7 +10,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll_frost.vmdl"	// Model.
+		"Model"						"models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee.vmdl"
 		"BaseClass"					"npc_dota_creature"
 		"SoundSet"					"n_creep_Ranged"
 		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
@@ -75,7 +75,7 @@
 	"npc_dota_creature_gnoll_boss"
 	{
 		"ModelScale"				"2.0"
-		"Model"						"models/creeps/neutral_creeps/n_creep_gnoll/n_creep_gnoll_frost.vmdl"	// Model.
+		"Model"						"models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee.vmdl"
 		"BaseClass"					"npc_dota_creature"
 		"SoundSet"					"n_creep_Ranged"
 		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
@@ -132,8 +132,8 @@
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"60" 		// Damage range min.
-		"AttackDamageMax"			"60"		// Damage range max.
+		"AttackDamageMin"			"80" 		// Damage range min.
+		"AttackDamageMax"			"80"		// Damage range max.
         "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.25"		// Speed of attack.
 		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
@@ -234,6 +234,24 @@
 		"StatusHealth"				"600"		// Base health.
 		"StatusMana"				"800"		// Base health.
         "StatusManaRegen"			"3.0"		// Mana regeneration rate.
-		"Ability1"                  "dark_troll_warlord_raise_dead"
+		"Ability1"                  "spawn_tower_creep"
 	}
+    "npc_dota_tower_creep"
+    {
+        "BaseClass"					"npc_dota_creep_neutral"
+        "Model"						"models/creeps/lane_creeps/creep_radiant_melee/radiant_melee.vmdl"
+        "IsSummoned"				"1"
+        "AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+        "TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+        "CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+        "AttackAnimationPoint"		"0.467"		// Normalized time in animation cycle to attack.
+        "MovementSpeed"				"325"		// Speed
+        "MovementTurnRate"			"0.5"		// Turning rate.
+        "AttackRange"				"100"		// Range within a target can be attacked.
+        "AttackRate"				"1.0"		// Speed of attack.
+        "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+    }
 }
