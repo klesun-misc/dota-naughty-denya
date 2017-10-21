@@ -87,14 +87,14 @@
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"25"
 		"AbilityManaCost"               "60"
-		"AbilityGoldCost"               "600"
+		"AbilityGoldCost"               "600 700 800 900 1000"
 
         "AbilitySpecial"
         {
             "01"
             {
                 "var_type"		"FIELD_FLOAT"
-                "dmg_mult"		"1.5"
+                "dmg_mult"		"1.33"
             }
         }
 	}
@@ -125,7 +125,7 @@
             "01"
             {
                 "var_type"		"FIELD_FLOAT"
-                "heal_mult"		"1.5"
+                "heal_mult"		"1.33"
             }
             "02"
             {
@@ -160,7 +160,7 @@
 		"BaseClass"             		"ability_lua"
         "ScriptFile"					"abilities/build_spawning_tower.lua"
 		"AbilityTextureName"			"denis128_spawning"
-		"MaxLevel" 						"1"
+		"MaxLevel" 						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AoERadius"						"60"
 		"AbilityCastRange"				"1000"
@@ -172,7 +172,22 @@
             "01"
             {
                 "var_type"		"FIELD_INTEGER"
+                "hp_base"		"250"
+            }
+            "02"
+            {
+                "var_type"		"FIELD_INTEGER"
                 "dmg_base"		"35"
+            }
+            "03"
+            {
+                "var_type"		"FIELD_FLOAT"
+                "dmg_mult"		"1.25"
+            }
+            "04"
+            {
+                "var_type"		"FIELD_FLOAT"
+                "hp_mult"		"1.25"
             }
         }
 	}
@@ -184,7 +199,7 @@
         "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
         "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
         "AbilityCastRange"				"900"
-        "AbilityCooldown"				"1"
+        "AbilityCooldown"				"1.00"
         "AbilityManaCost"				"5"
         "AbilityTextureName"			"dazzle_shadow_wave"
         "OnSpellStart"
@@ -222,22 +237,11 @@
 
         "Modifiers"
         {
-            "modifier_frost_armor_autocast_aura"
+            "modifier_tower_heal_autocast"
             {
                 "Passive"	"1"
                 "IsHidden"	"1"
-
-                "Aura" 				"modifier_tower_heal_autocast_potential_target"
-                "Aura_Radius" 		"900"
-                "Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-                "Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-            }
-
-            "modifier_tower_heal_autocast_potential_target"
-            {
-                "IsHidden"	"1"
-			    "Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-                "ThinkInterval" "0.1"
+                "ThinkInterval" "1.1"
                 "OnIntervalThink"
                 {
                     "RunScript"

@@ -44,16 +44,58 @@ TowerHeal = function(event)
     target:Heal(healAmount, target)
 end
 
+---@param unit CDOTA_BaseNPC
+local GetInsufHpPerc = function(unit)
+    return (unit:GetMaxHealth() - unit:GetHealth()) / unit:GetMaxHealth()
+end
+
+---@param caster CDOTA_BaseNPC
+---@param ability CDOTABaseAbility
+local ChooseHealTarget = function(caster, ability)
+    -- if there is a hero with less than 75% hp - heal him
+    -- else heal the unit with least hp
+    local sickestUnit = nil
+    local sickestHero = nil
+    local ent = Entities:FindInSphere(nil, caster:GetAbsOrigin(), ability:GetCastRange())
+    while ent do
+        local isValid = ent:IsAlive()
+            and ent:GetTeamNumber() == caster:GetTeamNumber()
+            and GetInsufHpPerc(ent) > 0.00000001
+            and type(ent.IsHero) == 'function'
+
+        if isValid then
+            sickestUnit = sickestUnit or ent
+            if GetInsufHpPerc(sickestUnit) < GetInsufHpPerc(ent) then
+                sickestUnit = ent
+            end
+            if ent:IsHero() then
+                sickestHero = sickestHero or ent
+                if GetInsufHpPerc(sickestHero) < GetInsufHpPerc(ent) then
+                    sickestHero = ent
+                end
+            end
+        end
+        ent = Entities:FindInSphere(ent, caster:GetAbsOrigin(), ability:GetCastRange())
+    end
+
+    return sickestHero
+        and GetInsufHpPerc(sickestHero) > 0.25
+        and sickestHero
+        or sickestUnit
+end
+
 ---@param event t_ability_event
 HealAutocast = function(event)
     local caster = event.caster
-    local target = event.target -- victim of the attack
     local ability = event.ability
 
     if ability:GetAutoCastState() then
         if ability:IsCooldownReady() then
             if not ability:IsChanneling() then
-                if target:GetHealth() < target:GetMaxHealth() then
+                local target = ChooseHealTarget(caster, ability)
+                if target ~= nil then
+                    ---@debug
+                    print('Casting the ability! ' .. target:GetName() .. '|' .. caster:GetUnitName() .. '|' .. ability:GetAbilityName())
                     caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
                 end
             end
@@ -73,11 +115,12 @@ SpawnTowerCreep = function(event)
 
         -- to prevent it from being stuck in parent
         unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
+		unit:AddNewModifier(huj, nil, 'modifier_kill', {duration = 60.00})
 
         unit:SetControllableByPlayer(event.caster:GetPlayerOwnerID(), true)
         unit:SetBaseDamageMin(event.caster:GetAttackDamage())
         unit:SetBaseDamageMax(event.caster:GetAttackDamage())
-        unit:SetBaseMaxHealth(250)
+        unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
 
         -- order spawned creep to go to nearest enemy
         local nearestEnemy = Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)

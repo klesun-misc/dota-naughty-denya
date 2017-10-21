@@ -16,13 +16,6 @@
 		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
 		"Level"						"1"
 
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					""			// Ability 1
-		"Ability2"					""			// Ability 2
-		"Ability3"					""			// Ability 3
-		"Ability4"					""			// Ability 4
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"1"			// Physical protection.
@@ -87,7 +80,7 @@
 		"AttackRange"				"100"		// Range within a target can be attacked.
 		"RingRadius"				"80"
 		"HealthBarOffset"			"170"
-		"BountyXP"					"150"		// Experience earn.
+		"BountyXP"					"100"		// Experience earn.
 		"BountyGoldMin"				"200"		// Gold earned min.
 		"BountyGoldMax"				"200"		// Gold earned max.
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
@@ -112,9 +105,9 @@
 		"AttackRange"				"100"		// Range within a target can be attacked.
 		"RingRadius"				"80"
 		"HealthBarOffset"			"170"
-		"BountyXP"					"150"		// Experience earn.
-		"BountyGoldMin"				"75"		// Gold earned min.
-		"BountyGoldMax"				"75"		// Gold earned max.
+		"BountyXP"					"50"		// Experience earn.
+		"BountyGoldMin"				"50"		// Gold earned min.
+		"BountyGoldMax"				"50"		// Gold earned max.
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"				"150"		// Speed.
 		"Ability1"                  "black_dragon_splash_attack"
@@ -225,13 +218,9 @@
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackRange"				"800"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"ProjectileCollisionSize"	"50"
 		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"StatusHealth"				"600"		// Base health.
+		"StatusHealth"				"1"		// Base health.
 		"StatusMana"				"800"		// Base health.
         "StatusManaRegen"			"3.0"		// Mana regeneration rate.
 		"Ability1"                  "spawn_tower_creep"

@@ -3,7 +3,7 @@
 
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
-    local expoMult = 1.1
+    local expoMult = 1.10
     local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
     local goalMark = Entities:FindByName(nil, 'creep_goal_mark')
     local point = spawnMark:GetAbsOrigin()
@@ -47,7 +47,7 @@ local Spawn = function()
     local SpawnBoss = function()
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
-        local hp = 1000 + math.pow(seconds, expoMult) * 10
+        local hp = 1000 + math.pow(seconds, expoMult) * 7
         local dmg = 15 + math.pow(seconds, expoMult) / 4
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)
@@ -64,7 +64,7 @@ local Spawn = function()
         local seconds = GameRules:GetGameTime()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
         local hp = 300 + math.pow(seconds, expoMult) * 1.25
-        local dmg = 15 + math.pow(seconds, expoMult) / 5
+        local dmg = 15 + math.pow(seconds, expoMult) / 8
         unit:SetBaseAttackTime(2)
         unit:SetBaseDamageMin(dmg)
         unit:SetBaseDamageMax(dmg)
@@ -85,7 +85,7 @@ local Spawn = function()
     if seconds > 1620 then cnt = cnt + 1 end
 
     local wave = math.floor(GameRules:GetGameTime() / waveInterval)
-    if wave > 20 and wave % 20 == 0 then
+    if wave > 25 and wave % 25 == 0 then
         SpawnBoss()
     end
     if wave > 16 and wave % 16 == 0 then

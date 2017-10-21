@@ -33,6 +33,8 @@ local MakeAbility = function(params)
             return UF_FAIL_CUSTOM
         end
 
+        -- I had problems with other Entities: functions, it
+        -- looked like they are not available in this context
         local ent = Entities:First()
         while ent ~= nil do
             local entRad = ent.GetHullRadius and ent:GetHullRadius() or 0
@@ -65,7 +67,7 @@ local MakeAbility = function(params)
             tower:SetInvulnCount(0)
         end
         tower:SetIdleAcquire(true) -- auto-attack ON
-        --tower:SetControllableByPlayer(caster:GetPlayerID(), false)
+        tower:SetControllableByPlayer(caster:GetPlayerID(), false)
         tower:SetHullRadius(towerRadius)
 
         OnCreated(tower, self)
