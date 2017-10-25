@@ -94,7 +94,7 @@
             "01"
             {
                 "var_type"		"FIELD_FLOAT"
-                "dmg_mult"		"1.33"
+                "dmg_mult"		"1.25"
             }
         }
 	}
@@ -118,14 +118,14 @@
             }
         }
 		"AbilityManaCost"               "60"
-		"AbilityGoldCost"               "200"
+		"AbilityGoldCost"               "250"
 
         "AbilitySpecial"
         {
             "01"
             {
                 "var_type"		"FIELD_FLOAT"
-                "heal_mult"		"1.33"
+                "heal_mult"		"1.25"
             }
             "02"
             {

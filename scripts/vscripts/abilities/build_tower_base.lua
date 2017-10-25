@@ -1,10 +1,14 @@
 
+local types = require('types')
+
 -- this module provides code needed by all
 -- towers - use it to avoid copy-pasting
 
 local lastCursorPosition = Vector(0,0,0);
+local defaultTowerRadius = 64
 
 local NormalizeTowerPoint = function(castPoint, hullRadius)
+    hullRadius = hullRadius or defaultTowerRadius
     local xRest = castPoint.x % (hullRadius * 2)
     local yRest = castPoint.y % (hullRadius * 2)
 
@@ -15,9 +19,36 @@ local NormalizeTowerPoint = function(castPoint, hullRadius)
     )
 end
 
+--- check whether it is possible to build tower on that point
+local CanBuildThere = function(point, towerRadius)
+    towerRadius = towerRadius or defaultTowerRadius
+    point = NormalizeTowerPoint(point, towerRadius)
+
+    local floatError = point.z % 128
+    if floatError > 0.01 and 128 - floatError > 0.01 then
+        -- when trying to build on a wall
+        return false
+    end
+
+    -- I had problems with other Entities: functions, it
+    -- looked like they are not available in this context
+    local ent = Entities:First()
+    while ent ~= nil do
+        local entRad = ent.GetHullRadius and ent:GetHullRadius() or 0
+        if entRad > 0 then
+            local dv = point - ent:GetAbsOrigin()
+            if (math.abs(dv.x) - entRad < towerRadius) and (math.abs(dv.y) - entRad < towerRadius) then
+                return false
+            end
+        end
+        ent = Entities:Next(ent)
+    end
+    return true
+end
+
 local MakeAbility = function(params)
     local datadrivenName = params.datadrivenName
-    local towerRadius = params.towerRadius or 64
+    local towerRadius = params.towerRadius or defaultTowerRadius
     local OnCreated = params.OnCreated or function(tower) end
 
     local build_tower_base = {}
@@ -25,28 +56,7 @@ local MakeAbility = function(params)
     ---@param point Vector | t_vec
     function build_tower_base:CastFilterResultLocation(point)
         lastCursorPosition = point + Vector(0,0,0)
-        point = NormalizeTowerPoint(point, towerRadius)
-
-        local floatError = point.z % 128
-        if floatError > 0.01 and 128 - floatError > 0.01 then
-            -- when trying to build on a wall
-            return UF_FAIL_CUSTOM
-        end
-
-        -- I had problems with other Entities: functions, it
-        -- looked like they are not available in this context
-        local ent = Entities:First()
-        while ent ~= nil do
-            local entRad = ent.GetHullRadius and ent:GetHullRadius() or 0
-            if entRad > 0 then
-                local dv = point - ent:GetAbsOrigin()
-                if (math.abs(dv.x) - entRad < towerRadius) and (math.abs(dv.y) - entRad < towerRadius) then
-                    return UF_FAIL_CUSTOM
-                end
-            end
-            ent = Entities:Next(ent)
-        end
-        return UF_SUCCESS
+        return CanBuildThere(point, towerRadius) and UF_SUCCESS or UF_FAIL_CUSTOM
     end
 
     function build_tower_base:GetCustomCastErrorLocation(point)
@@ -55,7 +65,7 @@ local MakeAbility = function(params)
 
     ---@param event t_ability_event
     function build_tower_base:OnSpellStart(event)
-        local caster = self:GetCaster()
+        local caster = types:t_npc(self:GetCaster())
         local spellPoint = NormalizeTowerPoint(self:GetCursorPosition(), towerRadius)
 
         local tower = CreateUnitByName(
@@ -66,8 +76,8 @@ local MakeAbility = function(params)
         if tower.SetInvulnCount ~= nil then
             tower:SetInvulnCount(0)
         end
-        tower:SetIdleAcquire(true) -- auto-attack ON
-        tower:SetControllableByPlayer(caster:GetPlayerID(), false)
+        --tower:SetIdleAcquire(true) -- auto-attack ON
+        tower:SetControllableByPlayer(caster:GetMainControllingPlayer(), false)
         tower:SetHullRadius(towerRadius)
 
         OnCreated(tower, self)
@@ -86,4 +96,6 @@ end
 
 return {
     MakeAbility = MakeAbility,
+    CanBuildThere = CanBuildThere,
+    NormalizeTowerPoint = NormalizeTowerPoint,
 }

@@ -1,8 +1,11 @@
 
 require('libs.timers')
+local types = require('types')
+
 local json = require('reloaded.json')
 local wave = require('wave')
 local lang = require('reloaded.lang')
+local botAi = require('bot_ai')
 
 -- vars that are kept after code reload
 if klesun == nil then klesun = {} end
@@ -151,7 +154,6 @@ end
 local player_connect_full = function(event)
     local player = PlayerResource:GetPlayer(event.PlayerID)
     DeepPrintTable(event)
-    player:MakeRandomHeroSelection()
     ---@debug
     print('Player connected - ' .. PlayerResource:GetPlayerName(event.PlayerID))
     klesun.playerIdUserId[event.PlayerID] = event.userid
@@ -162,6 +164,8 @@ local player_connect_full = function(event)
     PlayerResource:SetCustomTeamAssignment(event.PlayerID, defaultTeam)
     klesun.playerIdToRole[event.PlayerID] = defaultRole
 end
+
+local lastPlayerId = nil
 
 -- happens when you see the "TEAM SELECT" screen
 ---@param event t_player_team_event
@@ -178,6 +182,42 @@ end
 local player_team = function(event)
     print('OnPlayerTeam')
     DeepPrintTable(event)
+    lastPlayerId = event.userid - 1
+end
+
+local SpawnBots = function()
+    local radBuilerCnt = 0
+    for playerId, role in pairs(klesun.playerIdToRole) do
+        if PlayerResource:GetTeam(playerId) ~= DOTA_TEAM_GOODGUYS
+        or role ~= 'builder'
+        then --[[skip]] else
+            radBuilerCnt = radBuilerCnt + 1
+        end
+    end
+
+    if radBuilerCnt == 0 then
+        local toGoodTeam = true
+        Tutorial:AddBot('npc_dota_hero_templar_assassin', 'mid', 'unfair', toGoodTeam)
+        local botId = lastPlayerId
+        local botPlayer = PlayerResource:GetPlayer(botId)
+        -- i dunno which event do I need...
+        Timers:CreateTimer({
+            endTime = 4,
+            callback = function()
+                local hero = botPlayer:GetAssignedHero()
+                hero:SetThink(function()
+                    local ok, data = pcall(function() require('bot_ai').GiveOrders(hero, botId) end)
+                    local delay
+                    if ok then delay = 0.5 else
+                        print('Got exception while trying to give AI orders')
+                        DeepPrintTable({data})
+                        delay = 5
+                    end
+                    return delay
+                end)
+            end,
+        })
+    end
 end
 
 local game_rules_state_change = function(_)
@@ -185,6 +225,7 @@ local game_rules_state_change = function(_)
     if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		setupStartTime = GameRules:GetGameTime()
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
+        SpawnBots()
         for playerId, role in pairs(klesun.playerIdToRole) do
             if role == 'builder' then
                 local player = PlayerResource:GetPlayer(playerId)
@@ -194,11 +235,11 @@ local game_rules_state_change = function(_)
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
         -- dota does not allow rplacing hero instantly, "player has no current hero to replace"
         Timers:CreateTimer({
-            endTime = 2,
+            endTime = 4,
             callback = function()
                 for playerId, role in pairs(klesun.playerIdToRole) do
                     if role == 'builder' then
-                        PlayerResource:ReplaceHeroWith(playerId, 'npc_dota_hero_templar_assassin', 800, 0)
+                        local hero = PlayerResource:ReplaceHeroWith(playerId, 'npc_dota_hero_templar_assassin', 800, 0)
                     end
                 end
             end,
@@ -250,8 +291,8 @@ Timers:CreateTimer(function()
 end)
 Timers:CreateTimer(function()
 	CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
-		type = 'second_passed', 
-		setupTimeLeft = GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP 
+		type = 'second_passed',
+		setupTimeLeft = GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
 			and setupStartTime - GameRules:GetGameTime() + SETUP_MAX_TIME or nil,
 	})
     return 1

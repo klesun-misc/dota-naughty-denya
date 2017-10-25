@@ -94,8 +94,6 @@ HealAutocast = function(event)
             if not ability:IsChanneling() then
                 local target = ChooseHealTarget(caster, ability)
                 if target ~= nil then
-                    ---@debug
-                    print('Casting the ability! ' .. target:GetName() .. '|' .. caster:GetUnitName() .. '|' .. ability:GetAbilityName())
                     caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
                 end
             end

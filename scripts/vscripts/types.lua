@@ -31,6 +31,12 @@ local self = {}
 ---@return CDOTABaseAbility
 function self:t_abil(v) return v end
 
+---@return CDOTA_BaseNPC
+function self:t_npc(v) return v end
+
+---@return CBaseEntity
+function self:t_ent(v) return v end
+
 ---@return Vector | t_vec
 function self:t_vec(v) return v end
 
