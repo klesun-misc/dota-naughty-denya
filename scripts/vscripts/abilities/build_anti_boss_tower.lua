@@ -8,7 +8,7 @@ build_anti_boss_tower = build_tower_base.MakeAbility({
     ---@param abil CDOTABaseAbility
     OnCreated = function(tower, abil)
         tower:SetRenderColor(32,255,128)
-        tower:AddNewModifier(tower, nil, 'modifier_kill', {duration = 30.00})
+        tower:AddNewModifier(tower, nil, 'modifier_kill', {duration = 45.00})
 
         local dmgMult = abil:GetSpecialValueFor('dmg_mult')
         local dmg = (tower:GetBaseDamageMin() + tower:GetBaseDamageMax()) / 2
