@@ -239,7 +239,10 @@ local game_rules_state_change = function(_)
             callback = function()
                 for playerId, role in pairs(klesun.playerIdToRole) do
                     if role == 'builder' then
-                        local hero = PlayerResource:ReplaceHeroWith(playerId, 'npc_dota_hero_templar_assassin', 800, 0)
+                        local datadriven = PlayerResource:GetTeam(playerId) == DOTA_TEAM_GOODGUYS
+                            and 'npc_dota_hero_templar_assassin'
+                            or 'npc_dota_hero_lycan'
+                        local hero = PlayerResource:ReplaceHeroWith(playerId, datadriven, 800, 0)
                     end
                 end
             end,

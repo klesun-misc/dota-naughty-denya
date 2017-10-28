@@ -104,16 +104,15 @@ end
 ---@param event t_ability_event
 SpawnTowerCreep = function(event)
     for i = 0, 1, 1 do
-        local owner = event.caster:GetPlayerOwner()
-        local huj = event.caster.huj -- TODO: do it correctly. If you set the tower as owner, you won't get money from enemies killed by creep
+        local builder = event.caster.envyNs.builder
         local unit = CreateUnitByName(
             'npc_dota_tower_creep', event.caster:GetAbsOrigin() - Vector(0,-20,0),
-            false, huj, huj, huj:GetTeam()
+            false, builder, builder, builder:GetTeam()
         )
 
         -- to prevent it from being stuck in parent
         unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
-		unit:AddNewModifier(huj, nil, 'modifier_kill', {duration = 60.00})
+		unit:AddNewModifier(builder, nil, 'modifier_kill', {duration = 60.00})
 
         unit:SetControllableByPlayer(event.caster:GetPlayerOwnerID(), true)
         unit:SetBaseDamageMin(event.caster:GetAttackDamage())
@@ -133,7 +132,37 @@ SpawnTowerCreep = function(event)
 end
 
 ---@param event t_ability_event
-SpawnTowerCreepAutocast = function(event)
+SpawnEnvyMeleeCreep = function(event)
+    for i = 1, 1, 1 do
+        local builder = event.caster.envyNs.builder
+        local unit = CreateUnitByName(
+            'npc_dota_creature_gnoll_assassin', event.caster:GetAbsOrigin() - Vector(0,-20,0),
+            false, builder, builder, builder:GetTeam()
+        )
+
+        -- to prevent it from being stuck in parent
+        unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
+		unit:AddNewModifier(builder, nil, 'modifier_kill', {duration = 90.00})
+
+        --unit:SetControllableByPlayer(event.caster:GetPlayerOwnerID(), true)
+        unit:SetBaseDamageMin(event.caster:GetAttackDamage())
+        unit:SetBaseDamageMax(event.caster:GetAttackDamage())
+        unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
+
+        local goal = Entities:FindByName(nil, 'creep_goal_mark')
+            or Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
+        if goal ~= nil then
+            ExecuteOrderFromTable({
+                UnitIndex = unit:GetEntityIndex(),
+                OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+                Position = goal, Queue = true
+            })
+        end
+    end
+end
+
+---@param event t_ability_event
+AutocastByColdown = function(event)
     local ability = event.ability
     if ability:GetAutoCastState() then
         if ability:IsCooldownReady() then

@@ -39,6 +39,8 @@ local Spawn = function()
         golem:SetBaseHealthRegen(5)
         golem:SetBaseMoveSpeed(350)
 
+        golem:AddNewModifier(golem, nil, 'modifier_kill', {duration = 90})
+
         if wave % 5 == 0 then
             GameRules:SendCustomMessage('Creep spawned with hp: ' .. math.floor(hp) ..' dmg: ' .. math.floor(dmg), DOTA_TEAM_FIRST, 0)
         end

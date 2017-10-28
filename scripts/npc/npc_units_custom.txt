@@ -3,10 +3,7 @@
 {
 	"Version"	"1"
 	
-	//=================================================================================	
-	// Creature: Gnoll Assassin
-	//=================================================================================
-	"npc_dota_creature_gnoll_assassin"	
+	"npc_dota_creature_gnoll_assassin"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -29,20 +26,11 @@
 		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
 		"AttackRange"				"100"		// Range within a target can be attacked.
-
-		// Bounds
-		//----------------------------------------------------------------
 		"RingRadius"				"40"
 		"HealthBarOffset"			"170"
-
-		// Bounty
-		//----------------------------------------------------------------
 		"BountyXP"					"10"		// Experience earn.
 		"BountyGoldMin"				"5"		// Gold earned min.
 		"BountyGoldMax"				"12"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"				"270"		// Speed.			
 
@@ -224,6 +212,22 @@
 		"StatusMana"				"800"		// Base health.
         "StatusManaRegen"			"3.0"		// Mana regeneration rate.
 		"Ability1"                  "spawn_tower_creep"
+	}
+	"npc_dota_envy_melee_barracks"
+	{
+		// General
+		//----------------------------------------------------------------
+		"ModelScale"				"0.25"
+		"Model"						"models/props_structures/dire_barracks_melee001.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"ArmorPhysical"				"1"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"StatusHealth"				"1500"		// Base health.
+		"StatusMana"				"800"		// Base health.
+        "StatusManaRegen"			"3.0"		// Mana regeneration rate.
+		"Ability1"                  "train_envy_melee_creep"
 	}
     "npc_dota_tower_creep"
     {

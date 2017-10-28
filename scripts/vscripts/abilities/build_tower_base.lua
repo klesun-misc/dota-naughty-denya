@@ -72,7 +72,8 @@ local MakeAbility = function(params)
             datadrivenName, spellPoint,
             false, caster, caster, caster:GetTeam()
         )
-        tower.huj = caster ---@debug
+        tower.envyNs = tower.envyNs or {}
+        tower.envyNs.builder = caster
         if tower.SetInvulnCount ~= nil then
             tower:SetInvulnCount(0)
         end
