@@ -154,6 +154,7 @@
         }
 		"AbilityManaCost"               "60"
 		"AbilityGoldCost"               "80"
+	    "RequiredLevel"		        	"99" // TODO: remove once implemented
 	}
 	"build_spawning_tower"
 	{

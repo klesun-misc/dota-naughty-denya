@@ -11,7 +11,8 @@ local botAi = require('bot_ai')
 if klesun == nil then klesun = {} end
 if klesun.eventToFunc == nil then klesun.eventToFunc = {} end
 if klesun.playerIdToRole == nil then klesun.playerIdToRole = {} end
-if klesun.playerIdUserId == nil then klesun.playerIdUserId = {} end
+if klesun.playerIdToUserId == nil then klesun.playerIdToUserId = {} end
+if klesun.roledPlayerIds == nil then klesun.roledPlayerIds = {} end
 
 local SETUP_MAX_TIME = 15;
 local setupStartTime = nil
@@ -156,7 +157,7 @@ local player_connect_full = function(event)
     DeepPrintTable(event)
     ---@debug
     print('Player connected - ' .. PlayerResource:GetPlayerName(event.PlayerID))
-    klesun.playerIdUserId[event.PlayerID] = event.userid
+    klesun.playerIdToUserId[event.PlayerID] = event.userid
 
     -- default team/role if player does not choose something
     local defaultRole = math.random() < 0.5 and 'builder' or 'hero'
@@ -272,12 +273,13 @@ local klesun_event_js_to_lua = function(status, event)
         local playerId = event.PlayerID
         PlayerResource:SetCustomTeamAssignment(playerId, team)
         klesun.playerIdToRole[playerId] = event.role
-        if lang.Size(klesun.playerIdToRole) == lang.Size(klesun.playerIdUserId) then
+        table.insert(klesun.roledPlayerIds, event.PlayerID)
+        if lang.Size(klesun.roledPlayerIds) == lang.Size(klesun.playerIdToUserId) then
             -- everyone have chosen his role
             GameRules:SetCustomGameSetupRemainingTime(0)
         end
     else
-        print('Unepxected klesun_event_js_to_lua event format!')
+        print('Unexpected klesun_event_js_to_lua event format!')
         DeepPrintTable(event)
     end
 
