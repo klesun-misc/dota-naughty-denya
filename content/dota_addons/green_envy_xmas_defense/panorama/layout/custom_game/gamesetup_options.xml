@@ -1,0 +1,58 @@
+<root>
+	
+	<script>
+        var OnRoleSelected = function(fraction, role) {
+			GameEvents.SendCustomGameEventToServer('klesun_event_js_to_lua', {
+				type: 'role_selected', fraction: fraction, role: role
+			});
+			$('#choose-your-role-panel').visible = false;
+			$('#wait-for-other-players-panel').visible = true;
+		};
+		GameEvents.Subscribe('klesun_event_lua_to_js', function(event){
+			if (event.type === 'second_passed') {
+				($('#role-selection-time-left') || {}).text = event.setupTimeLeft;
+			}
+		});
+	</script>
+
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.css" />
+		<include src="s2r://panorama/styles/custom_game/gamesetup_options.css" />
+	</styles>
+
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/custom_ui_manifest.js" />
+	</scripts>
+
+	<Panel class="ContainerGameSetup" hittest="false">
+		<Panel class="CustomSettingsColumn" id="VoteColumn" hittest="false" >
+			<Panel class="ContainerCustomGameSettingsPanels" hittest="false" >
+				<Panel class="CustomSettingPanel" hittest="false" id="choose-your-role-panel">
+					<Panel class="ContainerCustomGameLengthTitle" hittest="false">
+						<Label class="CustomGameSettingsTitle" id="CustomGameLengthTitle1" hittest="false" text="Choose Who You Want To Be..." />
+					</Panel>
+					<Panel class="CustomGameSettingPanelDivider" hittest="false" />
+					<Panel class="ContainerCustomGameSettingOptions" hittest="false">
+						<RadioButton class="CGSRadio1" text="I want to be a Radiant hero" onactivate="OnRoleSelected('radiant', 'hero')" />
+						<RadioButton class="CGSRadio2" text="I want to be a Radiant builder" onactivate="OnRoleSelected('radiant', 'builder')" />
+						<RadioButton class="CGSRadio3" text="I want to be a Dire hero" onactivate="OnRoleSelected('dire', 'hero')" />
+						<RadioButton class="CGSRadio4" text="I want to be a Dire builder" onactivate="OnRoleSelected('dire', 'builder')" />
+					</Panel>
+				</Panel>
+				<Panel class="player hidden-panel" hittest="false" id="wait-for-other-players-panel">
+					<Label hittest="false" text="Thanks, now please wait for other players..." />
+				</Panel>
+				<Panel hittest="false">
+					<Label text="Role Selection Time Left: " />
+				</Panel>
+				<Panel hittest="false">
+					<Label text="-100" id="role-selection-time-left"/>
+				</Panel>
+			</Panel>
+		</Panel>
+
+		<Button id="ChangelogImg" onactivate="DOTADisplayURL('https://www.facebook.com/pg/X-Hero-Siege-619117744926665/notes/?ref=page_internal');" >
+			<Image src="file://{images}/custom_game/changelog.png" />
+		</Button>
+	</Panel>
+</root>

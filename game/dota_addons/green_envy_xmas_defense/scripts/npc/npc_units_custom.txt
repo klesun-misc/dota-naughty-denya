@@ -1,0 +1,250 @@
+// Units File
+"DOTAUnits"
+{
+	"Version"	"1"
+	
+	"npc_dota_creature_gnoll_assassin"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"SoundSet"					"n_creep_Ranged"
+		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
+		"Level"						"1"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"			// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"		// Damage range min.
+		"AttackDamageMax"			"36"		// Damage range max.
+		"AttackRate"				"1.6"		// Speed of attack.
+		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"RingRadius"				"40"
+		"HealthBarOffset"			"170"
+		"BountyXP"					"10"		// Experience earn.
+		"BountyGoldMin"				"5"		// Gold earned min.
+		"BountyGoldMax"				"12"		// Gold earned max.
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"		// Speed.			
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"75"		// Base health.
+		"StatusHealthRegen"			"0.5"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0.0"		// Mana regeneration rate.
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"400"		// Range of vision during day light.
+		"VisionNighttimeRange"		"400"		// Range of vision at night time.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"						// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	}
+	"npc_dota_creature_gnoll_boss"
+	{
+		"ModelScale"				"2.0"
+		"Model"						"models/creeps/lane_creeps/creep_bad_melee/creep_bad_melee.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"SoundSet"					"n_creep_Ranged"
+		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
+		"Level"						"1"
+		"ArmorPhysical"				"5"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"RingRadius"				"80"
+		"HealthBarOffset"			"170"
+		"BountyXP"					"100"		// Experience earn.
+		"BountyGoldMin"				"200"		// Gold earned min.
+		"BountyGoldMax"				"200"		// Gold earned max.
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"150"		// Speed.
+		"Ability1"                  "black_dragon_splash_attack"
+	}
+	"npc_dota_creature_gnoll_dragon"
+	{
+		"ModelScale"				"1.5"
+		"Model"						"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"SoundSet"					"n_creep_Ranged"
+		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
+		"Level"						"1"
+		"ArmorPhysical"				"5"			// Physical protection.
+        "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"			// Type of locomotion - ground, air
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackRange"				"400"
+        "ProjectileModel"			"particles/neutral_fx/black_dragon_attack.vpcf" // Particle system model for projectile.
+		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"RingRadius"				"80"
+		"HealthBarOffset"			"170"
+		"BountyXP"					"50"		// Experience earn.
+		"BountyGoldMin"				"50"		// Gold earned min.
+		"BountyGoldMax"				"50"		// Gold earned max.
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"150"		// Speed.
+		"Ability1"                  "black_dragon_splash_attack"
+	}
+
+	// attacks a lot but missiles are extremely slow, so it takes
+	// some time before attacks are delivered - effective only when target
+	// lives long, cuz launched missiles are wasted once target is dead
+	"npc_dota_anti_boss_tower"
+	{
+		// General
+		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
+		"Model"						"models/props_structures/tower_good.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"ArmorPhysical"				"1"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"110" 		// Damage range min.
+		"AttackDamageMax"			"110"		// Damage range max.
+        "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.25"		// Speed of attack.
+		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
+		"AttackRange"				"1200"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/base_attacks/ranged_tower_good.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"100"		// Speed of projectile.
+		"ProjectileCollisionSize"	"50"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"StatusHealth"				"400"		// Base health.
+	}
+
+	// tower that deals splash damage
+	"npc_dota_anti_army_tower"
+	{
+		// General
+		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
+		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"ArmorPhysical"				"1"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"75" 		// Damage range min.
+		"AttackDamageMax"			"75"		// Damage range max.
+        "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"2"		// Speed of attack.
+		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
+		"AttackRange"				"800"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"400"		// Speed of projectile.
+		"ProjectileCollisionSize"	"50"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"StatusHealth"				"600"		// Base health.
+		"Ability1"                  "black_dragon_splash_attack"
+	}
+
+	// if you manage to build 9(or whatever much you need to circle
+	// them by vertical/horizontal) such towers around an enemy(ies),
+	// they gain hp and start attacking enemies inside
+	// the more cells are occupied by prison, the more poweful it is i guess...
+	// may make it possible to link to any tower in some range
+	// and if enemy passes through link, it takes damage
+	"npc_dota_prison_tower"
+	{
+		// General
+		//----------------------------------------------------------------
+		"ModelScale"				"0.75"
+		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"ArmorPhysical"				"1"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackRange"				"800"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"400"		// Speed of projectile.
+		"ProjectileCollisionSize"	"50"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"StatusHealth"				"800"		// Base health.
+		"Ability1"					"prison_tether"
+	}
+
+	"npc_dota_healing_tower"
+	{
+		// General
+		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
+		"Model"						"models/props_structures/tower_good.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"ArmorPhysical"				"1"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackRange"				"800"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"400"		// Speed of projectile.
+		"ProjectileCollisionSize"	"50"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"StatusHealth"				"600"		// Base health.
+		"StatusMana"				"800"		// Base health.
+        "StatusManaRegen"			"3.0"		// Mana regeneration rate.
+		"Ability1"                  "tower_heal"
+	}
+	"npc_dota_spawning_tower"
+	{
+		// General
+		//----------------------------------------------------------------
+		"ModelScale"				"0.5"
+		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"ArmorPhysical"				"1"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"StatusHealth"				"1"		// Base health.
+		"StatusMana"				"800"		// Base health.
+        "StatusManaRegen"			"3.0"		// Mana regeneration rate.
+		"Ability1"                  "spawn_tower_creep"
+	}
+	"npc_dota_envy_melee_barracks"
+	{
+		// General
+		//----------------------------------------------------------------
+		"ModelScale"				"0.25"
+		"Model"						"models/props_structures/dire_barracks_melee001.vmdl"	// Model.
+		"BaseClass"					"npc_dota_building"
+		"ArmorPhysical"				"1"			// Physical protection.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"StatusHealth"				"1500"		// Base health.
+		"StatusMana"				"800"		// Base health.
+        "StatusManaRegen"			"3.0"		// Mana regeneration rate.
+		"Ability1"                  "train_envy_melee_creep"
+	}
+    "npc_dota_tower_creep"
+    {
+        "BaseClass"					"npc_dota_creep_neutral"
+        "Model"						"models/creeps/lane_creeps/creep_radiant_melee/radiant_melee.vmdl"
+        "IsSummoned"				"1"
+        "AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+        "TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+        "CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+        "AttackAnimationPoint"		"0.467"		// Normalized time in animation cycle to attack.
+        "MovementSpeed"				"325"		// Speed
+        "MovementTurnRate"			"0.5"		// Turning rate.
+        "AttackRange"				"100"		// Range within a target can be attacked.
+        "AttackRate"				"1.0"		// Speed of attack.
+        "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+    }
+}
