@@ -1,16 +1,18 @@
 ### Setup
 
-- Create an empty project using Dota 2 workshop (let's assume, you called it green_envy_xmas_defense)
-- Copy contents of this repository (including .git preferably) to:
+- Open Git Bash inside your `C:\g\Steam\steamapps\common\dota 2 beta` directory.
+- Enter these commands:
+```bash
+git init
+git remote add origin https://github.com/klesun/green-envy-xmas-defense
+git fetch
+git reset origin/master  # this is required if files in the non-empty directory are in the repo
+git checkout -t origin/master
+```
 
-`C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota_addons\green_envy_xmas_defense`
+- Now you can open this map from the Hammer (map editor) and launch it normally (though it has .txt extension, so you'll need to select "All Files" in dropdown menu).
 
-- Copy `maps` and `panorama` folders to :
-
-`C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\content\dota_addons\green_envy_xmas_defense`
-
-- Now you can open this map from the Hammer (map editor) and launch it normally.
-
+In Steam Repo: http://steamcommunity.com/sharedfiles/filedetails/?id=1170060197
 ___________________________
 
 ### Creeps vs Towers X-Mas Defenders
