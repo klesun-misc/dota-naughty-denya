@@ -203,7 +203,7 @@
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"20"
 		"AbilityManaCost"               "90"
-		"AbilityGoldCost"               "150"
+		"AbilityGoldCost"               "400"
 	}
 
 	"tower_heal"
@@ -315,7 +315,7 @@
         "AbilityCastPoint"				"0.5"
         "AbilityCooldown"				"6.0"
         "AbilityManaCost"				"10"
-		"AbilityGoldCost"               "-5"
+		"AbilityGoldCost"               "-10"
         "OnSpellStart"
         {
             "RunScript"

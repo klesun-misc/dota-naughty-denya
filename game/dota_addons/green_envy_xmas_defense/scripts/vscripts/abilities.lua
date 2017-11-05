@@ -133,6 +133,14 @@ end
 
 ---@param event t_ability_event
 SpawnEnvyMeleeCreep = function(event)
+    local abil = event.ability
+    local cost = abil:GetGoldCost(abil:GetLevel());
+    if cost < 0 then 
+        local playerId = event.caster:GetPlayerOwnerID()
+        PlayerResource:ModifyGold(playerId, -cost, true, 0)
+    end
+
+
     for i = 1, 1, 1 do
         local builder = event.caster.envyNs.builder
         local unit = CreateUnitByName(

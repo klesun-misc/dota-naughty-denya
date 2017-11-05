@@ -6,11 +6,10 @@
 git init
 git remote add origin https://github.com/klesun/green-envy-xmas-defense
 git fetch
-git reset origin/master  # this is required if files in the non-empty directory are in the repo
 git checkout -t origin/master
 ```
 
-- Now you can open this map from the Hammer (map editor) and launch it normally (though it has .txt extension, so you'll need to select "All Files" in dropdown menu).
+- Now you can open this map from the Hammer (map editor) and launch it normally (though it has .txt extension, so you'll need to select "All Files" in dropdown menu to see it in the explorer).
 
 In Steam Repo: http://steamcommunity.com/sharedfiles/filedetails/?id=1170060197
 ___________________________

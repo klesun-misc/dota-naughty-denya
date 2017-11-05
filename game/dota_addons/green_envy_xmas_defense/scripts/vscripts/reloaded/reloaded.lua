@@ -203,7 +203,7 @@ local SpawnBots = function()
         local botPlayer = PlayerResource:GetPlayer(botId)
         -- i dunno which event do I need...
         Timers:CreateTimer({
-            endTime = 4,
+            endTime = 10,
             callback = function()
                 local hero = botPlayer:GetAssignedHero()
                 hero:SetThink(function()
@@ -236,7 +236,7 @@ local game_rules_state_change = function(_)
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
         -- dota does not allow rplacing hero instantly, "player has no current hero to replace"
         Timers:CreateTimer({
-            endTime = 4,
+            endTime = 10,
             callback = function()
                 for playerId, role in pairs(klesun.playerIdToRole) do
                     if role == 'builder' then
