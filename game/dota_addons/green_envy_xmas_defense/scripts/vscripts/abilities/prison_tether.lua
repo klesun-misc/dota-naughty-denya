@@ -25,14 +25,29 @@ function prison_tether:OnSpellStart ()
 	local casterTower = caster:GetAbsOrigin()
 	local targetTower = self:GetCursorTarget():GetAbsOrigin()
 	local distance = (targetTower - casterTower):Length2D()
-	local effectName = "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
-	local pfx = ParticleManager:CreateParticle(effectName, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(pfx, 0, casterTower)
-	ParticleManager:SetParticleControl(pfx, 1, targetTower)
+	local projectileInfo =
+	{
+		Ability	= self,
+		EffectName = "particles/units/heroes/hero_wisp/wisp_tether.vpcf",
+		vSpawnOrigin = casterTower,
+		fStartRadius = 64,
+		fEndRadius = 64,
+		vVelocity = 500,
+		fDistance = 700,
+		Source = caster,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		iUnitTargetType = DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_BASIC
+	}
+	ProjectileManager:CreateLinearProjectile(projectileInfo)
+	--local pfx = ParticleManager:CreateParticle(effectName, PATTACH_ABSORIGIN, caster)
+	--ParticleManager:SetParticleControl(pfx, 0, casterTower)
+	--ParticleManager:SetParticleControl(pfx, 1, targetTower)
 
 end
 
 function prison_tether:OnProjectileHit(hTarget, vLocation)
 	print("xyu")
-	print(hTarget)
+	if hTarget ~= nil then 
+		print('somebody is here')
+	end
 end
