@@ -1,0 +1,10 @@
+"AddonInfo"
+{
+	"TeamCount" 	"2"
+	"maps"		"green_envy_xmas_defense"
+	"IsPlayable"	"1"
+	"green_envy_xmas_defense"
+	{
+		"MaxPlayers"	"4"
+	}
+}

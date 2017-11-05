@@ -4,8 +4,8 @@ local types = require('types')
 
 local json = require('reloaded.json')
 local wave = require('wave')
+local bgm = require('bgm')
 local lang = require('reloaded.lang')
-local botAi = require('bot_ai')
 
 -- vars that are kept after code reload
 if klesun == nil then klesun = {} end
@@ -248,6 +248,7 @@ local game_rules_state_change = function(_)
                 end
             end,
         })
+        bgm.Init()
     end
 end
 

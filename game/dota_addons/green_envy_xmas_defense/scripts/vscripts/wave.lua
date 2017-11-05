@@ -65,7 +65,7 @@ local Spawn = function()
     local SpawnDragon = function()
         local seconds = GameRules:GetGameTime()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
-        local hp = 300 + math.pow(seconds, expoMult) * 1.25
+        local hp = 300 + math.pow(seconds, expoMult) * 1.75
         local dmg = 15 + math.pow(seconds, expoMult) / 8
         unit:SetBaseAttackTime(2)
         unit:SetBaseDamageMin(dmg)

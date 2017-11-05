@@ -2,7 +2,8 @@
 
 local main = require('reloaded.reloaded')
 
-function Precache( context )
+function Precache(context)
+	PrecacheResource("soundfile", "soundevents/custom_sounds.vsndevts", context)
 	--[[
 		Precache things we know we'll use.  Possible file types include (but not limited to):
 			PrecacheResource( "model", "*.vmdl", context )
