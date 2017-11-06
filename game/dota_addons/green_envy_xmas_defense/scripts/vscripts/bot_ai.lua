@@ -44,7 +44,7 @@ local GiveOrders = function(hero, botPlayerId)
     local asEnt = types:t_ent(hero)
 
     if asNpc:GetUnitName() ~= 'npc_dota_hero_templar_assassin' then
-        print('Tried to give order to a non-builder - ' + asNpc:GetUnitName() + ' - not implemented yet')
+        print('Tried to give order to a non-builder - ' .. asNpc:GetUnitName() .. ' - not implemented yet')
         return
     end
 
