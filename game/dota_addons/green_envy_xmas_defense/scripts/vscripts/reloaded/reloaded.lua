@@ -83,6 +83,10 @@ local dota_player_pick_hero = function(event)
         dagger:SetPurchaseTime(0)
         hero:AddItem(dagger)
     end
+    if hero:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+        local abil = hero:AddAbility('dire_xp_gain_aura')
+        abil:SetLevel(1)
+    end
     if botIdToData[playerId] then
         hero:SetThink(function()
             local ok, data = pcall(function() require('bot_ai').GiveOrders(hero, playerId) end)

@@ -178,3 +178,42 @@ AutocastByColdown = function(event)
         end
     end
 end
+
+--- show briefly what keys does table have, truncate if there is too much
+Shorten = function(tbl)
+    if type(tbl) ~= 'table' then
+        return tbl
+    end
+    local shortTbl = {}
+    local i = 0
+    for k,v in pairs(tbl) do
+        i = i + 1
+        shortTbl[k] = Shorten(v)
+        if i > 7 then
+            break
+        end
+    end
+    if tbl.GetName then
+        shortTbl.name = tbl:GetName()
+    end
+    return shortTbl
+end
+
+local Log = function(msg, data)
+    print('&& LOG && ' .. msg)
+    if data ~= nil then
+        local short = Shorten(data)
+        DeepPrintTable(short)
+    end
+end
+
+
+
+GrantXpToEnemyHeroes = function(event)
+    local unit = types:t_npc(event.unit)
+    local hero = types:t_hero(event.caster)
+    if unit and hero and hero.AddExperience then
+        local xp = unit:GetDeathXP() * 1.25
+        hero:AddExperience(xp, DOTA_ModifyXP_Unspecified, false, true)
+    end
+end

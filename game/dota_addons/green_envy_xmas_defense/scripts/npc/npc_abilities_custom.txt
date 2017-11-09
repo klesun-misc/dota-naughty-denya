@@ -11,20 +11,20 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"17.0 17.0 17.0 17.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100"
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -206,12 +206,56 @@
 		"AbilityGoldCost"               "400"
 	}
 
+    // unit abilities
+
+    "dire_xp_gain_aura"
+    {
+        "BaseClass"				        "ability_datadriven"
+        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL"
+        "AbilityCastRange"				"1000"
+        "AbilityCastRange"				"1000"
+
+        "AbilityTextureName"			"denis128_book"
+        "MaxLevel"			            "1"
+        "Modifiers"
+        {
+            "modifier_xp_gain_aura_emitter"
+            {
+                "IsAura"				"1"
+                "Passive"				"1"
+                "IsHidden"				"0"
+			    "IsDebuff"			    "0"
+
+                "Aura" 					"modifier_xp_gain_aura_receiver"
+                "Aura_Radius" 			"1000"
+                "Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_BOTH"
+                "Aura_Types" "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+                "Aura_ApplyToCaster" 	"0"
+            }
+            "modifier_xp_gain_aura_receiver"
+            {
+			    "IsDebuff"			"1"
+                //"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+                "OnDeath"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"abilities.lua"
+                        "Function"			"GrantXpToEnemyHeroes"
+                    }
+                }
+            }
+        }
+    }
+
 	"tower_heal"
 	{
 	    "BaseClass"				        "ability_datadriven"
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AURA"
         "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-        "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+        "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
         "AbilityCastRange"				"900"
         "AbilityCooldown"				"1.00"
         "AbilityManaCost"				"5"
@@ -344,13 +388,13 @@
         }
 	}
 
-	"prison_tether"	
+	"prison_tether"
 	{
 		"BaseClass"					"ability_lua"
 		"MaxLevel"					"1"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"		
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
 		"AbilityTextureName"		"crystal_maiden_freezing_field"
 		"AbilityCastRange"			"800"
 		"AbilityCastPoint"			"0.2"
