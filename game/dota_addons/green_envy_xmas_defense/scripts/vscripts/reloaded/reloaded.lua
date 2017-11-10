@@ -177,6 +177,8 @@ local game_rules_state_change = function(_)
         end
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
         bgm().Init()
+    elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_DISCONNECT then
+        bgm().RestorePlayerSettings()
     end
 end
 
@@ -188,6 +190,23 @@ local npc_spawned = function(event)
     ---@debug
     local unit = EntIndexToHScript(event.entindex)
     local datadrivenName = unit:GetUnitName()
+end
+
+local entity_hurt = function(event)
+    local damage = event.damage
+    local unit = EntIndexToHScript(event.entindex_killed)
+    if unit and unit.GetUnitName and not (unit.envyNs and unit.envyNs.isDying) then
+        local perc = unit:GetHealth() / unit:GetMaxHealth()
+        if perc <= 0.33 then
+            unit.envyNs = unit.envyNs or {}
+            unit.envyNs.isDying = true
+            if unit:GetUnitName() == 'npc_dota_creature_gnoll_boss' then
+                bgm().SoundOn('bgm_sad_victory', unit)
+            elseif unit:GetUnitName() == 'npc_dota_goodguys_fort' then
+                bgm().SoundOn('bgm_sad_defeat', unit)
+            end
+        end
+    end
 end
 
 ---@param event t_klesun_event_js_to_lua
@@ -241,6 +260,7 @@ Relisten('player_connect_full', player_connect_full)
 Relisten('player_team', player_team)
 Relisten('game_rules_state_change', game_rules_state_change)
 Relisten('npc_spawned', npc_spawned)
+Relisten('entity_hurt', entity_hurt)
 
 RelistenCust('klesun_event_js_to_lua', klesun_event_js_to_lua)
 

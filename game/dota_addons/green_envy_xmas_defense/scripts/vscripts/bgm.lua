@@ -71,8 +71,16 @@ local makeSelf = function()
         local dura = ent:GetSoundDuration(songName, '')
         Quiet(0.1, dura).callback = function()
             ent:EmitSound(songName)
-            return function() ent:StopSound(songName) end
+            return function()
+                if ent then
+                    ent:StopSound(songName)
+                end
+            end
         end
+    end
+
+    local RestorePlayerSettings = function()
+        Convars:SetFloat('snd_musicvolume', initialVolume)
     end
 
     return {
@@ -80,6 +88,7 @@ local makeSelf = function()
         Init = Init,
         -- play some random jingle. quiet all other music down temporarily
         SoundOn = SoundOn,
+        RestorePlayerSettings = RestorePlayerSettings,
     }
 end
 
