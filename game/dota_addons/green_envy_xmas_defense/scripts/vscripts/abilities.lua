@@ -207,8 +207,6 @@ local Log = function(msg, data)
     end
 end
 
-
-
 GrantXpToEnemyHeroes = function(event)
     local unit = types:t_npc(event.unit)
     local hero = types:t_hero(event.caster)

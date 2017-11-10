@@ -176,7 +176,7 @@ local game_rules_state_change = function(_)
             end
         end
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-        bgm.Init()
+        bgm().Init()
     end
 end
 

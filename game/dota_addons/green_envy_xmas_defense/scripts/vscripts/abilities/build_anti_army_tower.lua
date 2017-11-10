@@ -2,6 +2,7 @@
 local types = require('types')
 local lang = require('reloaded.lang')
 local build_tower_base = require('abilities.build_tower_base')
+local bgm = require('bgm')
 
 local ChooseTheNeighborest = function(units, range)
     local neighborest = nil
@@ -70,5 +71,7 @@ build_anti_army_tower = build_tower_base.MakeAbility({
             }) end
             return 0.5
         end)
+
+        bgm().SoundOn('bgm_small_victory', tower)
     end,
 })
