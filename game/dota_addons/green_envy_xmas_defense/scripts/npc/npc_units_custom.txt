@@ -86,11 +86,10 @@
 		"ArmorPhysical"				"5"			// Physical protection.
         "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"			// Type of locomotion - ground, air
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-        "AttackRange"				"400"
+        "AttackRange"				"300"
         "ProjectileModel"			"particles/neutral_fx/black_dragon_attack.vpcf" // Particle system model for projectile.
 		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
-		"AttackRange"				"100"		// Range within a target can be attacked.
+		"AttackAcquisitionRange"	"1200"		// Range within a target can be acquired.
 		"RingRadius"				"80"
 		"HealthBarOffset"			"170"
 		"BountyXP"					"50"		// Experience earn.
@@ -136,20 +135,25 @@
 		"Model"						"models/props_structures/dire_tower002.vmdl"	// Model.
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"75" 		// Damage range min.
 		"AttackDamageMax"			"75"		// Damage range max.
         "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2"		// Speed of attack.
 		"AttackAnimationPoint"		"0.4"		// Normalized time in animation cycle to attack.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackRange"				"800"		// Range within a target can be attacked.
 		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
 		"ProjectileSpeed"			"400"		// Speed of projectile.
-		"ProjectileCollisionSize"	"50"
 		"RingRadius"				"64"
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
 		"StatusHealth"				"600"		// Base health.
+        "StatusHealthRegen"			"10.0"		// Mana regeneration rate.
 		"Ability1"                  "black_dragon_splash_attack"
+
+        // I guess this is what tells creeps to attack heroes instead of tower
+        "CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+        "CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+        "UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
 	}
 
 	// if you manage to build 9(or whatever much you need to circle
@@ -215,10 +219,8 @@
 	}
 	"npc_dota_envy_melee_barracks"
 	{
-		// General
-		//----------------------------------------------------------------
 		"ModelScale"				"0.25"
-		"Model"						"models/props_structures/dire_barracks_melee001.vmdl"	// Model.
+		"Model"						"models/props_structures/dire_barracks_melee001.vmdl"
 		"BaseClass"					"npc_dota_building"
 		"ArmorPhysical"				"1"			// Physical protection.
 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
@@ -228,6 +230,16 @@
 		"StatusMana"				"800"		// Base health.
         "StatusManaRegen"			"3.0"		// Mana regeneration rate.
 		"Ability1"                  "train_envy_melee_creep"
+	}
+	"npc_dota_envy_wizard_barracks"
+	{
+		"ModelScale"				"0.25"
+		"Model"						"models/props_structures/dire_barracks_ranged001.vmdl"
+		"BaseClass"					"npc_dota_building"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"RingRadius"				"64"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"Ability1"                  "train_envy_wizard_creep"
 	}
     "npc_dota_tower_creep"
     {
@@ -247,4 +259,25 @@
         "AttackRate"				"1.0"		// Speed of attack.
         "AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
     }
+	"envy_wizard_creep"
+	{
+		"Model"						"models/creeps/lane_creeps/creep_bad_ranged/lane_dire_ranged.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"SoundSet"					"n_creep_Ranged"
+		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
+		"AttackAnimationPoint"		"0.5"
+		"RingRadius"				"80"
+		"BountyXP"					"20"
+		"BountyGoldMax"				"20"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+
+        "AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackAcquisitionRange"	"1200"
+        "AttackRange"				"450"
+        "ProjectileModel"			"particles/base_attacks/fountain_attack.vpcf"
+        "ProjectileSpeed"			"150"
+        "ProjectileCollisionSize"	"0"
+        "Ability1"	"satyr_hellcaller_unholy_aura"
+	}
 }

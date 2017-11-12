@@ -7,19 +7,19 @@ local def = function(value, defaultValue)
     return value ~= 0 and value or defaultValue
 end
 
-build_melee_barracks = build_tower_base.MakeAbility({
-    datadrivenName = 'npc_dota_envy_melee_barracks',
+build_wizard_barracks = build_tower_base.MakeAbility({
+    datadrivenName = 'npc_dota_envy_wizard_barracks',
     ---@param tower CDOTA_BaseNPC
     ---@param abil CDOTABaseAbility
     OnCreated = function(tower, abil)
         tower:SetRenderColor(0,192,0)
-        local spell = tower:FindAbilityByName("train_envy_melee_creep")
+        local spell = tower:FindAbilityByName("train_envy_wizard_creep")
         if spell ~= nil then
             spell:ToggleAutoCast()
         end
-        local dmgBase = def(abil:GetSpecialValueFor('dmg_base'), 20)
-        local dmgMult = def(abil:GetSpecialValueFor('dmg_mult'), 1.33)
-        local hpBase = def(abil:GetSpecialValueFor('hp_base'), 200)
+        local dmgBase = def(abil:GetSpecialValueFor('dmg_base'), 8)
+        local dmgMult = def(abil:GetSpecialValueFor('dmg_mult'), 1.75)
+        local hpBase = def(abil:GetSpecialValueFor('hp_base'), 120)
         local hpMult = def(abil:GetSpecialValueFor('hp_mult'), 1.75)
         local dmg = dmgBase * math.pow(dmgMult, abil:GetLevel() - 1)
         local creepHp = hpBase * math.pow(hpMult, abil:GetLevel() - 1)

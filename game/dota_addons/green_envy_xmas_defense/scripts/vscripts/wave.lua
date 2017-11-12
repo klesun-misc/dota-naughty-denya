@@ -3,7 +3,8 @@
 
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
-    local expoMult = 1.10
+    local timeMult = 0.75
+    local expoMult = 1.25
     local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
     local goalMark = Entities:FindByName(nil, 'creep_goal_mark')
     local point = spawnMark:GetAbsOrigin()
@@ -30,8 +31,8 @@ local Spawn = function()
     local SpawnCreep = function(wave)
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_assassin')
-        local hp = 50 + math.pow(seconds, expoMult) * 0.7
-        local dmg = 15 + math.pow(seconds, expoMult) / 35
+        local hp = 50 + math.pow(timeMult * seconds, expoMult) * 0.7
+        local dmg = 15 + math.pow(timeMult * seconds, expoMult) / 35
         golem:SetBaseAttackTime(1)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -49,8 +50,8 @@ local Spawn = function()
     local SpawnBoss = function()
         local seconds = GameRules:GetGameTime()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
-        local hp = 1000 + math.pow(seconds, expoMult) * 7
-        local dmg = 15 + math.pow(seconds, expoMult) / 4
+        local hp = 1000 + math.pow(timeMult * seconds, expoMult) * 7
+        local dmg = 15 + math.pow(timeMult * seconds, expoMult) / 4
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -65,8 +66,8 @@ local Spawn = function()
     local SpawnDragon = function()
         local seconds = GameRules:GetGameTime()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
-        local hp = 300 + math.pow(seconds, expoMult) * 1.75
-        local dmg = 15 + math.pow(seconds, expoMult) / 8
+        local hp = 300 + math.pow(timeMult * seconds, expoMult) * 1.75
+        local dmg = 15 + math.pow(timeMult * seconds, expoMult) / 8
         unit:SetBaseAttackTime(2)
         unit:SetBaseDamageMin(dmg)
         unit:SetBaseDamageMax(dmg)

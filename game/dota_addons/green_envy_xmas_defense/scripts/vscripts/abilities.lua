@@ -103,70 +103,86 @@ end
 
 ---@param event t_ability_event
 SpawnTowerCreep = function(event)
-    for i = 0, 1, 1 do
-        local builder = event.caster.envyNs.builder
-        local unit = CreateUnitByName(
-            'npc_dota_tower_creep', event.caster:GetAbsOrigin() - Vector(0,-20,0),
-            false, builder, builder, builder:GetTeam()
-        )
+    local builder = event.caster.envyNs.builder
+    local unit = CreateUnitByName(
+        'npc_dota_tower_creep', event.caster:GetAbsOrigin() - Vector(0,-20,0),
+        false, builder, builder, builder:GetTeam()
+    )
 
-        -- to prevent it from being stuck in parent
-        unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
-		unit:AddNewModifier(builder, nil, 'modifier_kill', {duration = 60.00})
+    -- to prevent it from being stuck in parent
+    unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
+    unit:AddNewModifier(builder, nil, 'modifier_kill', {duration = 60.00})
 
-        unit:SetControllableByPlayer(event.caster:GetPlayerOwnerID(), true)
-        unit:SetBaseDamageMin(event.caster:GetAttackDamage())
-        unit:SetBaseDamageMax(event.caster:GetAttackDamage())
-        unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
+    unit:SetControllableByPlayer(event.caster:GetPlayerOwnerID(), true)
+    unit:SetBaseDamageMin(event.caster:GetAttackDamage())
+    unit:SetBaseDamageMax(event.caster:GetAttackDamage())
+    unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
 
-        -- order spawned creep to go to nearest enemy
-        local nearestEnemy = Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
-        if nearestEnemy ~= nil then
-            ExecuteOrderFromTable({
-                UnitIndex = unit:GetEntityIndex(),
-                OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-                Position = nearestEnemy:GetAbsOrigin(), Queue = true
-            })
-        end
+    -- order spawned creep to go to nearest enemy
+    local nearestEnemy = Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
+    if nearestEnemy ~= nil then
+        ExecuteOrderFromTable({
+            UnitIndex = unit:GetEntityIndex(),
+            OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+            Position = nearestEnemy:GetAbsOrigin(), Queue = true
+        })
+    end
+end
+
+local SpawnEnvyCreep = function(event, params)
+    local abil = event.ability
+    local cost = abil:GetGoldCost(abil:GetLevel());
+    local datadrivenName = params.datadrivenName
+
+    if cost < 0 then
+        local playerId = event.caster:GetPlayerOwnerID()
+        PlayerResource:ModifyGold(playerId, -cost, true, 0)
+    end
+
+    local builder = event.caster.envyNs.builder
+    local unit = CreateUnitByName(
+        datadrivenName, event.caster:GetAbsOrigin() - Vector(0,-20,0),
+        false, builder, builder, builder:GetTeam()
+    )
+
+    -- to prevent it from being stuck in parent
+    unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
+    unit:AddNewModifier(builder, nil, 'modifier_kill', {duration = 90.00})
+
+    --unit:SetControllableByPlayer(event.caster:GetPlayerOwnerID(), true)
+    unit:SetBaseDamageMin(event.caster:GetAttackDamage())
+    unit:SetBaseDamageMax(event.caster:GetAttackDamage())
+    unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
+
+    local goal = Entities:FindByName(nil, 'creep_goal_mark')
+        or Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
+
+    if goal ~= nil then
+        unit:SetThink(function()
+            if unit:IsIdle() then
+                ExecuteOrderFromTable({
+                    UnitIndex = unit:GetEntityIndex(),
+                    OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+                    Position = goal, Queue = true
+                })
+            end
+            return 2.00
+        end)
     end
 end
 
 ---@param event t_ability_event
 SpawnEnvyMeleeCreep = function(event)
-    local abil = event.ability
-    local cost = abil:GetGoldCost(abil:GetLevel());
-    if cost < 0 then 
-        local playerId = event.caster:GetPlayerOwnerID()
-        PlayerResource:ModifyGold(playerId, -cost, true, 0)
-    end
+    SpawnEnvyCreep(event, {
+        datadrivenName = 'npc_dota_creature_gnoll_assassin',
+    })
+end
 
-
-    for i = 1, 1, 1 do
-        local builder = event.caster.envyNs.builder
-        local unit = CreateUnitByName(
-            'npc_dota_creature_gnoll_assassin', event.caster:GetAbsOrigin() - Vector(0,-20,0),
-            false, builder, builder, builder:GetTeam()
-        )
-
-        -- to prevent it from being stuck in parent
-        unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
-		unit:AddNewModifier(builder, nil, 'modifier_kill', {duration = 90.00})
-
-        --unit:SetControllableByPlayer(event.caster:GetPlayerOwnerID(), true)
-        unit:SetBaseDamageMin(event.caster:GetAttackDamage())
-        unit:SetBaseDamageMax(event.caster:GetAttackDamage())
-        unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
-
-        local goal = Entities:FindByName(nil, 'creep_goal_mark')
-            or Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
-        if goal ~= nil then
-            ExecuteOrderFromTable({
-                UnitIndex = unit:GetEntityIndex(),
-                OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-                Position = goal, Queue = true
-            })
-        end
-    end
+---@param event t_ability_event
+SpawnEnvyWizardCreep = function(event)
+    SpawnEnvyCreep(event, {
+        datadrivenName = 'envy_wizard_creep',
+    })
 end
 
 ---@param event t_ability_event
@@ -211,7 +227,7 @@ GrantXpToEnemyHeroes = function(event)
     local unit = types:t_npc(event.unit)
     local hero = types:t_hero(event.caster)
     if unit and hero and hero.AddExperience then
-        local xp = unit:GetDeathXP() * 1.25
+        local xp = unit:GetDeathXP() * 1.10
         hero:AddExperience(xp, DOTA_ModifyXP_Unspecified, false, true)
     end
 end
