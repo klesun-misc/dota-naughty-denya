@@ -60,8 +60,9 @@ local makeSelf = function()
             end
         end
 
-        PlayAt(60 * 3, 'bgm_chuvstva_yuzefi', 90)
-        PlayAt(60 * 9, 'bgm_chuvstva_yuzefi', 90)
+        PlayAt(60 * 2, 'bgm_chuvstva_yuzefi', 90)
+        PlayAt(60 * 6, 'bgm_chuvstva_yuzefi', 90)
+        PlayAt(60 * 10, 'bgm_chuvstva_yuzefi', 90)
         PlayAt(60 * 15, 'bgm_chuvstva_yuzefi', 90)
     end
 

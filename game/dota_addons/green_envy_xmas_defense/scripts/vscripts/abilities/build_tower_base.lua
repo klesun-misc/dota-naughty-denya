@@ -50,17 +50,35 @@ local MakeAbility = function(params)
     local datadrivenName = params.datadrivenName
     local towerRadius = params.towerRadius or defaultTowerRadius
     local OnCreated = params.OnCreated or function(tower) end
+    local CustomPointCheck = params.CustomPointCheck
+        or function(point, abil) return nil end
 
     local build_tower_base = {}
 
     ---@param point Vector | t_vec
     function build_tower_base:CastFilterResultLocation(point)
         lastCursorPosition = point + Vector(0,0,0)
-        return CanBuildThere(point, towerRadius) and UF_SUCCESS or UF_FAIL_CUSTOM
+        if not CanBuildThere(point, towerRadius) then
+            return UF_FAIL_CUSTOM
+        else
+            local error = CustomPointCheck(point, self)
+            if error then
+                return UF_FAIL_CUSTOM
+            else
+                return UF_SUCCESS
+            end
+        end
     end
 
     function build_tower_base:GetCustomCastErrorLocation(point)
-        return 'I can\' build there'
+        local customError = CustomPointCheck(point, self)
+        if customError then
+            return customError
+        elseif not CanBuildThere(point, towerRadius) then
+            return 'I can\'t build there'
+        else
+            return nil
+        end
     end
 
     ---@param event t_ability_event

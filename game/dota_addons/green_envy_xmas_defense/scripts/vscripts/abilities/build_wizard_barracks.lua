@@ -36,4 +36,12 @@ build_wizard_barracks = build_tower_base.MakeAbility({
         -- need to apply any modifier to update npc gui hp numbers
         tower:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.05})
     end,
+    ---@param abil CDOTABaseAbility
+    CustomPointCheck = function(point, abil)
+        if (not GridNav) or GridNav:CanFindPath(point, abil:GetCaster():GetAbsOrigin()) then
+            return nil
+        else
+            return 'There is no path to the point you specified'
+        end
+    end,
 })
