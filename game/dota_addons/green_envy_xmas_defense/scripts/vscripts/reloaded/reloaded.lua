@@ -166,7 +166,7 @@ end
 local game_rules_state_change = function(_)
     print('game_rules_state_change - ' .. GameRules:State_Get())
     if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		setupStartTime = GameRules:GetGameTime()
+        setupStartTime = GameRules:GetGameTime()
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
         SpawnBots()
         for playerId, role in pairs(klesun.playerIdToRole) do
@@ -231,10 +231,10 @@ local klesun_event_js_to_lua = function(status, event)
         DeepPrintTable(event)
     end
 
-	--DeepPrintTable(event.type)
-	CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
-		type = 'response_message', value = 'Player #' .. event.PlayerID .. ' said that he likes you!'
-	})
+    --DeepPrintTable(event.type)
+    CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
+        type = 'response_message', value = 'Player #' .. event.PlayerID .. ' said that he likes you!'
+    })
 end
 
 Timers:RemoveTimers(true)
@@ -243,11 +243,11 @@ Timers:CreateTimer(function()
     return pause
 end)
 Timers:CreateTimer(function()
-	CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
-		type = 'second_passed',
-		setupTimeLeft = GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
-			and setupStartTime - GameRules:GetGameTime() + SETUP_MAX_TIME or nil,
-	})
+    CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
+        type = 'second_passed',
+        setupTimeLeft = GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
+            and setupStartTime - GameRules:GetGameTime() + SETUP_MAX_TIME or nil,
+    })
     return 1
 end)
 
@@ -265,8 +265,8 @@ Relisten('entity_hurt', entity_hurt)
 RelistenCust('klesun_event_js_to_lua', klesun_event_js_to_lua)
 
 local Main = function()
-	-- how many seconds users can spend on page defined by <CustomUIElement type="GameSetup" layoutfile="..." />
-	GameRules:SetCustomGameSetupTimeout(SETUP_MAX_TIME)
+    -- how many seconds users can spend on page defined by <CustomUIElement type="GameSetup" layoutfile="..." />
+    GameRules:SetCustomGameSetupTimeout(SETUP_MAX_TIME)
     -- how much time on "TEAM SELECT" screen
     GameRules:SetCustomGameSetupAutoLaunchDelay(10)
     -- how many seconds before you start losing gold for not picking a hero
@@ -277,8 +277,8 @@ local Main = function()
     GameRules:SetShowcaseTime(0)
     -- how many seconds before Kenarius says "Let's the battle begin!"
     GameRules:SetPreGameTime(0)
-	-- same hero selection enabled
-	GameRules:SetSameHeroSelectionEnabled(true)
+    -- same hero selection enabled
+    GameRules:SetSameHeroSelectionEnabled(true)
 end
 
 return Main

@@ -1,284 +1,284 @@
 // Dota Heroes File
 "DOTAAbilities"
 {
-	"Version"		"1"
+    "Version"        "1"
 
-	//=================================================================================================================
-	// Templar Assassin: Refraction Holdout
-	//=================================================================================================================
-	"templar_assassin_refraction_holdout"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+    //=================================================================================================================
+    // Templar Assassin: Refraction Holdout
+    //=================================================================================================================
+    "templar_assassin_refraction_holdout"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitDamageType"            "DAMAGE_TYPE_PHYSICAL"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"                "0.0 0.0 0.0 0.0"
 
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17.0 17.0 17.0 17.0"
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"                "17.0 17.0 17.0 17.0"
 
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"                "100"
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_absorb"				"200 300 400 500"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"20 40 60 80"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"17.0 17.0 17.0 17.0"
-			}
-		}
-	}
-
-	"build_anti_boss_tower"
-	{
-		"BaseClass"             		"ability_lua"
-        "ScriptFile"					"abilities/build_anti_boss_tower.lua"
-		"AbilityTextureName"			"denis128"
-		"MaxLevel" 						"5"
-
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityDamage"					"500 501 502 503 504"
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"ad"			"500 501 502 503 504"
-			}
-            "02"
-            {
-                "var_type"		"FIELD_FLOAT"
-                "dmg_mult"		"1.75"
-            }
-		}
-		"AoERadius"						"60"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"               "60"
-		"AbilityGoldCost"               "150"
-	}
-	"build_anti_army_tower"
-	{
-		"BaseClass"             		"ability_lua"
-        "ScriptFile"					"abilities/build_anti_army_tower.lua"
-		"AbilityTextureName"			"denis_army128"
-		"MaxLevel" 						"5"
-
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"60"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"25"
-		"AbilityManaCost"               "60"
-		"AbilityGoldCost"               "600 700 800 900 1000"
-
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
         {
             "01"
             {
-                "var_type"		"FIELD_FLOAT"
-                "dmg_mult"		"1.25"
-            }
-        }
-	}
-	"build_healing_tower"
-	{
-		"BaseClass"             		"ability_lua"
-        "ScriptFile"					"abilities/build_healing_tower.lua"
-		"AbilityTextureName"			"denis128_healing"
-		"MaxLevel" 						"5"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"60"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"15"
-        "OnSpellStart"
-        {
-            "RunScript"
-            {
-                "ScriptFile"			"abilities.lua"
-                "Function"				"BuildHealingTower"
-                "Target"                "POINT"
-            }
-        }
-		"AbilityManaCost"               "60"
-		"AbilityGoldCost"               "250"
-
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"		"FIELD_FLOAT"
-                "heal_mult"		"1.25"
+                "var_type"                    "FIELD_INTEGER"
+                "damage_absorb"                "200 300 400 500"
             }
             "02"
             {
-                "var_type"		"FIELD_INTEGER"
-                "heal_base"		"25"
-            }
-        }
-	}
-	"build_prison_tower"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityTextureName"			"denis128_prison"
-		"MaxLevel" 						"5"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"60"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"5"
-        "OnSpellStart"
-        {
-            "RunScript"
-            {
-                "ScriptFile"			"abilities.lua"
-                "Function"				"BuildPrisonTower"
-                "Target"                "POINT"
-            }
-        }
-		"AbilityManaCost"               "60"
-		"AbilityGoldCost"               "80"
-	    "RequiredLevel"		        	"99" // TODO: remove once implemented
-	}
-	"build_spawning_tower"
-	{
-		"BaseClass"             		"ability_lua"
-        "ScriptFile"					"abilities/build_spawning_tower.lua"
-		"AbilityTextureName"			"denis128_spawning"
-		"MaxLevel" 						"5"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"60"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"20"
-		"AbilityManaCost"               "90"
-		"AbilityGoldCost"               "300"
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"		"FIELD_INTEGER"
-                "hp_base"		"250"
-            }
-            "02"
-            {
-                "var_type"		"FIELD_INTEGER"
-                "dmg_base"		"35"
-            }
-            "03"
-            {
-                "var_type"		"FIELD_FLOAT"
-                "dmg_mult"		"1.25"
+                "var_type"                    "FIELD_INTEGER"
+                "bonus_damage"                "20 40 60 80"
             }
             "04"
             {
-                "var_type"		"FIELD_FLOAT"
-                "hp_mult"		"1.25"
+                "var_type"                    "FIELD_FLOAT"
+                "duration"                    "17.0 17.0 17.0 17.0"
             }
         }
-	}
-	"build_melee_barracks"
-	{
-		"BaseClass"             		"ability_lua"
-        "ScriptFile"					"abilities/build_melee_barracks.lua"
-		"AbilityTextureName"			"denis128_melee2"
-		"MaxLevel" 						"5"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"60"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"20"
-		"AbilityManaCost"               "90"
-		"AbilityGoldCost"               "400"
-	}
-	"build_wizard_barracks"
-	{
-		"BaseClass"             		"ability_lua"
-        "ScriptFile"					"abilities/build_wizard_barracks.lua"
-		"AbilityTextureName"			"denis128_wizard"
-		"MaxLevel" 						"5"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AoERadius"						"60"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"20"
-		"AbilityManaCost"               "90"
-		"AbilityGoldCost"               "700"
-	}
+    }
+
+    "build_anti_boss_tower"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/build_anti_boss_tower.lua"
+        "AbilityTextureName"            "denis128"
+        "MaxLevel"                         "5"
+
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AbilityDamage"                    "500 501 502 503 504"
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_INTEGER"
+                "ad"            "500 501 502 503 504"
+            }
+            "02"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "dmg_mult"        "1.75"
+            }
+        }
+        "AoERadius"                        "60"
+        "AbilityCastRange"                "1000"
+        "AbilityCooldown"                "0"
+        "AbilityManaCost"               "60"
+        "AbilityGoldCost"               "150"
+    }
+    "build_anti_army_tower"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/build_anti_army_tower.lua"
+        "AbilityTextureName"            "denis_army128"
+        "MaxLevel"                         "5"
+
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AoERadius"                        "60"
+        "AbilityCastRange"                "1000"
+        "AbilityCooldown"                "25"
+        "AbilityManaCost"               "60"
+        "AbilityGoldCost"               "600 700 800 900 1000"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "dmg_mult"        "1.25"
+            }
+        }
+    }
+    "build_healing_tower"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/build_healing_tower.lua"
+        "AbilityTextureName"            "denis128_healing"
+        "MaxLevel"                         "5"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AoERadius"                        "60"
+        "AbilityCastRange"                "1000"
+        "AbilityCooldown"                "15"
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"            "abilities.lua"
+                "Function"                "BuildHealingTower"
+                "Target"                "POINT"
+            }
+        }
+        "AbilityManaCost"               "60"
+        "AbilityGoldCost"               "250"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "heal_mult"        "1.25"
+            }
+            "02"
+            {
+                "var_type"        "FIELD_INTEGER"
+                "heal_base"        "25"
+            }
+        }
+    }
+    "build_prison_tower"
+    {
+        "BaseClass"                     "ability_datadriven"
+        "AbilityTextureName"            "denis128_prison"
+        "MaxLevel"                         "5"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AoERadius"                        "60"
+        "AbilityCastRange"                "1000"
+        "AbilityCooldown"                "5"
+        "OnSpellStart"
+        {
+            "RunScript"
+            {
+                "ScriptFile"            "abilities.lua"
+                "Function"                "BuildPrisonTower"
+                "Target"                "POINT"
+            }
+        }
+        "AbilityManaCost"               "60"
+        "AbilityGoldCost"               "80"
+        "RequiredLevel"                    "99" // TODO: remove once implemented
+    }
+    "build_spawning_tower"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/build_spawning_tower.lua"
+        "AbilityTextureName"            "denis128_spawning"
+        "MaxLevel"                         "5"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AoERadius"                        "60"
+        "AbilityCastRange"                "1000"
+        "AbilityCooldown"                "20"
+        "AbilityManaCost"               "90"
+        "AbilityGoldCost"               "300"
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"        "FIELD_INTEGER"
+                "hp_base"        "250"
+            }
+            "02"
+            {
+                "var_type"        "FIELD_INTEGER"
+                "dmg_base"        "35"
+            }
+            "03"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "dmg_mult"        "1.25"
+            }
+            "04"
+            {
+                "var_type"        "FIELD_FLOAT"
+                "hp_mult"        "1.25"
+            }
+        }
+    }
+    "build_melee_barracks"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/build_melee_barracks.lua"
+        "AbilityTextureName"            "denis128_melee2"
+        "MaxLevel"                         "5"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AoERadius"                        "60"
+        "AbilityCastRange"                "1000"
+        "AbilityCooldown"                "20"
+        "AbilityManaCost"               "90"
+        "AbilityGoldCost"               "400"
+    }
+    "build_wizard_barracks"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/build_wizard_barracks.lua"
+        "AbilityTextureName"            "denis128_wizard"
+        "MaxLevel"                         "5"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AoERadius"                        "60"
+        "AbilityCastRange"                "1000"
+        "AbilityCooldown"                "20"
+        "AbilityManaCost"               "90"
+        "AbilityGoldCost"               "700"
+    }
 
     // unit abilities
 
     "dire_xp_gain_aura"
     {
-        "BaseClass"				        "ability_datadriven"
-        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
         "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL"
-        "AbilityCastRange"				"1000"
-        "AbilityCastRange"				"1000"
+        "AbilityCastRange"                "1000"
+        "AbilityCastRange"                "1000"
 
-        "AbilityTextureName"			"denis128_book"
-        "MaxLevel"			            "1"
+        "AbilityTextureName"            "denis128_book"
+        "MaxLevel"                        "1"
         "Modifiers"
         {
             "modifier_xp_gain_aura_emitter"
             {
-                "IsAura"				"1"
-                "Passive"				"1"
-                "IsHidden"				"0"
-			    "IsDebuff"			    "0"
+                "IsAura"                "1"
+                "Passive"                "1"
+                "IsHidden"                "0"
+                "IsDebuff"                "0"
 
-                "Aura" 					"modifier_xp_gain_aura_receiver"
-                "Aura_Radius" 			"1000"
-                "Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_BOTH"
+                "Aura"                     "modifier_xp_gain_aura_receiver"
+                "Aura_Radius"             "1000"
+                "Aura_Teams"             "DOTA_UNIT_TARGET_TEAM_BOTH"
                 "Aura_Types" "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-                "Aura_ApplyToCaster" 	"0"
+                "Aura_ApplyToCaster"     "0"
             }
             "modifier_xp_gain_aura_receiver"
             {
-			    "IsDebuff"			"1"
-                //"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+                "IsDebuff"            "1"
+                //"Attributes"         "MODIFIER_ATTRIBUTE_MULTIPLE"
                 "OnDeath"
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"abilities.lua"
-                        "Function"			"GrantXpToEnemyHeroes"
+                        "ScriptFile"        "abilities.lua"
+                        "Function"            "GrantXpToEnemyHeroes"
                     }
                 }
             }
         }
     }
 
-	"tower_heal"
-	{
-	    "BaseClass"				        "ability_datadriven"
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AURA"
-        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-        "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-        "AbilityCastRange"				"900"
-        "AbilityCooldown"				"1.00"
-        "AbilityManaCost"				"5"
-        "AbilityTextureName"			"dazzle_shadow_wave"
+    "tower_heal"
+    {
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AURA"
+        "AbilityUnitTargetTeam"            "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"            "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityCastRange"                "900"
+        "AbilityCooldown"                "1.00"
+        "AbilityManaCost"                "5"
+        "AbilityTextureName"            "dazzle_shadow_wave"
         "OnSpellStart"
         {
             "FireSound"
             {
-                "EffectName"	"Hero_Dazzle.Shadow_Wave"
-                "Target" 		"CASTER"
+                "EffectName"    "Hero_Dazzle.Shadow_Wave"
+                "Target"         "CASTER"
             }
 
             "FireEffect"
@@ -288,8 +288,8 @@
 
                 "ControlPointEntities"
                 {
-                    "CASTER"	"attach_attack1"
-                    "TARGET"	"follow_origin"
+                    "CASTER"    "attach_attack1"
+                    "TARGET"    "follow_origin"
                 }
             }
 
@@ -302,16 +302,16 @@
 
         "precache"
         {
-            "soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
-            "particle"			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
+            "soundfile"            "soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+            "particle"            "particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
         }
 
         "Modifiers"
         {
             "modifier_tower_heal_autocast"
             {
-                "Passive"	"1"
-                "IsHidden"	"1"
+                "Passive"    "1"
+                "IsHidden"    "1"
                 "ThinkInterval" "1.1"
                 "OnIntervalThink"
                 {
@@ -323,26 +323,26 @@
                 }
             }
         }
-	}
-	"spawn_tower_creep"
-	{
-	    "BaseClass"				        "ability_datadriven"
-        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-        "AbilityTextureName"			"beastmaster_call_of_the_wild_boar"
-        "AbilityCastPoint"				"0.5"
-        "AbilityCooldown"				"25.0"
-        "AbilityManaCost"				"50"
+    }
+    "spawn_tower_creep"
+    {
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+        "AbilityTextureName"            "beastmaster_call_of_the_wild_boar"
+        "AbilityCastPoint"                "0.5"
+        "AbilityCooldown"                "25.0"
+        "AbilityManaCost"                "50"
         "OnSpellStart"
         {
             "FireSound"
             {
-                "EffectName"	"Hero_Beastmaster.Call.Boar"
-                "Target"		"CASTER"
+                "EffectName"    "Hero_Beastmaster.Call.Boar"
+                "Target"        "CASTER"
             }
             "RunScript"
             {
-                "ScriptFile"	"abilities.lua"
-                "Function"		"SpawnTowerCreep"
+                "ScriptFile"    "abilities.lua"
+                "Function"        "SpawnTowerCreep"
             }
         }
 
@@ -350,8 +350,8 @@
         {
             "modifier_spawn_tower_creep_autocast"
             {
-                "Passive"	"1"
-                "IsHidden"	"1"
+                "Passive"    "1"
+                "IsHidden"    "1"
                 "ThinkInterval" "1"
                 "OnIntervalThink"
                 {
@@ -363,22 +363,22 @@
                 }
             }
         }
-	}
-	"train_envy_melee_creep"
-	{
-	    "BaseClass"				        "ability_datadriven"
-        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-        "AbilityTextureName"			"denis128_melee2"
-        "AbilityCastPoint"				"0.5"
-        "AbilityCooldown"				"6.0"
-        "AbilityManaCost"				"10"
-		"AbilityGoldCost"               "-10"
+    }
+    "train_envy_melee_creep"
+    {
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+        "AbilityTextureName"            "denis128_melee2"
+        "AbilityCastPoint"                "0.5"
+        "AbilityCooldown"                "6.0"
+        "AbilityManaCost"                "10"
+        "AbilityGoldCost"               "-10"
         "OnSpellStart"
         {
             "RunScript"
             {
-                "ScriptFile"	"abilities.lua"
-                "Function"		"SpawnEnvyMeleeCreep"
+                "ScriptFile"    "abilities.lua"
+                "Function"        "SpawnEnvyMeleeCreep"
             }
         }
 
@@ -386,8 +386,8 @@
         {
             "modifier_autocast_by_cooldown"
             {
-                "Passive"	"1"
-                "IsHidden"	"1"
+                "Passive"    "1"
+                "IsHidden"    "1"
                 "ThinkInterval" "6.1"
                 "OnIntervalThink"
                 {
@@ -399,26 +399,26 @@
                 }
             }
         }
-	}
-	"train_envy_wizard_creep"
-	{
-	    "BaseClass"				        "ability_datadriven"
-        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-        "AbilityTextureName"			"denis128_wizard"
-        "AbilityCastPoint"				"0.5"
-        "AbilityCooldown"				"12.0"
-        "AbilityManaCost"				"10"
-		"AbilityGoldCost"               "-15"
+    }
+    "train_envy_wizard_creep"
+    {
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+        "AbilityTextureName"            "denis128_wizard"
+        "AbilityCastPoint"                "0.5"
+        "AbilityCooldown"                "12.0"
+        "AbilityManaCost"                "10"
+        "AbilityGoldCost"               "-15"
         "OnSpellStart" {
             "RunScript" {
-                "ScriptFile"	"abilities.lua"
-                "Function"		"SpawnEnvyWizardCreep"
+                "ScriptFile"    "abilities.lua"
+                "Function"        "SpawnEnvyWizardCreep"
             }
         }
         "Modifiers" {
             "modifier_autocast_by_cooldown" {
-                "Passive"	"1"
-                "IsHidden"	"1"
+                "Passive"    "1"
+                "IsHidden"    "1"
                 "ThinkInterval" "6.1"
                 "OnIntervalThink" {
                     "RunScript" {
@@ -428,19 +428,19 @@
                 }
             }
         }
-	}
+    }
 
-	"prison_tether"
-	{
-		"BaseClass"					"ability_lua"
-		"MaxLevel"					"1"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
-		"AbilityTextureName"		"crystal_maiden_freezing_field"
-		"AbilityCastRange"			"800"
-		"AbilityCastPoint"			"0.2"
-		"AbilityCooldown"			"10"
-		"ScriptFile"				"abilities/prison_tether"
-	}
+    "prison_tether"
+    {
+        "BaseClass"                    "ability_lua"
+        "MaxLevel"                    "1"
+        "AbilityBehavior"            "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+        "AbilityUnitTargetTeam"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"        "DOTA_UNIT_TARGET_BUILDING"
+        "AbilityTextureName"        "crystal_maiden_freezing_field"
+        "AbilityCastRange"            "800"
+        "AbilityCastPoint"            "0.2"
+        "AbilityCooldown"            "10"
+        "ScriptFile"                "abilities/prison_tether"
+    }
 }
