@@ -72,6 +72,6 @@ build_anti_army_tower = build_tower_base.MakeAbility({
             return 0.5
         end)
 
-        bgm().SoundOn('bgm_small_victory', tower)
+        bgm().SoundOn('bgm_small_victory', tower, 3)
     end,
 })

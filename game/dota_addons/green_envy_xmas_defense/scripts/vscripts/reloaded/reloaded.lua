@@ -201,9 +201,9 @@ local entity_hurt = function(event)
             unit.envyNs = unit.envyNs or {}
             unit.envyNs.isDying = true
             if unit:GetUnitName() == 'npc_dota_creature_gnoll_boss' then
-                bgm().SoundOn('bgm_sad_victory', unit)
+                bgm().SoundOn('bgm_sad_victory', unit, 14)
             elseif unit:GetUnitName() == 'npc_dota_goodguys_fort' then
-                bgm().SoundOn('bgm_sad_defeat', unit)
+                bgm().SoundOn('bgm_sad_defeat', unit, 14)
             end
         end
     end

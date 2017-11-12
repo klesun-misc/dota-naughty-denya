@@ -67,12 +67,14 @@ local makeSelf = function()
 
     ---@param songName string - name in the .../content/.../soundevents/custom_sounds.vsndevts_c
     ---@param ent CBaseEntity
-    local SoundOn = function(songName, ent)
-        local dura = ent:GetSoundDuration(songName, '')
+    local SoundOn = function(songName, ent, dura)
+        -- don't use GetSoundDuration(), it returns 2.00
+        -- on first call per dota process for some reason
+        --dura = dura or ent:GetSoundDuration(songName, '')
         Quiet(0.1, dura).callback = function()
             ent:EmitSound(songName)
             return function()
-                if ent then
+                if ent and not ent:IsNull() then
                     ent:StopSound(songName)
                 end
             end
