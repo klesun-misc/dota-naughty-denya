@@ -195,7 +195,28 @@ AutocastByColdown = function(event)
     end
 end
 
+IncreaseDamage = function(event)
+    local caster = types:t_npc(event.caster)
+    local spell = types:t_abil(event.ability)
+    local dmg = caster:GetAttackDamage() * 1.25
+    caster:SetBaseDamageMin(dmg)
+    caster:SetBaseDamageMax(dmg)
+    if dmg >= 4000 then
+        -- it would be a one-shot kill if we continued
+        caster:RemoveAbility(spell:GetAbilityName())
+    end
+end
+
+IncreaseHp = function(event)
+    local caster = types:t_npc(event.caster)
+    local hp = caster:GetBaseMaxHealth() * 1.15
+    caster:SetBaseMaxHealth(hp)
+    -- need to apply any modifier to update npc gui hp numbers
+    caster:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.01})
+end
+
 --- show briefly what keys does table have, truncate if there is too much
+local Shorten = function(tbl) return 'stub value for recursive call' end
 Shorten = function(tbl)
     if type(tbl) ~= 'table' then
         return tbl

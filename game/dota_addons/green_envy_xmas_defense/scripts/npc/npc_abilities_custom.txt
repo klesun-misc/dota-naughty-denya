@@ -370,7 +370,7 @@
         "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
         "AbilityTextureName"            "denis128_melee2"
         "AbilityCastPoint"                "0.5"
-        "AbilityCooldown"                "6.0"
+        "AbilityCooldown"                "12.0"
         "AbilityManaCost"                "10"
         "AbilityGoldCost"               "-10"
         "OnSpellStart"
@@ -406,7 +406,7 @@
         "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
         "AbilityTextureName"            "denis128_wizard"
         "AbilityCastPoint"                "0.5"
-        "AbilityCooldown"                "12.0"
+        "AbilityCooldown"                "18.0"
         "AbilityManaCost"                "10"
         "AbilityGoldCost"               "-15"
         "OnSpellStart" {
@@ -442,5 +442,36 @@
         "AbilityCastPoint"            "0.2"
         "AbilityCooldown"            "10"
         "ScriptFile"                "abilities/prison_tether"
+    }
+
+    "buy_damage_increase"
+    {
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityTextureName"            "denis128_buy_damage"
+        "AbilityCastPoint"                "0.0"
+        "AbilityCooldown"                "0.0"
+        "AbilityGoldCost"               "150"
+        "OnSpellStart" {
+            "RunScript" {
+                "ScriptFile"    "abilities.lua"
+                "Function"        "IncreaseDamage"
+            }
+        }
+    }
+    "buy_hp_increase"
+    {
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityTextureName"            "denis128_buy_health"
+        "AbilityCastPoint"                "0.0"
+        "AbilityCooldown"                "0.0"
+        "AbilityGoldCost"               "150"
+        "OnSpellStart" {
+            "RunScript" {
+                "ScriptFile"    "abilities.lua"
+                "Function"        "IncreaseHp"
+            }
+        }
     }
 }

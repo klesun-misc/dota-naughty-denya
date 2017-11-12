@@ -179,6 +179,11 @@
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_NONE"            // Type of locomotion - ground, air
         "StatusHealth"                "800"        // Base health.
         "Ability1"                    "prison_tether"
+
+        // I guess this is what tells creeps to attack heroes instead of tower
+        "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+        "CombatClassDefend"            "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+        "UnitRelationshipClass"        "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
     }
 
     "npc_dota_healing_tower"
@@ -200,6 +205,11 @@
         "StatusMana"                "800"        // Base health.
         "StatusManaRegen"            "3.0"        // Mana regeneration rate.
         "Ability1"                  "tower_heal"
+
+        // I guess this is what tells creeps to attack heroes instead of tower
+        "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+        "CombatClassDefend"            "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+        "UnitRelationshipClass"        "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
     }
     "npc_dota_spawning_tower"
     {
@@ -216,6 +226,11 @@
         "StatusMana"                "800"        // Base health.
         "StatusManaRegen"            "3.0"        // Mana regeneration rate.
         "Ability1"                  "spawn_tower_creep"
+
+        // I guess this is what tells creeps to attack heroes instead of tower
+        "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+        "CombatClassDefend"            "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+        "UnitRelationshipClass"        "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
     }
     "npc_dota_envy_melee_barracks"
     {

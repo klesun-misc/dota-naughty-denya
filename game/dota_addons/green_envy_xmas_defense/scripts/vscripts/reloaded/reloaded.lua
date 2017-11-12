@@ -78,7 +78,7 @@ local dota_player_pick_hero = function(event)
         end
     end
 
-    if hero:HasRoomForItem("item_blink", true, true) then
+    if hero:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
         local dagger = CreateItem("item_blink", hero, hero)
         dagger:SetPurchaseTime(0)
         hero:AddItem(dagger)

@@ -3,8 +3,8 @@
 
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
-    local timeMult = 0.75
-    local expoMult = 1.25
+    local timeMult = 0.30
+    local expoMult = 1.30
     local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
     local goalMark = Entities:FindByName(nil, 'creep_goal_mark')
     local point = spawnMark:GetAbsOrigin()
@@ -66,6 +66,7 @@ local Spawn = function()
     local SpawnDragon = function()
         local seconds = GameRules:GetGameTime()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
+        unit:AddNewModifier(unit, nil, 'MODIFIER_STATE_FLYING ', {duration = -1})
         local hp = 300 + math.pow(timeMult * seconds, expoMult) * 1.75
         local dmg = 15 + math.pow(timeMult * seconds, expoMult) / 8
         unit:SetBaseAttackTime(2)

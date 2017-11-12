@@ -28,6 +28,11 @@ build_wizard_barracks = build_tower_base.MakeAbility({
         -- 250 is likely something like "default" hp in dota, it is not included to "BaseMaxHealth"
         tower:SetBaseMaxHealth(math.max(creepHp * 4, 1))
 
+        local extraSpell = tower:AddAbility('buy_damage_increase')
+        extraSpell:SetLevel(1)
+        local extraSpell = tower:AddAbility('buy_hp_increase')
+        extraSpell:SetLevel(1)
+
         -- need to apply any modifier to update npc gui hp numbers
         tower:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.05})
     end,
