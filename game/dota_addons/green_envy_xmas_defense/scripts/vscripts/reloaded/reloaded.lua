@@ -68,7 +68,7 @@ local dota_player_pick_hero = function(event)
     local role = klesun.playerIdToRole[playerId]
     if role == 'builder' then
         local datadriven = PlayerResource:GetTeam(playerId) == DOTA_TEAM_GOODGUYS
-            and 'npc_dota_hero_templar_assassin'
+            and 'npc_dota_hero_vengefulspirit'
             or 'npc_dota_hero_lycan'
         if hero:GetUnitName() ~= datadriven then
             lang.Timeout(0.000001).callback = function()
@@ -157,7 +157,7 @@ local SpawnBots = function()
 
     if radBuilerCnt == 0 then
         local toGoodTeam = true
-        Tutorial:AddBot('npc_dota_hero_templar_assassin', 'mid', 'unfair', toGoodTeam)
+        Tutorial:AddBot('npc_dota_hero_vengefulspirit', 'mid', 'unfair', toGoodTeam)
         local botId = lastPlayerId
         botIdToData[botId] = {}
     end
@@ -270,7 +270,7 @@ local Main = function()
     -- how much time on "TEAM SELECT" screen
     GameRules:SetCustomGameSetupAutoLaunchDelay(10)
     -- how many seconds before you start losing gold for not picking a hero
-    GameRules:SetHeroSelectionTime(10)
+    GameRules:SetHeroSelectionTime(30)
     -- the 30 seconds to buy wards after hero pick
     GameRules:SetStrategyTime(0)
     -- Set the duration of the 'radiant versus dire' showcase screen

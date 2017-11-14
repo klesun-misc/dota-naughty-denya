@@ -88,7 +88,7 @@
         "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
         "AttackRange"                "300"
         "ProjectileModel"            "particles/neutral_fx/black_dragon_attack.vpcf" // Particle system model for projectile.
-        "AttackAnimationPoint"        "0.4"        // Normalized time in animation cycle to attack.
+        "AttackAnimationPoint"        "0.94"        // Normalized time in animation cycle to attack.
         "AttackAcquisitionRange"    "1200"        // Range within a target can be acquired.
         "RingRadius"                "80"
         "HealthBarOffset"            "170"

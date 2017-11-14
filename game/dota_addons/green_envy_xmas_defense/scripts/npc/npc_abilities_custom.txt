@@ -107,7 +107,7 @@
         "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
         "AoERadius"                        "60"
         "AbilityCastRange"                "1000"
-        "AbilityCooldown"                "15"
+        "AbilityCooldown"                "8"
         "OnSpellStart"
         {
             "RunScript"
@@ -167,7 +167,7 @@
         "AbilityCastRange"                "1000"
         "AbilityCooldown"                "20"
         "AbilityManaCost"               "90"
-        "AbilityGoldCost"               "300"
+        "AbilityGoldCost"               "150"
         "AbilitySpecial"
         {
             "01"
@@ -183,12 +183,12 @@
             "03"
             {
                 "var_type"        "FIELD_FLOAT"
-                "dmg_mult"        "1.25"
+                "dmg_mult"        "1.5"
             }
             "04"
             {
                 "var_type"        "FIELD_FLOAT"
-                "hp_mult"        "1.25"
+                "hp_mult"        "1.5"
             }
         }
     }
@@ -275,11 +275,11 @@
         "AbilityTextureName"            "dazzle_shadow_wave"
         "OnSpellStart"
         {
-            "FireSound"
-            {
-                "EffectName"    "Hero_Dazzle.Shadow_Wave"
-                "Target"         "CASTER"
-            }
+            //"FireSound"
+            //{
+            //    "EffectName"    "Hero_Dazzle.Shadow_Wave"
+            //    "Target"         "CASTER"
+            //}
 
             "FireEffect"
             {
