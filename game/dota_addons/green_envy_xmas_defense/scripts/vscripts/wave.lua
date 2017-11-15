@@ -4,9 +4,9 @@
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
 
-    local linearMult = 0.60
-    local expSpeed = 0.007
-    local exp = 5.0
+    local linearMult = 0.50
+    local expSpeed = 0.008
+    local exp = 4.5
     local postExpMult = 0.10
     local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
     local goalMark = Entities:FindByName(nil, 'creep_goal_mark')
@@ -40,7 +40,7 @@ local Spawn = function()
         local timeFactor = GetTimeFactor()
         local golem = SpawnUnit('npc_dota_creature_gnoll_assassin')
         local hp = 75 + timeFactor
-        local dmg = 15 + timeFactor / 12
+        local dmg = 17 + timeFactor / 15
         golem:SetBaseAttackTime(1)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -59,7 +59,7 @@ local Spawn = function()
         local timeFactor = GetTimeFactor()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
         local hp = 1000 + timeFactor * 9
-        local dmg = 15 + timeFactor / 6
+        local dmg = 30 + timeFactor / 6
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -76,7 +76,7 @@ local Spawn = function()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
         unit:AddNewModifier(unit, nil, 'MODIFIER_STATE_FLYING ', {duration = -1})
         local hp = 300 + timeFactor * 2
-        local dmg = 15 + timeFactor / 12
+        local dmg = 20 + timeFactor / 9
         unit:SetBaseAttackTime(2)
         unit:SetBaseDamageMin(dmg)
         unit:SetBaseDamageMax(dmg)
