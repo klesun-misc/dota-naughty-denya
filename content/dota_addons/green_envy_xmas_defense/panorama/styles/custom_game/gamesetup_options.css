@@ -72,10 +72,10 @@
 }
 
 .CGSRadio,
-.CGSRadio1,
-.CGSRadio2,
-.CGSRadio3,
-.CGSRadio4
+.RoleOptionSentinelHero,
+.RoleOptionSentinelBuilder,
+.RoleOptionScourgeHero,
+.RoleOptionScourgeBuilder
 {
 	width: 100%;
 
@@ -85,10 +85,10 @@
 }
 
 .CGSRadio Label,
-.CGSRadio1 Label,
-.CGSRadio2 Label,
-.CGSRadio3 Label,
-.CGSRadio4 Label
+.RoleOptionSentinelHero Label,
+.RoleOptionSentinelBuilder Label,
+.RoleOptionScourgeHero Label,
+.RoleOptionScourgeBuilder Label
 {
 	font-size: 16px;
 	letter-spacing: 1px;
@@ -101,24 +101,24 @@
 	color: dodgerBlue;
 }
 
-.CGSRadio1 Label
+.RoleOptionSentinelHero Label
 {
 	color: green;
 }
 
-.CGSRadio2 Label
+.RoleOptionSentinelBuilder Label
 {
-	color: yellow;
+	color: #00ff00;
 }
 
-.CGSRadio3 Label
+.RoleOptionScourgeHero Label
 {
-	color: orange;
+	color: #884400;
 }
 
-.CGSRadio4 Label
+.RoleOptionScourgeBuilder Label
 {
-	color: red;
+	color: #ff4400;
 }
 
 

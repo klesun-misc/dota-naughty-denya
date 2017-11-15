@@ -1,0 +1,32 @@
+<root>
+	<styles>
+		<!--<include src="file://{resources}/styles/custom_game/custom_loading_screen.css" />-->
+		<include src="s2r://panorama/styles/custom_game/custom_loading_screen.css" />
+	</styles>
+	<scripts>
+        <include src="s2r://panorama/scripts/custom_game/custom_loading_screen.js" />
+    </scripts>
+    <script>
+        $.Msg( "Compiled Panorama Loading Screen!" );
+    </script>
+
+    <Panel class="GreenEnvyLoadingRoot">
+        <Panel id="seq" >
+            <Image id="seq_light" class="SeqImg LoadingScreenBgImage" src="file://{images}/custom_game/loading_screen/gamemode.png" />
+            <Image id="seq_bg" class="SeqBg" />
+            <Image id="seq_bg" class="LoadingScreenGlowingBorders" />
+
+            <Panel class="Content">
+                <Panel class="LeftSidePanel">
+                    <Label class="Title ChangelogTitle" text="#loading_screen_rules_title"/>
+                    <Label class="ChangelogText" text="#loading_screen_rules_text_radiant" html="true"/>
+                </Panel>
+                <Panel class="RightSidePanel">
+                    <Label class="ChangelogText" text="#loading_screen_rules_text_dire" html="true"/>
+                    <Label class="Title ChangelogTitle" text="#loading_screen_rules_title_dire"/>
+                </Panel>
+            </Panel>
+        </Panel>
+    </Panel>
+
+</root>

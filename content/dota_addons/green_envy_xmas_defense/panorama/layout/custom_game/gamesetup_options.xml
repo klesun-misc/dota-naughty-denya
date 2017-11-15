@@ -33,10 +33,10 @@
 					</Panel>
 					<Panel class="CustomGameSettingPanelDivider" hittest="false" />
 					<Panel class="ContainerCustomGameSettingOptions" hittest="false">
-						<RadioButton class="CGSRadio1" text="I want to be a Radiant hero" onactivate="OnRoleSelected('radiant', 'hero')" />
-						<RadioButton class="CGSRadio2" text="I want to be a Radiant builder" onactivate="OnRoleSelected('radiant', 'builder')" />
-						<RadioButton class="CGSRadio3" text="I want to be a Dire hero" onactivate="OnRoleSelected('dire', 'hero')" />
-						<RadioButton class="CGSRadio4" text="I want to be a Dire builder" onactivate="OnRoleSelected('dire', 'builder')" />
+						<RadioButton class="RoleOptionSentinelBuilder" text="I want to be a Sentinel builder" onactivate="OnRoleSelected('radiant', 'builder')" />
+						<RadioButton class="RoleOptionSentinelHero" text="I want to be a Sentinel hero" onactivate="OnRoleSelected('radiant', 'hero')" />
+						<RadioButton class="RoleOptionScourgeBuilder" text="I want to be a Scourge builder" onactivate="OnRoleSelected('dire', 'builder')" />
+						<RadioButton class="RoleOptionScourgeHero" text="I want to be a Scourge hero" onactivate="OnRoleSelected('dire', 'hero')" />
 					</Panel>
 				</Panel>
 				<Panel class="player hidden-panel" hittest="false" id="wait-for-other-players-panel">
@@ -50,9 +50,5 @@
 				</Panel>
 			</Panel>
 		</Panel>
-
-		<Button id="ChangelogImg" onactivate="DOTADisplayURL('https://www.facebook.com/pg/X-Hero-Siege-619117744926665/notes/?ref=page_internal');" >
-			<Image src="file://{images}/custom_game/changelog.png" />
-		</Button>
 	</Panel>
 </root>
