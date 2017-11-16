@@ -29,14 +29,14 @@
 			<Panel class="ContainerCustomGameSettingsPanels" hittest="false" >
 				<Panel class="CustomSettingPanel" hittest="false" id="choose-your-role-panel">
 					<Panel class="ContainerCustomGameLengthTitle" hittest="false">
-						<Label class="CustomGameSettingsTitle" id="CustomGameLengthTitle1" hittest="false" text="Choose Who You Want To Be..." />
+						<Label class="CustomGameSettingsTitle" id="CustomGameLengthTitle1" hittest="false" text="Who are you?" />
 					</Panel>
 					<Panel class="CustomGameSettingPanelDivider" hittest="false" />
 					<Panel class="ContainerCustomGameSettingOptions" hittest="false">
-						<RadioButton class="RoleOptionSentinelBuilder" text="I want to be a Sentinel builder" onactivate="OnRoleSelected('radiant', 'builder')" />
-						<RadioButton class="RoleOptionSentinelHero" text="I want to be a Sentinel hero" onactivate="OnRoleSelected('radiant', 'hero')" />
-						<RadioButton class="RoleOptionScourgeBuilder" text="I want to be a Scourge builder" onactivate="OnRoleSelected('dire', 'builder')" />
-						<RadioButton class="RoleOptionScourgeHero" text="I want to be a Scourge hero" onactivate="OnRoleSelected('dire', 'hero')" />
+						<RadioButton class="RoleOptionSentinelBuilder" text="I am a Sentinel builder" onactivate="OnRoleSelected('radiant', 'builder')" />
+						<RadioButton class="RoleOptionSentinelHero" text="I am a Sentinel hero" onactivate="OnRoleSelected('radiant', 'hero')" />
+						<RadioButton class="RoleOptionScourgeBuilder" text="I am a Scourge builder" onactivate="OnRoleSelected('dire', 'builder')" />
+						<RadioButton class="RoleOptionScourgeHero" text="I am a Scourge hero" onactivate="OnRoleSelected('dire', 'hero')" />
 					</Panel>
 				</Panel>
 				<Panel class="player hidden-panel" hittest="false" id="wait-for-other-players-panel">
