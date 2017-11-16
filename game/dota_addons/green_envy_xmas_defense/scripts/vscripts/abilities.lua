@@ -154,8 +154,9 @@ local SpawnEnvyCreep = function(event, params)
     unit:SetBaseDamageMax(event.caster:GetAttackDamage())
     unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
 
-    local goal = Entities:FindByName(nil, 'creep_goal_mark')
-        or Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
+	local goal = Entities:FindByName(nil, 'creep_goal_mark')
+    --local goal = Entities:FindByName(nil, 'creep_goal_mark')
+    --    or Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
 
     if goal ~= nil then
         unit:SetThink(function()

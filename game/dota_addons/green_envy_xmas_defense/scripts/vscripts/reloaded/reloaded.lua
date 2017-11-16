@@ -14,7 +14,8 @@ if klesun.playerIdToRole == nil then klesun.playerIdToRole = {} end
 if klesun.playerIdToUserId == nil then klesun.playerIdToUserId = {} end
 if klesun.roledPlayerIds == nil then klesun.roledPlayerIds = {} end
 
-local SETUP_MAX_TIME = 15;
+local SETUP_MAX_TIME = 15
+local RADIANT_VICTORY_TIME = 20 * 60
 local setupStartTime = nil
 
 local botIdToData = {}
@@ -140,7 +141,6 @@ end
 ---@field     name              string
 ---@field     disconnect        number
 local player_team = function(event)
-    print('OnPlayerTeam')
     DeepPrintTable(event)
     lastPlayerId = event.userid - 1
 end
@@ -164,7 +164,6 @@ local SpawnBots = function()
 end
 
 local game_rules_state_change = function(_)
-    print('game_rules_state_change - ' .. GameRules:State_Get())
     if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
         setupStartTime = GameRules:GetGameTime()
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
@@ -176,7 +175,23 @@ local game_rules_state_change = function(_)
             end
         end
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+        Timers:CreateTimer(function()
+            local pause = wave.Spawn()
+            return pause
+        end)
         bgm().Init()
+        -- hud js is executed _after_ this block of code
+        lang.Timeout(5).callback = function()
+            CustomGameEventManager:Send_ServerToAllClients("display_timer", {
+                msg="Sentinels Win In", duration=RADIANT_VICTORY_TIME,
+                mode=0, endfade=false, position=0, warning=5, paused=false, sound=true
+            })
+            GameRules:SetCustomVictoryMessage('The Christmas Tree Was Destroyed')
+            lang.Timeout(RADIANT_VICTORY_TIME).callback = function()
+                GameRules:SetCustomVictoryMessage('The Christmas Tree Was Saved')
+                GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+            end
+        end
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_DISCONNECT then
         bgm().RestorePlayerSettings()
     end
@@ -230,18 +245,9 @@ local klesun_event_js_to_lua = function(status, event)
         print('Unexpected klesun_event_js_to_lua event format!')
         DeepPrintTable(event)
     end
-
-    --DeepPrintTable(event.type)
-    CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
-        type = 'response_message', value = 'Player #' .. event.PlayerID .. ' said that he likes you!'
-    })
 end
 
 Timers:RemoveTimers(true)
-Timers:CreateTimer(function()
-    local pause = wave.Spawn()
-    return pause
-end)
 Timers:CreateTimer(function()
     CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
         type = 'second_passed',

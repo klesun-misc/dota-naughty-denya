@@ -53,7 +53,7 @@ local makeSelf = function()
     local Init = function()
         local PlayAt = function(time, songName, songLength)
             lang.Timeout(time).callback = function()
-                Quiet(10.00, songLength).callback = function()
+                Quiet(5, songLength).callback = function()
                     bgmEnt:EmitSound(songName)
                     return function() bgmEnt:StopSound(songName) end
                 end

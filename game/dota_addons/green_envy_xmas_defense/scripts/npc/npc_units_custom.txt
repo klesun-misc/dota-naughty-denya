@@ -254,6 +254,8 @@
         "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
         "RingRadius"                "64"
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_NONE"
+		"StatusMana"                "800"        // Base health.
+        "StatusManaRegen"            "3.0"        // Mana regeneration rate.
         "Ability1"                  "train_envy_wizard_creep"
     }
     "npc_dota_tower_creep"
