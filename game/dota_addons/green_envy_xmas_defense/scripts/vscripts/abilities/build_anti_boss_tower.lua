@@ -18,6 +18,7 @@ build_anti_boss_tower = build_tower_base.MakeAbility({
         end
         tower:SetBaseDamageMin(dmg)
         tower:SetBaseDamageMax(dmg)
+        tower:SetIdleAcquire(true)
 
         -- need to apply any modifier to update npc gui hp numbers
         tower:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.05})

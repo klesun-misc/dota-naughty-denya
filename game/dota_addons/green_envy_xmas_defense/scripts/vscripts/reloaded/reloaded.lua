@@ -183,7 +183,7 @@ local game_rules_state_change = function(_)
         -- hud js is executed _after_ this block of code
         lang.Timeout(5).callback = function()
             CustomGameEventManager:Send_ServerToAllClients("display_timer", {
-                msg="Sentinels Win In", duration=RADIANT_VICTORY_TIME,
+                msg="Towers Win In", duration=RADIANT_VICTORY_TIME,
                 mode=0, endfade=false, position=0, warning=5, paused=false, sound=true
             })
             GameRules:SetCustomVictoryMessage('The Christmas Tree Was Destroyed')

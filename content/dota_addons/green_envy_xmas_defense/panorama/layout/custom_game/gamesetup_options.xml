@@ -36,7 +36,7 @@
 						<RadioButton class="RoleOptionSentinelBuilder" text="I am a Sentinel builder" onactivate="OnRoleSelected('radiant', 'builder')" />
 						<RadioButton class="RoleOptionSentinelHero" text="I am a Sentinel hero" onactivate="OnRoleSelected('radiant', 'hero')" />
 						<RadioButton class="RoleOptionScourgeBuilder" text="I am a Scourge builder" onactivate="OnRoleSelected('dire', 'builder')" />
-						<RadioButton class="RoleOptionScourgeHero" text="I am a Scourge hero" onactivate="OnRoleSelected('dire', 'hero')" />
+						<!--<RadioButton class="RoleOptionScourgeHero" text="I am a Scourge hero" onactivate="OnRoleSelected('dire', 'hero')" />-->
 					</Panel>
 				</Panel>
 				<Panel class="player hidden-panel" hittest="false" id="wait-for-other-players-panel">

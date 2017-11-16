@@ -155,8 +155,6 @@ local SpawnEnvyCreep = function(event, params)
     unit:SetBaseMaxHealth(event.caster:GetMaxHealth() / 4)
 
 	local goal = Entities:FindByName(nil, 'creep_goal_mark')
-    --local goal = Entities:FindByName(nil, 'creep_goal_mark')
-    --    or Entities:FindByClassnameNearest('npc_dota_creature', unit:GetAbsOrigin(), 30000)
 
     if goal ~= nil then
         unit:SetThink(function()
@@ -164,7 +162,7 @@ local SpawnEnvyCreep = function(event, params)
                 ExecuteOrderFromTable({
                     UnitIndex = unit:GetEntityIndex(),
                     OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-                    Position = goal, Queue = true
+                    Position = goal:GetAbsOrigin(), Queue = true
                 })
             end
             return 2.00
@@ -249,7 +247,7 @@ GrantXpToEnemyHeroes = function(event)
     local unit = types:t_npc(event.unit)
     local hero = types:t_hero(event.caster)
     if unit and hero and hero.AddExperience then
-        local xp = unit:GetDeathXP() * 1.10
+        local xp = unit:GetDeathXP() * 1.50
         hero:AddExperience(xp, DOTA_ModifyXP_Unspecified, false, true)
     end
 end

@@ -96,7 +96,7 @@ local MakeAbility = function(params)
             tower:SetInvulnCount(0)
         end
         --tower:SetIdleAcquire(true) -- auto-attack ON
-        tower:SetControllableByPlayer(caster:GetMainControllingPlayer(), false)
+        --tower:SetControllableByPlayer(caster:GetMainControllingPlayer(), false)
         tower:SetHullRadius(towerRadius)
 
         OnCreated(tower, self)

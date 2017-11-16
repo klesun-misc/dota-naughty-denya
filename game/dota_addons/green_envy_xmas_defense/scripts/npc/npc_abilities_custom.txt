@@ -220,8 +220,8 @@
         "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
         "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL"
-        "AbilityCastRange"                "750"
-        "AbilityCastRange"                "750"
+        "AbilityCastRange"                "600"
+        "AbilityCastRange"                "600"
 
         "AbilityTextureName"            "denis128_book"
         "MaxLevel"                        "1"
@@ -235,7 +235,7 @@
                 "IsDebuff"                "0"
 
                 "Aura"                     "modifier_xp_gain_aura_receiver"
-                "Aura_Radius"             "750"
+                "Aura_Radius"             "550"
                 "Aura_Teams"             "DOTA_UNIT_TARGET_TEAM_BOTH"
                 "Aura_Types" "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
                 "Aura_ApplyToCaster"     "0"
