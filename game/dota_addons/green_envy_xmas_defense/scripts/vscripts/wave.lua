@@ -39,8 +39,8 @@ local Spawn = function()
     local SpawnCreep = function(wave)
         local timeFactor = GetTimeFactor()
         local golem = SpawnUnit('npc_dota_creature_gnoll_assassin')
-        local hp = 75 + timeFactor
-        local dmg = 17 + timeFactor / 15
+        local hp = 50 + timeFactor
+        local dmg = 15 + timeFactor / 15
         golem:SetBaseAttackTime(1)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)

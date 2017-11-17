@@ -60,9 +60,7 @@ local makeSelf = function()
             end
         end
 
-        PlayAt(60 * 2, 'bgm_chuvstva_yuzefi', 90)
-        PlayAt(60 * 8, 'bgm_chuvstva_yuzefi', 90)
-        PlayAt(60 * 15, 'bgm_chuvstva_yuzefi', 90)
+        PlayAt(60 * 10, 'bgm_chuvstva_yuzefi', 90)
     end
 
     ---@param songName string - name in the .../content/.../soundevents/custom_sounds.vsndevts_c
