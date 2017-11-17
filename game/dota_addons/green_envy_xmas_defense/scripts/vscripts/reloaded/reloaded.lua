@@ -21,6 +21,9 @@ local setupStartTime = nil
 local botIdToData = {}
 local lastPlayerId = nil
 
+local initialCheatsFlag = Convars:GetBool('sv_cheats')
+Convars:SetBool('sv_cheats', true)
+
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
     if klesun.eventToFunc[eventName] == nil then
@@ -74,8 +77,23 @@ local dota_player_pick_hero = function(event)
         if hero:GetUnitName() ~= datadriven then
             lang.Timeout(0.000001).callback = function()
                 -- for some reason replace is not allowed instantly
-                PlayerResource:ReplaceHeroWith(playerId, datadriven, 800, 0)
+                PlayerResource:ReplaceHeroWith(playerId, datadriven, 625, 0)
             end
+        elseif botIdToData[playerId] then
+            hero:SetThink(function()
+                local ok, data = pcall(function() require('bot_ai').GiveOrders(hero, playerId) end)
+                local delay
+                if ok then delay = 0.5 else
+                    print('Got exception while trying to give AI orders')
+                    DeepPrintTable({data})
+                    delay = 5
+                end
+                return delay
+            end)
+        end
+    elseif hero:GetUnitName() == 'npc_dota_hero_vengefulspirit' or hero:GetUnitName() == 'npc_dota_hero_lycan' then
+        lang.Timeout(0.000001).callback = function()
+            PlayerResource:ReplaceHeroWith(playerId, 'npc_dota_hero_keeper_of_the_light', 625, 0)
         end
     end
 
@@ -87,18 +105,6 @@ local dota_player_pick_hero = function(event)
     if hero:GetTeamNumber() == DOTA_TEAM_BADGUYS then
         local abil = hero:AddAbility('dire_xp_gain_aura')
         abil:SetLevel(1)
-    end
-    if botIdToData[playerId] then
-        hero:SetThink(function()
-            local ok, data = pcall(function() require('bot_ai').GiveOrders(hero, playerId) end)
-            local delay
-            if ok then delay = 0.5 else
-                print('Got exception while trying to give AI orders')
-                DeepPrintTable({data})
-                delay = 5
-            end
-            return delay
-        end)
     end
 end
 
@@ -156,15 +162,28 @@ local SpawnBots = function()
     end
 
     if radBuilerCnt == 0 then
-        local toGoodTeam = true
-        Tutorial:AddBot('npc_dota_hero_vengefulspirit', 'mid', 'unfair', toGoodTeam)
-        local botId = lastPlayerId
-        botIdToData[botId] = {}
+        local toGoodTeam = true        
+        for playerID = 0, 9 do -- We go through all player indexes
+            local isFake = PlayerResource:IsFakeClient( playerID )
+            local msg = string.format( 'PlayerID %s is%s a fake player', playerID, isFake and '' or ' not' )
+            print( msg ) 
+            if isFake then 
+                local defaultTeam = DOTA_TEAM_GOODGUYS
+                PlayerResource:SetCustomTeamAssignment(playerID, defaultTeam)
+                local player = PlayerResource:GetPlayer(playerID)
+                player:MakeRandomHeroSelection()
+                klesun.playerIdToRole[playerID] = 'builder'
+                table.insert(klesun.roledPlayerIds, playerID)
+                botIdToData[playerID] = {}
+                break
+            end
+        end
     end
 end
 
 local game_rules_state_change = function(_)
     if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+        SendToServerConsole('dota_create_fake_clients')
         setupStartTime = GameRules:GetGameTime()
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
         SpawnBots()
@@ -179,6 +198,7 @@ local game_rules_state_change = function(_)
             local pause = wave.Spawn()
             return pause
         end)
+        Convars:SetBool('sv_cheats', initialCheatsFlag)        
         bgm().Init()
         -- hud js is executed _after_ this block of code
         lang.Timeout(5).callback = function()
