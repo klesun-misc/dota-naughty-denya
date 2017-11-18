@@ -14,7 +14,8 @@
         "Ability3"                    "build_spawning_tower"
         "Ability4"                    "build_anti_boss_tower"
         "Ability5"                    "build_prison_tower"
-        "VisionNighttimeRange"        "1800"
+        "VisionDaytimeRange"        "1200"
+        "VisionNighttimeRange"        "600"
         "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
         "AttackRange"		"100"
 
@@ -32,11 +33,12 @@
         "AbilityLayout"             "2"
         "Ability1"                    "build_melee_barracks"
         "Ability2"                    "build_wizard_barracks"
-        "VisionNighttimeRange"        "1800"
+		"VisionDaytimeRange"        "1200"
+        "VisionNighttimeRange"        "600"
 
         // dire should be weaker than radiant, since they
         // would just lure them over the towers and kill otherwise
-        "AttributeBaseStrength" "3"  instead of 25
+        "AttributeBaseStrength" "8"  instead of 25
         "AttributeBaseAgility" "1"  instead of 16
     }
 }

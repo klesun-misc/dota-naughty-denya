@@ -23,7 +23,7 @@ local Spawn = function()
     local SpawnUnit = function(dataDrivenName)
         local unit = CreateUnitByName(
             dataDrivenName,
-            point + RandomVector(RandomInt(100, 200)),
+            point + RandomVector(RandomInt(100, 600)),
             true, nill, nill, DOTA_TEAM_BADGUYS
         )
         -- need to apply any modifier to update npc gui hp numbers
@@ -50,12 +50,12 @@ local Spawn = function()
         golem:SetBaseHealthRegen(5)
 		
 		-- so they skipped Vika's maze fast
-        golem:SetBaseMoveSpeed(1200)
+        golem:SetBaseMoveSpeed(1500)
 		lang.Timeout(20).callback = function()
 			golem:SetBaseMoveSpeed(350)
 		end
 
-		golem:AddNewModifier(nil, nil, 'modifier_phased', {duration = 15.00})
+		golem:AddNewModifier(nil, nil, 'modifier_phased', {duration = 20.00})
         golem:AddNewModifier(golem, nil, 'modifier_kill', {duration = 90})
 
         if wave % 5 == 0 then

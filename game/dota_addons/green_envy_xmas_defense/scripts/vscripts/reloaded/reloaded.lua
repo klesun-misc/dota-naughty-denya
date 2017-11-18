@@ -14,16 +14,13 @@ if klesun.playerIdToRole == nil then klesun.playerIdToRole = {} end
 if klesun.playerIdToUserId == nil then klesun.playerIdToUserId = {} end
 if klesun.roledPlayerIds == nil then klesun.roledPlayerIds = {} end
 
-local SETUP_MAX_TIME = 15
+local SETUP_MAX_TIME = 25
 local RADIANT_VICTORY_TIME = 20 * 60
 local setupStartTime = nil
 
 local botIdToData = {}
 local lastPlayerId = nil
-
-local initialCheatsFlag = Convars:GetBool('sv_cheats')
---Convars:SetBool('sv_cheats', true)
-SendToServerConsole('sv_cheats 1')
+local debugPlayerIdToReplace = {}
 
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
@@ -75,7 +72,13 @@ local dota_player_pick_hero = function(event)
         local datadriven = PlayerResource:GetTeam(playerId) == DOTA_TEAM_GOODGUYS
             and 'npc_dota_hero_vengefulspirit'
             or 'npc_dota_hero_lycan'
-        if hero:GetUnitName() ~= datadriven then
+        if hero:GetUnitName() ~= datadriven and not debugPlayerIdToReplace[playerId] then
+			debugPlayerIdToReplace[playerId] = {}
+			---@debug
+			local msg = 'Replacing player ' .. playerId .. ' team #' .. PlayerResource:GetTeam(playerId) .. ' hero from ' .. hero:GetUnitName() .. ' to ' .. datadriven
+			GameRules:SendCustomMessage(msg, DOTA_TEAM_GOODGUYS, 0)
+			GameRules:SendCustomMessage(msg, DOTA_TEAM_BADGUYS, 0)
+
             lang.Timeout(0.000001).callback = function()
                 -- for some reason replace is not allowed instantly
                 PlayerResource:ReplaceHeroWith(playerId, datadriven, 625, 0)
@@ -92,17 +95,17 @@ local dota_player_pick_hero = function(event)
                 return delay
             end)
         end
+		if hero:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
+			local dagger = CreateItem("item_blink", hero, hero)
+			dagger:SetPurchaseTime(0)
+			hero:AddItem(dagger)
+		end
     elseif hero:GetUnitName() == 'npc_dota_hero_vengefulspirit' or hero:GetUnitName() == 'npc_dota_hero_lycan' then
         lang.Timeout(0.000001).callback = function()
             PlayerResource:ReplaceHeroWith(playerId, 'npc_dota_hero_keeper_of_the_light', 625, 0)
         end
     end
 
-    if hero:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
-        local dagger = CreateItem("item_blink", hero, hero)
-        dagger:SetPurchaseTime(0)
-        hero:AddItem(dagger)
-    end
     if hero:GetTeamNumber() == DOTA_TEAM_BADGUYS then
         local abil = hero:AddAbility('dire_xp_gain_aura')
         abil:SetLevel(1)
@@ -164,40 +167,22 @@ local SpawnBots = function()
 
     if radBuilerCnt == 0 then
         local toGoodTeam = true
-		GameRules:SendCustomMessage('Ading a bot', DOTA_TEAM_FIRST, 0)
+		GameRules:SendCustomMessage('Ading a bot', DOTA_TEAM_GOODGUYS, 0)
+		GameRules:SendCustomMessage('Ading a bot', DOTA_TEAM_BADGUYS, 0)
 		Tutorial:StartTutorialMode()
         Tutorial:AddBot('npc_dota_hero_vengefulspirit', 'mid', 'unfair', toGoodTeam)
         local botId = lastPlayerId
 
-		-- cv_cheats works only in debug
-        --for playerID = 0, 9 do -- We go through all player indexes
-        --    local isFake = PlayerResource:IsFakeClient( playerID )
-        --    local msg = string.format( 'PlayerID %s is%s a fake player', playerID, isFake and '' or ' not' )
-        --    print( msg ) 
-		--	---@debug
-		--	GameRules:SendCustomMessage('DEBUG: ' .. msg, DOTA_TEAM_FIRST, 0)
-		--	GameRules:SendCustomMessage('DEBUG: svc: ' .. (Convars:GetBool('sv_cheats') and 'Y' or 'N'), DOTA_TEAM_FIRST, 0)
-        --    if isFake then 
-        --        local defaultTeam = DOTA_TEAM_GOODGUYS
-        --        PlayerResource:SetCustomTeamAssignment(playerID, defaultTeam)
-        --        local player = PlayerResource:GetPlayer(playerID)
-        --        player:MakeRandomHeroSelection()
-        --        klesun.playerIdToRole[playerID] = 'builder'
-        --        table.insert(klesun.roledPlayerIds, playerID)
-        --        botIdToData[playerID] = {}
-        --        break
-        --    end
-        --end
 		klesun.playerIdToRole[botId] = 'builder'
 		table.insert(klesun.roledPlayerIds, botId)
         botIdToData[botId] = {}
-		GameRules:SendCustomMessage('Added the bot', DOTA_TEAM_FIRST, 0)
+		GameRules:SendCustomMessage('Added the bot ' .. botId, DOTA_TEAM_FIRST, 0)
+		GameRules:SendCustomMessage('Added the bot ' .. botId, DOTA_TEAM_BADGUYS, 0)
     end
 end
 
 local game_rules_state_change = function(_)
     if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-        SendToServerConsole('dota_create_fake_clients')
         setupStartTime = GameRules:GetGameTime()
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
         SpawnBots()
