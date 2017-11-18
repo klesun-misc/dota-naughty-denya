@@ -22,7 +22,8 @@ local botIdToData = {}
 local lastPlayerId = nil
 
 local initialCheatsFlag = Convars:GetBool('sv_cheats')
-Convars:SetBool('sv_cheats', true)
+--Convars:SetBool('sv_cheats', true)
+SendToServerConsole('sv_cheats 1')
 
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
@@ -162,22 +163,35 @@ local SpawnBots = function()
     end
 
     if radBuilerCnt == 0 then
-        local toGoodTeam = true        
-        for playerID = 0, 9 do -- We go through all player indexes
-            local isFake = PlayerResource:IsFakeClient( playerID )
-            local msg = string.format( 'PlayerID %s is%s a fake player', playerID, isFake and '' or ' not' )
-            print( msg ) 
-            if isFake then 
-                local defaultTeam = DOTA_TEAM_GOODGUYS
-                PlayerResource:SetCustomTeamAssignment(playerID, defaultTeam)
-                local player = PlayerResource:GetPlayer(playerID)
-                player:MakeRandomHeroSelection()
-                klesun.playerIdToRole[playerID] = 'builder'
-                table.insert(klesun.roledPlayerIds, playerID)
-                botIdToData[playerID] = {}
-                break
-            end
-        end
+        local toGoodTeam = true
+		GameRules:SendCustomMessage('Ading a bot', DOTA_TEAM_FIRST, 0)
+		Tutorial:StartTutorialMode()
+        Tutorial:AddBot('npc_dota_hero_vengefulspirit', 'mid', 'unfair', toGoodTeam)
+        local botId = lastPlayerId
+
+		-- cv_cheats works only in debug
+        --for playerID = 0, 9 do -- We go through all player indexes
+        --    local isFake = PlayerResource:IsFakeClient( playerID )
+        --    local msg = string.format( 'PlayerID %s is%s a fake player', playerID, isFake and '' or ' not' )
+        --    print( msg ) 
+		--	---@debug
+		--	GameRules:SendCustomMessage('DEBUG: ' .. msg, DOTA_TEAM_FIRST, 0)
+		--	GameRules:SendCustomMessage('DEBUG: svc: ' .. (Convars:GetBool('sv_cheats') and 'Y' or 'N'), DOTA_TEAM_FIRST, 0)
+        --    if isFake then 
+        --        local defaultTeam = DOTA_TEAM_GOODGUYS
+        --        PlayerResource:SetCustomTeamAssignment(playerID, defaultTeam)
+        --        local player = PlayerResource:GetPlayer(playerID)
+        --        player:MakeRandomHeroSelection()
+        --        klesun.playerIdToRole[playerID] = 'builder'
+        --        table.insert(klesun.roledPlayerIds, playerID)
+        --        botIdToData[playerID] = {}
+        --        break
+        --    end
+        --end
+		klesun.playerIdToRole[botId] = 'builder'
+		table.insert(klesun.roledPlayerIds, botId)
+        botIdToData[botId] = {}
+		GameRules:SendCustomMessage('Added the bot', DOTA_TEAM_FIRST, 0)
     end
 end
 
@@ -198,8 +212,8 @@ local game_rules_state_change = function(_)
             local pause = wave.Spawn()
             return pause
         end)
-        Convars:SetBool('sv_cheats', initialCheatsFlag)        
         bgm().Init()
+		
         -- hud js is executed _after_ this block of code
         lang.Timeout(5).callback = function()
             CustomGameEventManager:Send_ServerToAllClients("display_timer", {
