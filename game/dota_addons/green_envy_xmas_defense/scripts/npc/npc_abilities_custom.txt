@@ -152,10 +152,10 @@
                 "Target"                "POINT"
             }
         }
-        "AbilityManaCost"               "60"
-        "AbilityGoldCost"               "80"
-        "RequiredLevel"                    "99" // TODO: remove once implemented
-    }
+		"AbilityManaCost"               "60"
+		"AbilityGoldCost"               "80"
+	}
+
     "build_spawning_tower"
     {
         "BaseClass"                     "ability_lua"
@@ -455,19 +455,23 @@
         }
     }
 
-    "prison_tether"
-    {
-        "BaseClass"                    "ability_lua"
-        "MaxLevel"                    "1"
-        "AbilityBehavior"            "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-        "AbilityUnitTargetTeam"        "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-        "AbilityUnitTargetType"        "DOTA_UNIT_TARGET_BUILDING"
-        "AbilityTextureName"        "crystal_maiden_freezing_field"
-        "AbilityCastRange"            "800"
-        "AbilityCastPoint"            "0.2"
-        "AbilityCooldown"            "10"
-        "ScriptFile"                "abilities/prison_tether"
-    }
+	"prison_tether"	
+	{
+		"BaseClass"					"ability_lua"
+		"MaxLevel"					"1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"		
+		"AbilityTextureName"		"crystal_maiden_freezing_field"
+		"AbilityCastRange"			"1000"
+		"AbilityCastPoint"			"0.2"
+		"AbilityCooldown"			"10"
+		"precache"
+		{
+			"partricle"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+		}
+		"ScriptFile"				"abilities/prison_tether"	
+	}
 
     "buy_damage_increase"
     {
@@ -484,6 +488,7 @@
             }
         }
     }
+
     "buy_hp_increase"
     {
         "BaseClass"                        "ability_datadriven"

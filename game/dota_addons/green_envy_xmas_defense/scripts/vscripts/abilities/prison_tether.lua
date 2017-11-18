@@ -1,5 +1,8 @@
 prison_tether = class ({})
 
+LinkLuaModifier("prison_tether_modifier", "abilities/prison_tether_modifier.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "prison_tether_modifier_thinker", "abilities/prison_tether_modifier_thinker.lua", LUA_MODIFIER_MOTION_NONE )
+
 function prison_tether:CastFilterResultTarget (target)
     if self:GetCaster() == target then
         return UF_FAIL_CUSTOM
@@ -21,18 +24,18 @@ function prison_tether:GetCustomCastErrorTarget(target)
 end
 
 function prison_tether:OnSpellStart ()
-    local caster = self:GetCaster()
-    local casterTower = caster:GetAbsOrigin()
-    local targetTower = self:GetCursorTarget():GetAbsOrigin()
-    local distance = (targetTower - casterTower):Length2D()
-    local effectName = "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
-    local pfx = ParticleManager:CreateParticle(effectName, PATTACH_ABSORIGIN, caster)
-    ParticleManager:SetParticleControl(pfx, 0, casterTower)
-    ParticleManager:SetParticleControl(pfx, 1, targetTower)
+	local caster = self:GetCaster()
+	local casterTower = caster:GetAbsOrigin()
+	local targetTower = self:GetCursorTarget():GetAbsOrigin()
+	local distance = (targetTower - casterTower):Length2D()
+	local kv = {}
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_tether.vpcf", PATTACH_ABSORIGIN, self:GetCursorTarget() )
+	
+	ParticleManager:SetParticleControl(particle, 0, targetTower)
+	ParticleManager:SetParticleControl(particle, 1, casterTower)
 
-end
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self:GetCursorTarget(), "prison_tether_modifier", { duration = 10 })	
 
-function prison_tether:OnProjectileHit(hTarget, vLocation)
-    print("xyu")
-    print(hTarget)
+	CreateModifierThinker( caster, self, "prison_tether_modifier_thinker", kv, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false )
+
 end
