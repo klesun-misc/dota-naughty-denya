@@ -126,6 +126,8 @@
         "StatusHealth"                "400"        // Base health.
         "BountyGoldMin"                "100"
         "BountyGoldMax"                "100"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
 
     // tower that deals splash damage
@@ -153,6 +155,8 @@
         "BountyGoldMin"                "100"
         "BountyGoldMax"                "100"
         "Ability1"                  "black_dragon_splash_attack"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
 
         // I guess this is what tells creeps to attack heroes instead of tower
         "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
@@ -185,6 +189,8 @@
         "BountyGoldMin"                "100"
         "BountyGoldMax"                "100"
         "Ability1"                    "prison_tether"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
 
         // I guess this is what tells creeps to attack heroes instead of tower
         "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
@@ -212,6 +218,8 @@
         "StatusManaRegen"            "3.0"        // Mana regeneration rate.
         "BountyGoldMin"                "100"
         "BountyGoldMax"                "100"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
         "Ability1"                  "tower_heal"
     }
     "npc_dota_spawning_tower"
@@ -231,6 +239,8 @@
         "Ability1"                  "spawn_tower_creep"
         "BountyGoldMin"                "100"
         "BountyGoldMax"                "100"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
     "npc_dota_envy_melee_barracks"
     {
@@ -247,6 +257,8 @@
         "BountyGoldMin"                "300"
         "BountyGoldMax"                "300"
         "Ability1"                  "train_envy_melee_creep"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
     "npc_dota_envy_wizard_barracks"
     {
@@ -261,6 +273,8 @@
         "BountyGoldMin"                "400"
         "BountyGoldMax"                "400"
         "Ability1"                  "train_envy_wizard_creep"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
     "npc_dota_tower_creep"
     {
