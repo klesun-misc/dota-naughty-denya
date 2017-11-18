@@ -18,17 +18,31 @@ build_melee_barracks = build_tower_base.MakeAbility({
             spell:ToggleAutoCast()
         end
         local dmgBase = def(abil:GetSpecialValueFor('dmg_base'), 20)
-        local dmgMult = def(abil:GetSpecialValueFor('dmg_mult'), 1.5)
-        local hpBase = def(abil:GetSpecialValueFor('hp_base'), 80)
-        local hpMult = def(abil:GetSpecialValueFor('hp_mult'), 2.0)
-        local dmg = dmgBase * math.pow(dmgMult, abil:GetLevel())
-        local creepHp = hpBase * math.pow(hpMult, abil:GetLevel())
+        local dmgMult = def(abil:GetSpecialValueFor('dmg_mult'), 1.33)
+        local hpBase = def(abil:GetSpecialValueFor('hp_base'), 200)
+        local hpMult = def(abil:GetSpecialValueFor('hp_mult'), 1.75)
+        local dmg = dmgBase * math.pow(dmgMult, abil:GetLevel() - 1)
+        local creepHp = hpBase * math.pow(hpMult, abil:GetLevel() - 1)
         tower:SetBaseDamageMin(dmg)
         tower:SetBaseDamageMax(dmg)
         -- 250 is likely something like "default" hp in dota, it is not included to "BaseMaxHealth"
         tower:SetBaseMaxHealth(math.max(creepHp * 4, 1))
 
+        local extraSpell = tower:AddAbility('buy_damage_increase')
+        extraSpell:SetLevel(1)
+        local extraSpell = tower:AddAbility('buy_hp_increase')
+        extraSpell:SetLevel(1)
+
         -- need to apply any modifier to update npc gui hp numbers
         tower:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.05})
+        tower:SetControllableByPlayer(abil:GetCaster():GetMainControllingPlayer(), false)
+    end,
+    ---@param abil CDOTABaseAbility
+    CustomPointCheck = function(point, abil)
+        if (not GridNav) or GridNav:CanFindPath(point, abil:GetCaster():GetAbsOrigin()) then
+            return nil
+        else
+            return 'There is no path to the point you specified'
+        end
     end,
 })

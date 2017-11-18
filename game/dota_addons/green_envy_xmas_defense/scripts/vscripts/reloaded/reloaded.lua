@@ -14,8 +14,16 @@ if klesun.playerIdToRole == nil then klesun.playerIdToRole = {} end
 if klesun.playerIdToUserId == nil then klesun.playerIdToUserId = {} end
 if klesun.roledPlayerIds == nil then klesun.roledPlayerIds = {} end
 
-local SETUP_MAX_TIME = 15;
+local SETUP_MAX_TIME = 15
+local RADIANT_VICTORY_TIME = 20 * 60
 local setupStartTime = nil
+
+local botIdToData = {}
+local lastPlayerId = nil
+
+local initialCheatsFlag = Convars:GetBool('sv_cheats')
+--Convars:SetBool('sv_cheats', true)
+SendToServerConsole('sv_cheats 1')
 
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
@@ -36,101 +44,68 @@ local RelistenCust = function(eventName, func)
     klesun.eventToFunc[eventName] = func
 end
 
-local Log = function(text, data)
-    print(text)
-    DebugDrawScreenTextLine(100, 100, 0, text, 255, 255, 0, 255, 10)
-    if data ~= nil then
-        local jsonText = json.stringify(data)
-        print(jsonText)
-        DebugDrawScreenTextLine(100, 200, 0, jsonText, 127, 127, 255, 255, 10)
-    end
-end
-
--- processes the chat input and interprets it as Lua code
-local InterpretCode = (function()
-    local isTakingCode = false;
-    local chunkedCode = ''
-
-    local eval = function(code)
-        local func = loadstring(code)
-        local ok, data = pcall(func)
-        if (ok) then
-            Log('evaled ok')
-            return data
-        else
-            Log('failed to eval', data)
-            return nil
-        end
-    end
-
-    local getFreshCode = function(fileName)
-        local result = {thn = function(resp) end}
-        -- `math.random` because stean caches GET requests otherwise
-        local url = 'http://localhost/vscripts/reloaded/' .. fileName .. '.lua?rndom=' .. math.random()
-        local rq = CreateHTTPRequestScriptVM('GET', url)
-
-        print('Requesting url: ' .. url)
-        ---@param resp t_http_rs
-        rq:Send(function(resp)
-            print('got reloaded code of ' .. fileName .. ' \n' .. resp.Body:sub(15000))
-            result.thn(resp.Body)
-        end)
-        return result
-    end
-
-    ---@param event  t_chat_event
-    return function(event)
-        local msg = event.text
-        if msg:sub(1, 3) == 'do|' then
-            local code = msg:sub(4)
-            Log('evaluating code', code)
-            eval(code)
-        elseif msg.sub(1, 8) == '--[[do]]' then
-            local code = msg:sub(9)
-            Log('evaluating code', code)
-            eval(code)
-        elseif msg == 'klesun speaks' then
-            isTakingCode = true
-            Log('klesun may now speak')
-        elseif msg == 'klesun spoken' then
-            eval(chunkedCode)
-            chunkedCode = ''
-        elseif isTakingCode then
-            chunkedCode = chunkedCode .. "\n" .. msg
-        end
-    end
-end)()
-
 local entity_killed = function(event)
     --print('Unit lost!')
-    ---- none of these works for some reason
     --DebugDrawScreenTextLine(100, 100, 0, 'Denya Uronil Shkaf na ekran!', 255, 127, 127, 255, 10)
     --GameRules:SendCustomMessage('Denya Uronil Shkaf v chat!', DOTA_TEAM_FIRST, 0)
     --DeepPrintTable(event)
 end
 
--- pretty useles event, it don't even provide the point where skill was cast
+-- pretty useles event, it doesn't even provide the point where skill was casted
 ---@param event t_ability_brief_event
 ---@class t_ability_brief_event
 ---@field     caster_entindex   number
 ---@field     abilityname       string
 ---@field     PlayerID          number
 ---@field     splitscreenplayer number
-local dota_unit_used_ability = function(event)
-    if event.abilityname == 'uronitj_shkaf' then
-        Log('An ability was used!', event)
-        local caster = EntIndexToHScript(event.caster_entindex)
-        local abil = caster:FindAbilityByName(event.abilityname)
-        Log('GetCastPoint', abil:GetCastPoint())
-    end
-end
+local dota_unit_used_ability = function(event) end
 
+---@param event t_pick_hero_event
+---@class t_pick_hero_event
+---@field     player    number player index starting with 1
+---@field     heroindex string
+---@field     hero      string datadriven name
+---@field     splitscreenplayer number
 local dota_player_pick_hero = function(event)
     local hero = EntIndexToHScript(event.heroindex)
-    if hero:HasRoomForItem("item_blink", true, true) then
+    local playerId = event.player - 1
+
+    local role = klesun.playerIdToRole[playerId]
+    if role == 'builder' then
+        local datadriven = PlayerResource:GetTeam(playerId) == DOTA_TEAM_GOODGUYS
+            and 'npc_dota_hero_vengefulspirit'
+            or 'npc_dota_hero_lycan'
+        if hero:GetUnitName() ~= datadriven then
+            lang.Timeout(0.000001).callback = function()
+                -- for some reason replace is not allowed instantly
+                PlayerResource:ReplaceHeroWith(playerId, datadriven, 625, 0)
+            end
+        elseif botIdToData[playerId] then
+            hero:SetThink(function()
+                local ok, data = pcall(function() require('bot_ai').GiveOrders(hero, playerId) end)
+                local delay
+                if ok then delay = 0.5 else
+                    print('Got exception while trying to give AI orders')
+                    DeepPrintTable({data})
+                    delay = 5
+                end
+                return delay
+            end)
+        end
+    elseif hero:GetUnitName() == 'npc_dota_hero_vengefulspirit' or hero:GetUnitName() == 'npc_dota_hero_lycan' then
+        lang.Timeout(0.000001).callback = function()
+            PlayerResource:ReplaceHeroWith(playerId, 'npc_dota_hero_keeper_of_the_light', 625, 0)
+        end
+    end
+
+    if hero:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
         local dagger = CreateItem("item_blink", hero, hero)
         dagger:SetPurchaseTime(0)
         hero:AddItem(dagger)
+    end
+    if hero:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+        local abil = hero:AddAbility('dire_xp_gain_aura')
+        abil:SetLevel(1)
     end
 end
 
@@ -141,9 +116,7 @@ end
 ---@field     teamonly          number
 ---@field     userid            number
 ---@field     splitscreenplayer number
-local player_chat = function(event)
-    InterpretCode(event)
-end
+local player_chat = function(event) end
 
 -- happens when you see the "TEAM SELECT" screen
 ---@param event t_player_connected_full_event
@@ -153,10 +126,6 @@ end
 ---@field     userid            number
 ---@field     splitscreenplayer number
 local player_connect_full = function(event)
-    local player = PlayerResource:GetPlayer(event.PlayerID)
-    DeepPrintTable(event)
-    ---@debug
-    print('Player connected - ' .. PlayerResource:GetPlayerName(event.PlayerID))
     klesun.playerIdToUserId[event.PlayerID] = event.userid
 
     -- default team/role if player does not choose something
@@ -165,8 +134,6 @@ local player_connect_full = function(event)
     PlayerResource:SetCustomTeamAssignment(event.PlayerID, defaultTeam)
     klesun.playerIdToRole[event.PlayerID] = defaultRole
 end
-
-local lastPlayerId = nil
 
 -- happens when you see the "TEAM SELECT" screen
 ---@param event t_player_team_event
@@ -181,7 +148,6 @@ local lastPlayerId = nil
 ---@field     name              string
 ---@field     disconnect        number
 local player_team = function(event)
-    print('OnPlayerTeam')
     DeepPrintTable(event)
     lastPlayerId = event.userid - 1
 end
@@ -198,33 +164,41 @@ local SpawnBots = function()
 
     if radBuilerCnt == 0 then
         local toGoodTeam = true
-        Tutorial:AddBot('npc_dota_hero_templar_assassin', 'mid', 'unfair', toGoodTeam)
+		GameRules:SendCustomMessage('Ading a bot', DOTA_TEAM_FIRST, 0)
+		Tutorial:StartTutorialMode()
+        Tutorial:AddBot('npc_dota_hero_vengefulspirit', 'mid', 'unfair', toGoodTeam)
         local botId = lastPlayerId
-        local botPlayer = PlayerResource:GetPlayer(botId)
-        -- i dunno which event do I need...
-        Timers:CreateTimer({
-            endTime = 10,
-            callback = function()
-                local hero = botPlayer:GetAssignedHero()
-                hero:SetThink(function()
-                    local ok, data = pcall(function() require('bot_ai').GiveOrders(hero, botId) end)
-                    local delay
-                    if ok then delay = 0.5 else
-                        print('Got exception while trying to give AI orders')
-                        DeepPrintTable({data})
-                        delay = 5
-                    end
-                    return delay
-                end)
-            end,
-        })
+
+		-- cv_cheats works only in debug
+        --for playerID = 0, 9 do -- We go through all player indexes
+        --    local isFake = PlayerResource:IsFakeClient( playerID )
+        --    local msg = string.format( 'PlayerID %s is%s a fake player', playerID, isFake and '' or ' not' )
+        --    print( msg ) 
+		--	---@debug
+		--	GameRules:SendCustomMessage('DEBUG: ' .. msg, DOTA_TEAM_FIRST, 0)
+		--	GameRules:SendCustomMessage('DEBUG: svc: ' .. (Convars:GetBool('sv_cheats') and 'Y' or 'N'), DOTA_TEAM_FIRST, 0)
+        --    if isFake then 
+        --        local defaultTeam = DOTA_TEAM_GOODGUYS
+        --        PlayerResource:SetCustomTeamAssignment(playerID, defaultTeam)
+        --        local player = PlayerResource:GetPlayer(playerID)
+        --        player:MakeRandomHeroSelection()
+        --        klesun.playerIdToRole[playerID] = 'builder'
+        --        table.insert(klesun.roledPlayerIds, playerID)
+        --        botIdToData[playerID] = {}
+        --        break
+        --    end
+        --end
+		klesun.playerIdToRole[botId] = 'builder'
+		table.insert(klesun.roledPlayerIds, botId)
+        botIdToData[botId] = {}
+		GameRules:SendCustomMessage('Added the bot', DOTA_TEAM_FIRST, 0)
     end
 end
 
 local game_rules_state_change = function(_)
-    print('game_rules_state_change - ' .. GameRules:State_Get())
     if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		setupStartTime = GameRules:GetGameTime()
+        SendToServerConsole('dota_create_fake_clients')
+        setupStartTime = GameRules:GetGameTime()
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
         SpawnBots()
         for playerId, role in pairs(klesun.playerIdToRole) do
@@ -234,21 +208,26 @@ local game_rules_state_change = function(_)
             end
         end
     elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-        -- dota does not allow rplacing hero instantly, "player has no current hero to replace"
-        Timers:CreateTimer({
-            endTime = 10,
-            callback = function()
-                for playerId, role in pairs(klesun.playerIdToRole) do
-                    if role == 'builder' then
-                        local datadriven = PlayerResource:GetTeam(playerId) == DOTA_TEAM_GOODGUYS
-                            and 'npc_dota_hero_templar_assassin'
-                            or 'npc_dota_hero_lycan'
-                        local hero = PlayerResource:ReplaceHeroWith(playerId, datadriven, 800, 0)
-                    end
-                end
-            end,
-        })
-        bgm.Init()
+        Timers:CreateTimer(function()
+            local pause = wave.Spawn()
+            return pause
+        end)
+        bgm().Init()
+		
+        -- hud js is executed _after_ this block of code
+        lang.Timeout(5).callback = function()
+            CustomGameEventManager:Send_ServerToAllClients("display_timer", {
+                msg="Towers Win In", duration=RADIANT_VICTORY_TIME,
+                mode=0, endfade=false, position=0, warning=5, paused=false, sound=true
+            })
+            GameRules:SetCustomVictoryMessage('The Christmas Tree Was Destroyed')
+            lang.Timeout(RADIANT_VICTORY_TIME).callback = function()
+                GameRules:SetCustomVictoryMessage('The Christmas Tree Was Saved')
+                GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+            end
+        end
+    elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_DISCONNECT then
+        bgm().RestorePlayerSettings()
     end
 end
 
@@ -260,6 +239,23 @@ local npc_spawned = function(event)
     ---@debug
     local unit = EntIndexToHScript(event.entindex)
     local datadrivenName = unit:GetUnitName()
+end
+
+local entity_hurt = function(event)
+    local damage = event.damage
+    local unit = EntIndexToHScript(event.entindex_killed)
+    if unit and unit.GetUnitName and not (unit.envyNs and unit.envyNs.isDying) then
+        local perc = unit:GetHealth() / unit:GetMaxHealth()
+        if perc <= 0.33 then
+            unit.envyNs = unit.envyNs or {}
+            unit.envyNs.isDying = true
+            if unit:GetUnitName() == 'npc_dota_creature_gnoll_boss' then
+                bgm().SoundOn('bgm_sad_victory', unit, 14)
+            elseif unit:GetUnitName() == 'npc_dota_goodguys_fort' then
+                bgm().SoundOn('bgm_sad_defeat', unit, 14)
+            end
+        end
+    end
 end
 
 ---@param event t_klesun_event_js_to_lua
@@ -283,24 +279,15 @@ local klesun_event_js_to_lua = function(status, event)
         print('Unexpected klesun_event_js_to_lua event format!')
         DeepPrintTable(event)
     end
-
-	--DeepPrintTable(event.type)
-	CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
-		type = 'response_message', value = 'Player #' .. event.PlayerID .. ' said that he likes you!'
-	})
 end
 
 Timers:RemoveTimers(true)
 Timers:CreateTimer(function()
-    local pause = wave.Spawn()
-    return pause
-end)
-Timers:CreateTimer(function()
-	CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
-		type = 'second_passed',
-		setupTimeLeft = GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
-			and setupStartTime - GameRules:GetGameTime() + SETUP_MAX_TIME or nil,
-	})
+    CustomGameEventManager:Send_ServerToAllClients('klesun_event_lua_to_js', {
+        type = 'second_passed',
+        setupTimeLeft = GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
+            and setupStartTime - GameRules:GetGameTime() + SETUP_MAX_TIME or nil,
+    })
     return 1
 end)
 
@@ -313,24 +300,25 @@ Relisten('player_connect_full', player_connect_full)
 Relisten('player_team', player_team)
 Relisten('game_rules_state_change', game_rules_state_change)
 Relisten('npc_spawned', npc_spawned)
+Relisten('entity_hurt', entity_hurt)
 
 RelistenCust('klesun_event_js_to_lua', klesun_event_js_to_lua)
 
 local Main = function()
-	-- how many seconds users can spend on page defined by <CustomUIElement type="GameSetup" layoutfile="..." />
-	GameRules:SetCustomGameSetupTimeout(SETUP_MAX_TIME)
+    -- how many seconds users can spend on page defined by <CustomUIElement type="GameSetup" layoutfile="..." />
+    GameRules:SetCustomGameSetupTimeout(SETUP_MAX_TIME)
     -- how much time on "TEAM SELECT" screen
     GameRules:SetCustomGameSetupAutoLaunchDelay(10)
     -- how many seconds before you start losing gold for not picking a hero
-    GameRules:SetHeroSelectionTime(10)
+    GameRules:SetHeroSelectionTime(30)
     -- the 30 seconds to buy wards after hero pick
     GameRules:SetStrategyTime(0)
     -- Set the duration of the 'radiant versus dire' showcase screen
     GameRules:SetShowcaseTime(0)
     -- how many seconds before Kenarius says "Let's the battle begin!"
     GameRules:SetPreGameTime(0)
-	-- same hero selection enabled
-	GameRules:SetSameHeroSelectionEnabled(true)
+    -- same hero selection enabled
+    GameRules:SetSameHeroSelectionEnabled(true)
 end
 
 return Main

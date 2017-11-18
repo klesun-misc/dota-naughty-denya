@@ -3,11 +3,20 @@
 
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
-    local expoMult = 1.10
+
+    local linearMult = 0.50
+    local expSpeed = 0.012
+    local exp = 3.8
+    local postExpMult = 0.10
     local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
     local goalMark = Entities:FindByName(nil, 'creep_goal_mark')
     local point = spawnMark:GetAbsOrigin()
     local goal = goalMark:GetAbsOrigin()
+
+    local GetTimeFactor = function()
+        local seconds = GameRules:GetGameTime()
+        return seconds * linearMult + math.pow(expSpeed * seconds, exp) * postExpMult
+    end
 
     local SpawnUnit = function(dataDrivenName)
         local unit = CreateUnitByName(
@@ -28,10 +37,10 @@ local Spawn = function()
     end
 
     local SpawnCreep = function(wave)
-        local seconds = GameRules:GetGameTime()
+        local timeFactor = GetTimeFactor()
         local golem = SpawnUnit('npc_dota_creature_gnoll_assassin')
-        local hp = 50 + math.pow(seconds, expoMult) * 0.7
-        local dmg = 15 + math.pow(seconds, expoMult) / 35
+        local hp = 50 + timeFactor
+        local dmg = 15 + timeFactor / 15
         golem:SetBaseAttackTime(1)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -47,10 +56,10 @@ local Spawn = function()
     end
 
     local SpawnBoss = function()
-        local seconds = GameRules:GetGameTime()
+        local timeFactor = GetTimeFactor()
         local golem = SpawnUnit('npc_dota_creature_gnoll_boss')
-        local hp = 1000 + math.pow(seconds, expoMult) * 7
-        local dmg = 15 + math.pow(seconds, expoMult) / 4
+        local hp = 1000 + timeFactor * 6
+        local dmg = 30 + timeFactor / 6
         golem:SetBaseAttackTime(2)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -63,10 +72,11 @@ local Spawn = function()
     end
 
     local SpawnDragon = function()
-        local seconds = GameRules:GetGameTime()
+        local timeFactor = GetTimeFactor()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
-        local hp = 300 + math.pow(seconds, expoMult) * 1.75
-        local dmg = 15 + math.pow(seconds, expoMult) / 8
+        unit:AddNewModifier(unit, nil, 'MODIFIER_STATE_FLYING ', {duration = -1})
+        local hp = 300 + timeFactor * 2
+        local dmg = 20 + timeFactor / 9
         unit:SetBaseAttackTime(2)
         unit:SetBaseDamageMin(dmg)
         unit:SetBaseDamageMax(dmg)
@@ -75,7 +85,7 @@ local Spawn = function()
         unit:SetBaseMoveSpeed(350)
         unit:SetMana(200)
 
-        GameRules:SendCustomMessage('Boss spawned with hp: ' .. math.floor(hp) ..' dmg: ' .. math.floor(dmg), DOTA_TEAM_FIRST, 0)
+        GameRules:SendCustomMessage('Dragon spawned with hp: ' .. math.floor(hp) ..' dmg: ' .. math.floor(dmg), DOTA_TEAM_FIRST, 0)
     end
 
     local seconds = GameRules:GetGameTime()

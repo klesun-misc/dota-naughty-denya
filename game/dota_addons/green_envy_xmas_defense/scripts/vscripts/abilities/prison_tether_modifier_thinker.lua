@@ -24,7 +24,7 @@ end
 
 function prison_tether_modifier_thinker:OnIntervalThink()
 	if IsServer() then
-		if GameRules:GetGameTime() < startTime + 10 then 
+		---if GameRules:GetGameTime() < startTime + 10 then 
 			local enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), self:GetParent():GetAbsOrigin(), nil, 86, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE )
 			if #enemies > 0 then
 				for _,enemy in pairs(enemies) do
@@ -42,9 +42,9 @@ function prison_tether_modifier_thinker:OnIntervalThink()
 					end
 				end
 			end
-		else
-			UTIL_Remove(self:GetParent())
-		end
+		--else
+		---	UTIL_Remove(self:GetParent())
+		--end
 	end
 end
 

@@ -1,10 +1,11 @@
 "AddonInfo"
 {
-	"TeamCount" 	"2"
-	"maps"		"green_envy_xmas_defense"
-	"IsPlayable"	"1"
-	"green_envy_xmas_defense"
-	{
-		"MaxPlayers"	"4"
-	}
+    "TeamCount"     "2"
+    "maps"        "green_envy_xmas_defense"
+	"addontagline"					"ENVY"
+    "IsPlayable"    "1"
+    "green_envy_xmas_defense"
+    {
+        "MaxPlayers"    "4"
+    }
 }

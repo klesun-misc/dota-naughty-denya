@@ -34,6 +34,9 @@ function self:t_abil(v) return v end
 ---@return CDOTA_BaseNPC
 function self:t_npc(v) return v end
 
+---@return CDOTA_BaseNPC_Hero
+function self:t_hero(v) return v end
+
 ---@return CBaseEntity
 function self:t_ent(v) return v end
 

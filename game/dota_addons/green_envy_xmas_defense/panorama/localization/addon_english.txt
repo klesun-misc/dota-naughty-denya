@@ -1,0 +1,56 @@
+"addon"
+{
+    "Language"        "English"
+    "Tokens"
+    {
+
+        "addonname"                                 "Green Envy X-Mas Defense"
+        "addon_game_name"                           "Green Envy X-Mas Defense"
+
+        // Usage
+        //  <br> for break lines
+        //  • for bullets
+        //  <font color='#hex'>text</font>  for color
+        //  <b>text</b> for bold        
+        "loading_screen_rules_title"   "Green Envy X-Mas Defense Rules"
+        "loading_screen_rules_title_dire"   "Green Envy X-Mas Offense Rules"
+		
+        "loading_screen_rules_text_radiant" "
+			• You are a <font color='#00ffff'>Sentinel</font><br/>
+			• You <font color='#00ff00'>protect</font><br/>
+			• You build <font color='#88aaff'>towers</font> to prolong life of your <font color='#00cc88'>Christmas Tree</font><br/>
+			• You win if your <font color='#00ff00'>Christmas Tree</font> lives for <font color='#ffff00'>20 minutes</font><br/>
+			<br/>
+			• Anti-Army Tower is the main damage dealer.<br/>
+			  If you don't up it early, you gonna have a bad time.<br/>
+			  <br/>
+			• Healing Tower is needed to keep tanking without dying<br/>
+			  while your other towers deal damage to enemies<br/>
+			  <br/>
+			• There is a convenient narrow path in the middle of the map.<br/>
+			  You can put towers on cliffs unreachable to monsters.<br/>
+			  <br/>
+			• Spawning tower can be useful for both tanking and damage deal.<br/>
+			  It requires good microcontrolling though.<br/>
+			  If you loose all units, you likely won't survive.
+		"
+        "loading_screen_rules_text_dire" "
+			• You are the <font color='#cc8800'>Scourge</font><br/>
+			• You <font color='#ff0000'>attack</font><br/>
+			• You build barracks to give birth to the <font color='#ffaa00'>creeps</font><br/>
+			• <font color='#ffaa00'>Creeps</font> hate the <font color='#00ff00'>Christmas Tree</font> same as you do<br/>
+			• You win when <font color='#00ff00'>Christmas Tree</font> is dead<br/>
+			<br/>
+			• Keep close to your creeps to gain experience when they die.<br/>
+			<br/>
+			• Creeps spawned by barracks grant you gold.<br/>
+			<br/>
+			• Each barrack can up HP or Damage several times.<br/>
+			  Each next upgrade is better than previous.<br/>
+			<br/>
+			• Melee creeps grant you more gold.<br/>
+			<br/>
+			• Wizard creeps cause more trouble to your enemy.
+		"
+    }
+}

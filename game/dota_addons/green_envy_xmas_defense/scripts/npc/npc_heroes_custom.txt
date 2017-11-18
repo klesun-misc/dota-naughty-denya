@@ -3,25 +3,40 @@
 // the specified key-value combinations.  Use override_hero <hero_to_override> for this.
 "DOTAHeroes"
 {
-	//=================================================================================================================
-	// HERO: Templar Assassin
-	//=================================================================================================================
-	"npc_dota_hero_templar_assassin_template"
-	{
-		"override_hero"				"npc_dota_hero_templar_assassin"
-		"AbilityLayout"             "5"
-		"Ability1"					"build_anti_army_tower"
-		"Ability2"					"build_healing_tower"
-		"Ability3"					"build_spawning_tower"
-		"Ability4"					"build_anti_boss_tower"
-		"Ability5"					"build_prison_tower"
-		"VisionNighttimeRange"		"1800"
-	}
-	"npc_dota_hero_barrack_builder"
-	{
-		"override_hero"				"npc_dota_hero_lycan"
-		"AbilityLayout"             "1"
-		"Ability1"					"build_melee_barracks"
-		"VisionNighttimeRange"		"1800"
-	}
+    // let's use vengeful spirit model instead of Lanaya, since Lanaya is
+    // the default hero and most our (not so strong) competitors will use her
+    "npc_dota_hero_tower_builder"
+    {
+        "override_hero"                "npc_dota_hero_vengefulspirit"
+        "AbilityLayout"             "5"
+        "Ability1"                    "build_anti_army_tower"
+        "Ability2"                    "build_healing_tower"
+        "Ability3"                    "build_spawning_tower"
+        "Ability4"                    "build_anti_boss_tower"
+        "Ability5"                    "build_prison_tower"
+        "VisionNighttimeRange"        "1800"
+        "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackRange"		"100"
+
+        // at some point her max HP becomes lower than single boss attack and nothing
+        // can be done about that except not getting hit which makes hel towers useless
+        // so we set pretty big str increment so she had more hp
+        "AttributeStrengthGain"        "5.0000" // instead of 2.1
+        // after ~10 minute all damage is dealt by towers and her attack are almost nothing  - fix
+        "AttributeAgilityGain"        "7.5000" // instead of 2.7
+
+    }
+    "npc_dota_hero_barrack_builder"
+    {
+        "override_hero"                "npc_dota_hero_lycan"
+        "AbilityLayout"             "2"
+        "Ability1"                    "build_melee_barracks"
+        "Ability2"                    "build_wizard_barracks"
+        "VisionNighttimeRange"        "1800"
+
+        // dire should be weaker than radiant, since they
+        // would just lure them over the towers and kill otherwise
+        "AttributeBaseStrength" "3"  instead of 25
+        "AttributeBaseAgility" "1"  instead of 16
+    }
 }

@@ -4,23 +4,23 @@ LinkLuaModifier("prison_tether_modifier", "abilities/prison_tether_modifier.lua"
 LinkLuaModifier( "prison_tether_modifier_thinker", "abilities/prison_tether_modifier_thinker.lua", LUA_MODIFIER_MOTION_NONE )
 
 function prison_tether:CastFilterResultTarget (target)
-	if self:GetCaster() == target then
-		return UF_FAIL_CUSTOM
-	end
-	
-	if target:IsHero() or target:IsCreep() then
-		return UF_FAIL_CUSTOM
-	end
+    if self:GetCaster() == target then
+        return UF_FAIL_CUSTOM
+    end
+
+    if target:IsHero() or target:IsCreep() then
+        return UF_FAIL_CUSTOM
+    end
 end
 
 function prison_tether:GetCustomCastErrorTarget(target)
-	if self:GetCaster() == target then
-		return "#dota_hud_error_cant_cast_on_self"
-	end
-	
-	if target:IsHero() or target:IsCreep() then
-		return "Ability Can't Target Hero or Creep"
-	end
+    if self:GetCaster() == target then
+        return "#dota_hud_error_cant_cast_on_self"
+    end
+
+    if target:IsHero() or target:IsCreep() then
+        return "Ability Can't Target Hero or Creep"
+    end
 end
 
 function prison_tether:OnSpellStart ()
@@ -39,17 +39,3 @@ function prison_tether:OnSpellStart ()
 	CreateModifierThinker( caster, self, "prison_tether_modifier_thinker", kv, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false )
 
 end
-
---[[function prison_tether:OnIntervalThink()
-		ProjectileManager:CreateLinearProjectile( {
-		Ability				= self,
-		vSpawnOrigin		= self.GetCaster():GetAbsOrigin(),
-		fDistance			= (self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D(),
-		Source				= self:GetCaster(),
-		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		fExpireTime			= GameRules:GetGameTime() + 0.06,
-		bDeleteOnHit		= false,
-	} )
-end--]]
