@@ -55,7 +55,7 @@ local Spawn = function()
 			golem:SetBaseMoveSpeed(350)
 		end
 
-		unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 15.00})
+		golem:AddNewModifier(nil, nil, 'modifier_phased', {duration = 15.00})
         golem:AddNewModifier(golem, nil, 'modifier_kill', {duration = 90})
 
         if wave % 5 == 0 then
