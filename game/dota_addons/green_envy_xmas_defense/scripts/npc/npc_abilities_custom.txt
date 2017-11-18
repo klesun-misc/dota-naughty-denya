@@ -359,40 +359,6 @@
 			
 			"partricle"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 		}
-		"ScriptFile"				"abilities/prison_tether"
-		"Modifiers"
-		{
-			"modifier_tower_tether"
-			{
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
-						"EffectAttachType"	"attach_hitloc"
-						"Target"			"TARGET"
-						
-						"ControlPointEntities"
-						{
-							"CASTER"	"attach_hitloc"
-							"TARGET"	"attach_hitloc"
-						}
-					}					
-					"ThinkInterval"			"0.03"
-					"OnIntervalThink"
-					{
-						"RunScript"
-						{
-							"ScriptFile"		"heroes/hero_wisp/tether.lua"
-							"Function"			"FireTetherProjectile"
-							"Target"			"TARGET"
-							
-							"tether_line_radius"	"%tether_line_radius"
-							"tick_interval"			"%tether_line_tick_interval"
-						}
-					}
-				}
-			}
-		}
+		"ScriptFile"				"abilities/prison_tether"	
 	}
 }

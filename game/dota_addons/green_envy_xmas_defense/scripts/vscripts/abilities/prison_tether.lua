@@ -1,5 +1,8 @@
 prison_tether = class ({})
 
+LinkLuaModifier("prison_tether_modifier", "abilities/prison_tether_modifier.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "prison_tether_modifier_thinker", "abilities/prison_tether_modifier_thinker.lua", LUA_MODIFIER_MOTION_NONE )
+
 function prison_tether:CastFilterResultTarget (target)
 	if self:GetCaster() == target then
 		return UF_FAIL_CUSTOM
@@ -25,29 +28,28 @@ function prison_tether:OnSpellStart ()
 	local casterTower = caster:GetAbsOrigin()
 	local targetTower = self:GetCursorTarget():GetAbsOrigin()
 	local distance = (targetTower - casterTower):Length2D()
-	local projectileInfo =
-	{
-		Ability	= self,
-		EffectName = "particles/units/heroes/hero_wisp/wisp_tether.vpcf",
-		vSpawnOrigin = casterTower,
-		fStartRadius = 64,
-		fEndRadius = 64,
-		vVelocity = 500,
-		fDistance = 700,
-		Source = caster,
-		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-		iUnitTargetType = DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_BASIC
-	}
-	ProjectileManager:CreateLinearProjectile(projectileInfo)
-	--local pfx = ParticleManager:CreateParticle(effectName, PATTACH_ABSORIGIN, caster)
-	--ParticleManager:SetParticleControl(pfx, 0, casterTower)
-	--ParticleManager:SetParticleControl(pfx, 1, targetTower)
+	local kv = {}
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_tether.vpcf", PATTACH_ABSORIGIN, self:GetCursorTarget() )
+	
+	ParticleManager:SetParticleControl(particle, 0, targetTower)
+	ParticleManager:SetParticleControl(particle, 1, casterTower)
+
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self:GetCursorTarget(), "prison_tether_modifier", { duration = 10 })	
+
+	CreateModifierThinker( caster, self, "prison_tether_modifier_thinker", kv, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false )
 
 end
 
-function prison_tether:OnProjectileHit(hTarget, vLocation)
-	print("xyu")
-	if hTarget ~= nil then 
-		print('somebody is here')
-	end
-end
+--[[function prison_tether:OnIntervalThink()
+		ProjectileManager:CreateLinearProjectile( {
+		Ability				= self,
+		vSpawnOrigin		= self.GetCaster():GetAbsOrigin(),
+		fDistance			= (self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D(),
+		Source				= self:GetCaster(),
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		fExpireTime			= GameRules:GetGameTime() + 0.06,
+		bDeleteOnHit		= false,
+	} )
+end--]]
