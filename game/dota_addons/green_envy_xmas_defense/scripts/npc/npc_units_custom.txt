@@ -283,7 +283,7 @@
         "AttackAcquisitionRange"    "1200"
         "AttackRange"                "450"
         "ProjectileModel"            "particles/base_attacks/fountain_attack.vpcf"
-        "ProjectileSpeed"            "150"
+        "ProjectileSpeed"            "500"
         "ProjectileCollisionSize"    "0"
         "Ability1"    "satyr_hellcaller_unholy_aura"
     }

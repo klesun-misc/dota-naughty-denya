@@ -17,10 +17,10 @@ build_wizard_barracks = build_tower_base.MakeAbility({
         if spell ~= nil then
             spell:ToggleAutoCast()
         end
-        local dmgBase = def(abil:GetSpecialValueFor('dmg_base'), 8)
-        local dmgMult = def(abil:GetSpecialValueFor('dmg_mult'), 1.75)
+        local dmgBase = def(abil:GetSpecialValueFor('dmg_base'), 16)
+        local dmgMult = def(abil:GetSpecialValueFor('dmg_mult'), 1.25)
         local hpBase = def(abil:GetSpecialValueFor('hp_base'), 120)
-        local hpMult = def(abil:GetSpecialValueFor('hp_mult'), 1.75)
+        local hpMult = def(abil:GetSpecialValueFor('hp_mult'), 1.25)
         local dmg = dmgBase * math.pow(dmgMult, abil:GetLevel() - 1)
         local creepHp = hpBase * math.pow(hpMult, abil:GetLevel() - 1)
         tower:SetBaseDamageMin(dmg)

@@ -1,4 +1,6 @@
 
+local lang = require('reloaded.lang')
+
 -- this module encapsulates logic related to waves: who/how often/what modifiers/special events/etc...
 
 local Spawn = function()
@@ -46,8 +48,14 @@ local Spawn = function()
         golem:SetBaseDamageMax(dmg)
         golem:SetBaseMaxHealth(hp)
         golem:SetBaseHealthRegen(5)
-        golem:SetBaseMoveSpeed(350)
+		
+		-- so they skipped Vika's maze fast
+        golem:SetBaseMoveSpeed(1200)
+		lang.Timeout(20).callback = function()
+			golem:SetBaseMoveSpeed(350)
+		end
 
+		unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 15.00})
         golem:AddNewModifier(golem, nil, 'modifier_kill', {duration = 90})
 
         if wave % 5 == 0 then
@@ -74,6 +82,7 @@ local Spawn = function()
     local SpawnDragon = function()
         local timeFactor = GetTimeFactor()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
+		unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = -1})
         unit:AddNewModifier(unit, nil, 'MODIFIER_STATE_FLYING ', {duration = -1})
         local hp = 300 + timeFactor * 2
         local dmg = 20 + timeFactor / 9

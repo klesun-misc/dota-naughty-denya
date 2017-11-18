@@ -197,6 +197,22 @@
         "AbilityCooldown"                "20"
         "AbilityManaCost"               "90"
         "AbilityGoldCost"               "400"
+        "AbilitySpecial"
+        {
+            "01" {
+                "var_type"        "FIELD_INTEGER"
+                "hp_base"        "200"
+            } "02" {
+                "var_type"        "FIELD_INTEGER"
+                "dmg_base"        "20"
+            } "03" {
+                "var_type"        "FIELD_FLOAT"
+                "dmg_mult"        "1.34"
+            } "04" {
+                "var_type"        "FIELD_FLOAT"
+                "hp_mult"        "1.75"
+            }
+        }
     }
     "build_wizard_barracks"
     {
@@ -209,7 +225,23 @@
         "AbilityCastRange"                "1000"
         "AbilityCooldown"                "20"
         "AbilityManaCost"               "90"
-        "AbilityGoldCost"               "700"
+        "AbilityGoldCost"               "650"
+        "AbilitySpecial"
+        {
+            "01" {
+                "var_type"        "FIELD_INTEGER"
+                "hp_base"        "120"
+            } "02" {
+                "var_type"        "FIELD_INTEGER"
+                "dmg_base"        "16"
+            } "03" {
+                "var_type"        "FIELD_FLOAT"
+                "dmg_mult"        "1.26"
+            } "04" {
+                "var_type"        "FIELD_FLOAT"
+                "hp_mult"        "1.25"
+            }
+        }
     }
 
     // unit abilities
@@ -444,7 +476,7 @@
         "AbilityTextureName"            "denis128_buy_damage"
         "AbilityCastPoint"                "0.0"
         "AbilityCooldown"                "0.0"
-        "AbilityGoldCost"               "150"
+        "AbilityGoldCost"               "300"
         "OnSpellStart" {
             "RunScript" {
                 "ScriptFile"    "abilities.lua"
@@ -459,7 +491,7 @@
         "AbilityTextureName"            "denis128_buy_health"
         "AbilityCastPoint"                "0.0"
         "AbilityCooldown"                "0.0"
-        "AbilityGoldCost"               "150"
+        "AbilityGoldCost"               "300"
         "OnSpellStart" {
             "RunScript" {
                 "ScriptFile"    "abilities.lua"
