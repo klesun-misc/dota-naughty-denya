@@ -19,7 +19,7 @@
 			• You are a <font color='#00ffff'>Sentinel</font><br/>
 			• You <font color='#00ff00'>protect</font><br/>
 			• You build <font color='#88aaff'>towers</font> to prolong life of your <font color='#00cc88'>Christmas Tree</font><br/>
-			• You win if your <font color='#00ff00'>Christmas Tree</font> lives for <font color='#ffff00'>20 minutes</font><br/>
+			• You win if your <font color='#00ff00'>Christmas Tree</font> lives for <font color='#ffff00'>25 minutes</font><br/>
 			<br/>
 			• Anti-Army Tower is the main damage dealer.<br/>
 			  If you don't up it early, you gonna have a bad time.<br/>

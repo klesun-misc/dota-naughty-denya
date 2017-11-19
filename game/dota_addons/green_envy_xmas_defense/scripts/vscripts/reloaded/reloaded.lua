@@ -15,7 +15,7 @@ if klesun.playerIdToUserId == nil then klesun.playerIdToUserId = {} end
 if klesun.roledPlayerIds == nil then klesun.roledPlayerIds = {} end
 
 local SETUP_MAX_TIME = 25
-local RADIANT_VICTORY_TIME = 20 * 60
+local RADIANT_VICTORY_TIME = 25 * 60
 local setupStartTime = nil
 
 local botIdToData = {}

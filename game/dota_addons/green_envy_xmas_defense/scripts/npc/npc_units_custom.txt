@@ -74,6 +74,8 @@
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_GROUND"
         "MovementSpeed"                "150"        // Speed.
         "Ability1"                  "black_dragon_splash_attack"
+        "ConsideredHero"			"1"
+        "IsAncient"					"1"
     }
     "npc_dota_creature_gnoll_dragon"
     {
@@ -98,6 +100,8 @@
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_GROUND"
         "MovementSpeed"                "150"        // Speed.
         "Ability1"                  "black_dragon_splash_attack"
+        "ConsideredHero"			"1"
+        "IsAncient"					"1"
     }
 
     // attacks a lot but missiles are extremely slow, so it takes
