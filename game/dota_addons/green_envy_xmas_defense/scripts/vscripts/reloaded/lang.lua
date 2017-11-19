@@ -59,4 +59,10 @@ return {
         end
         rec.doNext(steps)
     end,
+
+    -- 0 is true in lua. sadly this does not go well with
+    -- some dota c++ functions that return 0 on no value
+    Def = function(value, defaultValue)
+        return value ~= 0 and value or defaultValue
+    end,
 }

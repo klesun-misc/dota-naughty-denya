@@ -28,7 +28,7 @@ build_wizard_barracks = build_tower_base.MakeAbility({
         -- 250 is likely something like "default" hp in dota, it is not included to "BaseMaxHealth"
         tower:SetBaseMaxHealth(math.max(creepHp * 4, 1))
 
-        local extraSpell = tower:AddAbility('buy_damage_increase')
+        local extraSpell = tower:AddAbility('buy_damage_increase_ranged')
         extraSpell:SetLevel(1)
         local extraSpell = tower:AddAbility('buy_hp_increase')
         extraSpell:SetLevel(1)

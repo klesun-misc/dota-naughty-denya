@@ -196,19 +196,25 @@ end
 
 IncreaseDamage = function(event)
     local caster = types:t_npc(event.caster)
-    local spell = types:t_abil(event.ability)
-    local dmg = caster:GetAttackDamage() * 1.25
+    local abil = types:t_abil(event.ability)
+    local mult = abil:GetSpecialValueFor('dmg_mult')
+    local dmgMax = lang.Def(abil:GetSpecialValueFor('dmg_max'), 3000)
+    local dmg = caster:GetAttackDamage() * mult
     caster:SetBaseDamageMin(dmg)
     caster:SetBaseDamageMax(dmg)
-    if dmg >= 4000 then
+    if dmg >= dmgMax then
         -- it would be a one-shot kill if we continued
-        caster:RemoveAbility(spell:GetAbilityName())
+        caster:RemoveAbility(abil:GetAbilityName())
     end
 end
 
 IncreaseHp = function(event)
+    local abil = types:t_abil(event.ability)
+    local mult = abil:GetSpecialValueFor('hp_mult')
+    print('Gonna multiply HP by ' .. mult)
+
     local caster = types:t_npc(event.caster)
-    local hp = caster:GetBaseMaxHealth() * 1.15
+    local hp = caster:GetBaseMaxHealth() * mult
     caster:SetBaseMaxHealth(hp)
     -- need to apply any modifier to update npc gui hp numbers
     caster:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.01})
