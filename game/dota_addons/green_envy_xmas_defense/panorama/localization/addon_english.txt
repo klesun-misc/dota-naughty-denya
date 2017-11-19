@@ -50,7 +50,10 @@
 			<br/>
 			• Melee creeps grant you more gold.<br/>
 			<br/>
-			• Wizard creeps cause more trouble to your enemy.
+			• Wizard creeps cause more trouble to your enemy.<br/>
+			<br/>
+			• I advise you to up the abilities before starting to<br/>
+			  spend money on upgrades of barracks.
 		"
     }
 }

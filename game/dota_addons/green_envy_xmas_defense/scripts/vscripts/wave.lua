@@ -6,8 +6,8 @@ local lang = require('reloaded.lang')
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
 
-    local linearMult = 0.50
-    local expSpeed = 0.014
+    local linearMult = 0.85
+    local expSpeed = 0.012
     local exp = 3.6
     local postExpMult = 0.10
     local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
@@ -41,8 +41,8 @@ local Spawn = function()
     local SpawnCreep = function(wave)
         local timeFactor = GetTimeFactor()
         local golem = SpawnUnit('npc_dota_creature_gnoll_assassin')
-        local hp = 50 + timeFactor
-        local dmg = 15 + timeFactor / 15
+        local hp = 60 + timeFactor
+        local dmg = 17 + timeFactor / 15
         golem:SetBaseAttackTime(1)
         golem:SetBaseDamageMin(dmg)
         golem:SetBaseDamageMax(dmg)
@@ -50,8 +50,8 @@ local Spawn = function()
         golem:SetBaseHealthRegen(5)
 		
 		-- so they skipped Vika's maze fast
-        golem:SetBaseMoveSpeed(1500)
-		lang.Timeout(20).callback = function()
+        golem:SetBaseMoveSpeed(3000)
+		lang.Timeout(25).callback = function()
 			golem:SetBaseMoveSpeed(350)
 		end
 

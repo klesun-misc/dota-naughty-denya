@@ -6,7 +6,7 @@ local bgm = require('bgm')
 
 local ChooseTheNeighborest = function(units, range)
     local neighborest = nil
-    local maxNeighbors = 0
+    local maxNeighbors = -1
     for _,unit in pairs(units) do
         local neighborCnt = 0
         for _,neighbor in pairs(units) do
@@ -25,8 +25,6 @@ end
 ---@param attacker CDOTA_BaseNPC
 ---@return CDOTA_BaseNPC
 local ChooseAttackTarget = function(attacker)
-    -- if there is a hero with less than 75% hp - heal him
-    -- else heal the unit with least hp
     local targets = {}
     local ent = Entities:FindInSphere(nil, attacker:GetAbsOrigin(), attacker:GetAttackRange())
     while ent do

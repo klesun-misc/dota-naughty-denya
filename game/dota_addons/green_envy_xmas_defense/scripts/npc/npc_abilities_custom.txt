@@ -60,11 +60,6 @@
         {
             "01"
             {
-                "var_type"        "FIELD_INTEGER"
-                "ad"            "500 501 502 503 504"
-            }
-            "02"
-            {
                 "var_type"        "FIELD_FLOAT"
                 "dmg_mult"        "1.75"
             }
@@ -87,7 +82,7 @@
         "AbilityCastRange"                "1000"
         "AbilityCooldown"                "25"
         "AbilityManaCost"               "60"
-        "AbilityGoldCost"               "600 700 800 900 1000"
+        "AbilityGoldCost"               "600 725 850 975 1100"
 
         "AbilitySpecial"
         {
@@ -118,7 +113,7 @@
             }
         }
         "AbilityManaCost"               "60"
-        "AbilityGoldCost"               "250"
+        "AbilityGoldCost"               "250 275 300 325 350"
 
         "AbilitySpecial"
         {
@@ -165,9 +160,9 @@
         "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
         "AoERadius"                        "60"
         "AbilityCastRange"                "1000"
-        "AbilityCooldown"                "60"
+        "AbilityCooldown"                "90"
         "AbilityManaCost"               "90"
-        "AbilityGoldCost"               "150"
+        "AbilityGoldCost"               "200 250 300 350 400"
         "AbilitySpecial"
         {
             "01" {
