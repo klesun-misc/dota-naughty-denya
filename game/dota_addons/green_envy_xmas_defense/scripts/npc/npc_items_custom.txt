@@ -1,3 +1,18 @@
 "DOTAAbilities"
 {
+    "item_builder_blink_dagger" {
+        "BaseClass" "item_blink"
+        // set item cost to something small so you could not profit from selling it
+        "ItemCost"						"12"
+        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"12.0"
+		"AbilityManaCost"				"0"
+		"AbilitySpecial" {
+			"01" {"var_type" "FIELD_INTEGER" "blink_range" "1200"}
+			"02" {"var_type" "FIELD_FLOAT" "blink_damage_cooldown"	"3.0"}
+			"03" {"var_type" "FIELD_INTEGER" "blink_range_clamp" "960"}
+		}
+    }
 }

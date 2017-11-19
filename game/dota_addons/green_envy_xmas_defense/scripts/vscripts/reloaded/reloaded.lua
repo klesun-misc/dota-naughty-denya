@@ -101,7 +101,7 @@ local dota_player_pick_hero = function(event)
             end)
         end
 		if hero:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
-			local dagger = CreateItem("item_blink", hero, hero)
+			local dagger = CreateItem("item_builder_blink_dagger", hero, hero)
 			dagger:SetPurchaseTime(0)
 			hero:AddItem(dagger)
 		end
