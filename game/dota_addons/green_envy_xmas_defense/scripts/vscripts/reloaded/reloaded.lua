@@ -21,6 +21,7 @@ local setupStartTime = nil
 local botIdToData = {}
 local lastPlayerId = nil
 local debugPlayerIdToReplace = {}
+local userIdToPlayerId = {}
 
 -- listen for Dota game event or update function if already listening
 local Relisten = function(eventName, func)
@@ -64,8 +65,13 @@ local dota_unit_used_ability = function(event) end
 ---@field     hero      string datadriven name
 ---@field     splitscreenplayer number
 local dota_player_pick_hero = function(event)
+    local heroName = event.hero
     local hero = EntIndexToHScript(event.heroindex)
-    local playerId = event.player - 1
+
+    local playerId = userIdToPlayerId[event.player]
+    if not playerId then
+        playerId = userIdToPlayerId['bot']
+    end
 
     local role = klesun.playerIdToRole[playerId]
     if role == 'builder' then
@@ -76,7 +82,6 @@ local dota_player_pick_hero = function(event)
 			debugPlayerIdToReplace[playerId] = {}
 			---@debug
 			local msg = 'Replacing player ' .. playerId .. ' team #' .. PlayerResource:GetTeam(playerId) .. ' hero from ' .. hero:GetUnitName() .. ' to ' .. datadriven
-			GameRules:SendCustomMessage(msg, DOTA_TEAM_GOODGUYS, 0)
 			GameRules:SendCustomMessage(msg, DOTA_TEAM_BADGUYS, 0)
 
             lang.Timeout(0.000001).callback = function()
@@ -136,6 +141,8 @@ local player_connect_full = function(event)
     local defaultTeam = DOTA_TEAM_GOODGUYS
     PlayerResource:SetCustomTeamAssignment(event.PlayerID, defaultTeam)
     klesun.playerIdToRole[event.PlayerID] = defaultRole
+
+    userIdToPlayerId[event.userid] = event.PlayerID
 end
 
 -- happens when you see the "TEAM SELECT" screen
@@ -167,7 +174,6 @@ local SpawnBots = function()
 
     if radBuilerCnt == 0 then
         local toGoodTeam = true
-		GameRules:SendCustomMessage('Ading a bot', DOTA_TEAM_GOODGUYS, 0)
 		GameRules:SendCustomMessage('Ading a bot', DOTA_TEAM_BADGUYS, 0)
 		Tutorial:StartTutorialMode()
         Tutorial:AddBot('npc_dota_hero_vengefulspirit', 'mid', 'unfair', toGoodTeam)
@@ -176,8 +182,8 @@ local SpawnBots = function()
 		klesun.playerIdToRole[botId] = 'builder'
 		table.insert(klesun.roledPlayerIds, botId)
         botIdToData[botId] = {}
-		GameRules:SendCustomMessage('Added the bot ' .. botId, DOTA_TEAM_FIRST, 0)
-		GameRules:SendCustomMessage('Added the bot ' .. botId, DOTA_TEAM_BADGUYS, 0)
+        userIdToPlayerId['bot'] = botId
+        GameRules:SendCustomMessage('Added the bot ' .. botId, DOTA_TEAM_BADGUYS, 0)
     end
 end
 

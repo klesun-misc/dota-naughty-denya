@@ -116,7 +116,7 @@
         "AttackDamageMax"            "110"        // Damage range max.
         "AttackDamageType"            "DAMAGE_TYPE_ArmorPhysical"
         "AttackRate"                "0.25"        // Speed of attack.
-        "AttackAnimationPoint"        "0.4"        // Normalized time in animation cycle to attack.
+        "AttackAnimationPoint"        "0.0"        // Normalized time in animation cycle to attack.
         "AttackRange"                "1200"        // Range within a target can be attacked.
         "ProjectileModel"            "particles/base_attacks/ranged_tower_good.vpcf" // Particle system model for projectile.
         "ProjectileSpeed"            "100"        // Speed of projectile.
@@ -124,6 +124,10 @@
         "RingRadius"                "64"
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_NONE"            // Type of locomotion - ground, air
         "StatusHealth"                "400"        // Base health.
+        "BountyGoldMin"                "100"
+        "BountyGoldMax"                "100"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
 
     // tower that deals splash damage
@@ -139,7 +143,7 @@
         "AttackDamageMax"            "75"        // Damage range max.
         "AttackDamageType"            "DAMAGE_TYPE_ArmorPhysical"
         "AttackRate"                "2"        // Speed of attack.
-        "AttackAnimationPoint"        "0.4"        // Normalized time in animation cycle to attack.
+        "AttackAnimationPoint"        "0.0"        // Normalized time in animation cycle to attack.
         "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
         "AttackRange"                "800"        // Range within a target can be attacked.
         "ProjectileModel"            "particles/base_attacks/ranged_tower_bad.vpcf" // Particle system model for projectile.
@@ -148,7 +152,11 @@
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_NONE"            // Type of locomotion - ground, air
         "StatusHealth"                "600"        // Base health.
         "StatusHealthRegen"            "10.0"        // Mana regeneration rate.
+        "BountyGoldMin"                "100"
+        "BountyGoldMax"                "100"
         "Ability1"                  "black_dragon_splash_attack"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
 
         // I guess this is what tells creeps to attack heroes instead of tower
         "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
@@ -178,7 +186,11 @@
         "RingRadius"                "64"
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_NONE"            // Type of locomotion - ground, air
         "StatusHealth"                "800"        // Base health.
+        "BountyGoldMin"                "100"
+        "BountyGoldMax"                "100"
         "Ability1"                    "prison_tether"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
 
         // I guess this is what tells creeps to attack heroes instead of tower
         "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
@@ -204,6 +216,10 @@
         "StatusHealth"                "600"        // Base health.
         "StatusMana"                "800"        // Base health.
         "StatusManaRegen"            "3.0"        // Mana regeneration rate.
+        "BountyGoldMin"                "100"
+        "BountyGoldMax"                "100"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
         "Ability1"                  "tower_heal"
     }
     "npc_dota_spawning_tower"
@@ -221,6 +237,10 @@
         "StatusMana"                "800"        // Base health.
         "StatusManaRegen"            "3.0"        // Mana regeneration rate.
         "Ability1"                  "spawn_tower_creep"
+        "BountyGoldMin"                "100"
+        "BountyGoldMax"                "100"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
     "npc_dota_envy_melee_barracks"
     {
@@ -234,7 +254,11 @@
         "StatusHealth"                "1500"        // Base health.
         "StatusMana"                "800"        // Base health.
         "StatusManaRegen"            "3.0"        // Mana regeneration rate.
+        "BountyGoldMin"                "300"
+        "BountyGoldMax"                "300"
         "Ability1"                  "train_envy_melee_creep"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
     "npc_dota_envy_wizard_barracks"
     {
@@ -246,7 +270,11 @@
         "MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_NONE"
 		"StatusMana"                "800"        // Base health.
         "StatusManaRegen"            "3.0"        // Mana regeneration rate.
+        "BountyGoldMin"                "400"
+        "BountyGoldMax"                "400"
         "Ability1"                  "train_envy_wizard_creep"
+        "MinimapIcon"					"minimap_siege"
+        "MinimapIconSize"				"-1"
     }
     "npc_dota_tower_creep"
     {
@@ -264,6 +292,8 @@
         "MovementTurnRate"            "0.5"        // Turning rate.
         "AttackRange"                "100"        // Range within a target can be attacked.
         "AttackRate"                "1.0"        // Speed of attack.
+        "BountyGoldMin"                "1"
+        "BountyGoldMax"                "5"
         "AttackDamageType"            "DAMAGE_TYPE_ArmorPhysical"
     }
     "envy_wizard_creep"
