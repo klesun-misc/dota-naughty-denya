@@ -7,8 +7,8 @@ local Spawn = function()
     local waveInterval = 6.0 -- seconds
 
     local linearMult = 0.50
-    local expSpeed = 0.012
-    local exp = 3.8
+    local expSpeed = 0.014
+    local exp = 3.6
     local postExpMult = 0.10
     local spawnMark = Entities:FindByName(nil, 'creep_spawn_mark')
     local goalMark = Entities:FindByName(nil, 'creep_goal_mark')
