@@ -152,8 +152,8 @@
                 "Target"                "POINT"
             }
         }
-		"AbilityManaCost"               "60"
-		"AbilityGoldCost"               "80"
+		"AbilityManaCost"               "65"
+		"AbilityGoldCost"               "175"
 	}
 
     "build_spawning_tower"
@@ -463,9 +463,9 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"		
 		"AbilityTextureName"		"crystal_maiden_freezing_field"
-		"AbilityCastRange"			"1000"
+		"AbilityCastRange"			"1100"
 		"AbilityCastPoint"			"0.2"
-		"AbilityCooldown"			"10"
+		"AbilityCooldown"			"15"
 		"precache"
 		{
 			"partricle"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"

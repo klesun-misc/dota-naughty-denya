@@ -11,6 +11,10 @@ function prison_tether:CastFilterResultTarget (target)
     if target:IsHero() or target:IsCreep() then
         return UF_FAIL_CUSTOM
     end
+
+    if target:HasModifier("prison_tether_modifier") then
+    	return UF_FAIL_CUSTOM
+	end
 end
 
 function prison_tether:GetCustomCastErrorTarget(target)
@@ -21,6 +25,10 @@ function prison_tether:GetCustomCastErrorTarget(target)
     if target:IsHero() or target:IsCreep() then
         return "Ability Can't Target Hero or Creep"
     end
+
+    if target:HasModifier("prison_tether_modifier") then
+    	return "Targeted Tower Is Already Tethered"
+	end
 end
 
 function prison_tether:OnSpellStart ()
@@ -29,13 +37,13 @@ function prison_tether:OnSpellStart ()
 	local targetTower = self:GetCursorTarget():GetAbsOrigin()
 	local distance = (targetTower - casterTower):Length2D()
 	local kv = {}
+
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_tether.vpcf", PATTACH_ABSORIGIN, self:GetCursorTarget() )
-	
 	ParticleManager:SetParticleControl(particle, 0, targetTower)
 	ParticleManager:SetParticleControl(particle, 1, casterTower)
 
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self:GetCursorTarget(), "prison_tether_modifier", { duration = 10 })	
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self:GetCursorTarget(), "prison_tether_modifier", {})	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster(), "prison_tether_modifier", {})	
 
 	CreateModifierThinker( caster, self, "prison_tether_modifier_thinker", kv, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false )
-
 end
