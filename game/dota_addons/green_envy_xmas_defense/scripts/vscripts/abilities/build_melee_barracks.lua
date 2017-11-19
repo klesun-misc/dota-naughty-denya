@@ -35,7 +35,9 @@ build_melee_barracks = build_tower_base.MakeAbility({
 
         -- need to apply any modifier to update npc gui hp numbers
         tower:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.05})
+        tower:AddNewModifier(nil, nil, 'modifier_phased', {duration = -1})
         tower:SetControllableByPlayer(abil:GetCaster():GetMainControllingPlayer(), false)
+        tower:SetHullRadius(-1)
     end,
     ---@param abil CDOTABaseAbility
     CustomPointCheck = function(point, abil)
