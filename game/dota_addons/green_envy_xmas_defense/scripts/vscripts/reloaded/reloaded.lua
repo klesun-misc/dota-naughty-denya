@@ -99,6 +99,8 @@ local dota_player_pick_hero = function(event)
                 end
                 return delay
             end)
+            local abil = hero:AddAbility('bot_handicap_aura')
+            abil:SetLevel(1)
         end
 		if hero:GetTeamNumber() ~= DOTA_TEAM_BADGUYS then
 			local dagger = CreateItem("item_builder_blink_dagger", hero, hero)

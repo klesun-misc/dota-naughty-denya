@@ -283,6 +283,38 @@
         }
     }
 
+    // bots play worse than real players, this handicap should balance them
+    "bot_handicap_aura"
+    {
+        "BaseClass"                        "ability_datadriven"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL"
+        "AbilityCastRange"                "1200"
+        "AbilityTextureName"            "denis128_book"
+        "MaxLevel"                        "1"
+        "Modifiers" {
+            "bot_handicap_aura_emitter" {
+                "IsAura"                "1"
+                "Passive"                "1"
+                "IsHidden"                "1"
+                "IsDebuff"                "0"
+
+                "Aura"                     "bot_handicap_aura_receiver"
+                "Aura_Radius"             "1200"
+                "Aura_Teams"             "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                "Aura_Types" "DOTA_UNIT_TARGET_ALL"
+                "Aura_ApplyToCaster"     "1"
+            }
+            "bot_handicap_aura_receiver" {
+                "IsDebuff"            "1"
+                "Properties" {
+                    "MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"20"
+                }
+            }
+        }
+    }
+
     "tower_heal"
     {
         "BaseClass"                        "ability_datadriven"

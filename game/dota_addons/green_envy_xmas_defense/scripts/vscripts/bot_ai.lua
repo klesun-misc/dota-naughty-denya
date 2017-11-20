@@ -126,7 +126,7 @@ local GiveOrders = function(hero, botPlayerId)
     end
 
     upAbilities(hero)
-    if (asEnt:GetAbsOrigin() - healRegion):Length() > 850
+    if (asEnt:GetAbsOrigin() - healRegion):Length() > 600
     or (asEnt:GetAbsOrigin() - healRegion):Length() > 250 and HpPerc(hero) < 0.33
     then
         ExecuteOrderFromTable({
