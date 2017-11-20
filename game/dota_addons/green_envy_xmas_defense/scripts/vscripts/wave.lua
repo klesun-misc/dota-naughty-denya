@@ -3,6 +3,22 @@ local lang = require('reloaded.lang')
 
 -- this module encapsulates logic related to waves: who/how often/what modifiers/special events/etc...
 
+local GetClosestEnemy = function(attacker)
+    local distance = 400
+    local ent = Entities:FindInSphere(nil, attacker:GetAbsOrigin(), distance)
+    while ent do
+        if not ent:IsAlive()
+        or type(ent.IsHero) ~= 'function'
+        or not ent:IsOpposingTeam(attacker:GetTeamNumber())
+        or ent:GetHealth() < 1
+        then --[[skip]] else
+            return ent
+        end
+        ent = Entities:FindInSphere(ent, attacker:GetAbsOrigin(), distance)
+    end
+    return nil
+end
+
 local Spawn = function()
     local waveInterval = 6.0 -- seconds
 
@@ -29,11 +45,37 @@ local Spawn = function()
         -- need to apply any modifier to update npc gui hp numbers
         unit:AddNewModifier(nil, nil, 'modifier_stunned', {duration = 0.05})
 
-        ExecuteOrderFromTable({
+        local goToGoalOrder = {
             UnitIndex = unit:GetEntityIndex(),
             OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
             Position = goal, Queue = true
-        })
+        }
+        ExecuteOrderFromTable(goToGoalOrder)
+
+        local lastLocation = nil
+        unit:SetThink(function()
+            local currentLocation = unit:GetAbsOrigin()
+            if not lastLocation
+            or lastLocation:__sub(currentLocation):Length() > 0.0001
+            or unit:IsAttacking()
+            or not unit:IsAlive()
+            then --[[skip]] else
+                -- creep is either stuck or done moving to the ancient
+                -- if the former - attack nearest tower, if the latter, re-execute order to go to ancient
+                local enemy = GetClosestEnemy(unit)
+                if enemy then
+                    ExecuteOrderFromTable({
+                        UnitIndex = unit:entindex(),
+                        OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+                        TargetIndex = enemy:entindex(),
+                    })
+                else
+                    ExecuteOrderFromTable(goToGoalOrder)
+                end
+            end
+            lastLocation = currentLocation
+            return 1
+        end)
 
         return unit
     end
@@ -84,6 +126,8 @@ local Spawn = function()
         local unit = SpawnUnit('npc_dota_creature_gnoll_dragon')
 		unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = -1})
         unit:AddNewModifier(unit, nil, 'MODIFIER_STATE_FLYING ', {duration = -1})
+        unit:AddNewModifier(unit, nil, 'MODIFIER_STATE_NO_UNIT_COLLISION ', {duration = -1})
+        unit:AddNewModifier(unit, nil, 'MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY ', {duration = -1})
         local hp = 300 + timeFactor * 2
         local dmg = 20 + timeFactor / 9
         unit:SetBaseAttackTime(2)
