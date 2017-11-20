@@ -30,9 +30,11 @@
     "npc_dota_hero_barrack_builder"
     {
         "override_hero"                "npc_dota_hero_lycan"
-        "AbilityLayout"             "2"
+        "AbilityLayout"             "4"
         "Ability1"                    "build_melee_barracks"
         "Ability2"                    "build_wizard_barracks"
+        "Ability3"                    "puck_phase_shift"
+        "Ability4"                    "dire_xp_gain_aura"
 		"VisionDaytimeRange"        "1200"
         "VisionNighttimeRange"        "600"
 

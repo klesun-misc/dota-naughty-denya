@@ -138,6 +138,16 @@ local SpawnEnvyCreep = function(event, params)
     if cost < 0 then
         local playerId = event.caster:GetPlayerOwnerID()
         PlayerResource:ModifyGold(playerId, -cost, true, 0)
+
+        event.caster:EmitSound("DOTA_Item.Hand_Of_Midas")
+       	local midas_particle = ParticleManager:CreateParticle(
+            "particles/items2_fx/hand_of_midas.vpcf",
+            PATTACH_ABSORIGIN_FOLLOW, event.caster
+        )
+       	ParticleManager:SetParticleControlEnt(
+            midas_particle, 1, event.caster.envyNs.builder, PATTACH_POINT_FOLLOW,
+            "attach_hitloc", event.caster.envyNs.builder:GetAbsOrigin(), false
+        )
     end
 
     local builder = event.caster.envyNs.builder
@@ -256,5 +266,7 @@ GrantXpToEnemyHeroes = function(event)
     if unit and hero and hero.AddExperience then
         local xp = unit:GetDeathXP() * 1.50
         hero:AddExperience(xp, DOTA_ModifyXP_Unspecified, false, true)
+        local gold = math.max(unit:GetGoldBounty() * 0.1, 1)
+        hero:ModifyGold(gold, false, 0)
     end
 end

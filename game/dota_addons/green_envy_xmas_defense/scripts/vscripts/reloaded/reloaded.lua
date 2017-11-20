@@ -114,8 +114,12 @@ local dota_player_pick_hero = function(event)
     end
 
     if hero:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-        local abil = hero:AddAbility('dire_xp_gain_aura')
+        local abil = hero:FindAbilityByName('dire_xp_gain_aura')
+            or hero:AddAbility('dire_xp_gain_aura')
         abil:SetLevel(1)
+        local abil = hero:FindAbilityByName('puck_phase_shift')
+            or hero:AddAbility('puck_phase_shift')
+        abil:SetLevel(4)
     end
 end
 

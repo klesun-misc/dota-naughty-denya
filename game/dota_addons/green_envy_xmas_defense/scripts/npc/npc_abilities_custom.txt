@@ -255,6 +255,7 @@
         "Modifiers"
         {
             "modifier_xp_gain_aura_emitter"
+            
             {
                 "IsAura"                "1"
                 "Passive"                "1"
@@ -273,10 +274,17 @@
                 //"Attributes"         "MODIFIER_ATTRIBUTE_MULTIPLE"
                 "OnDeath"
                 {
-                    "RunScript"
-                    {
+                    "RunScript" {
                         "ScriptFile"        "abilities.lua"
                         "Function"            "GrantXpToEnemyHeroes"
+                    }
+                    "FireEffect" {
+                        "EffectName"        "particles/items2_fx/hand_of_midas.vpcf"
+                        "EffectAttachType"  "start_at_customorigin"
+                        "ControlPointEntities" {
+                            "CASTER"    "attach_attack1"
+                            "TARGET"    "follow_origin"
+                        }
                     }
                 }
             }
@@ -526,10 +534,10 @@
         "AbilityTextureName"            "denis128_buy_damage"
         "AbilityCastPoint"                "0.0"
         "AbilityCooldown"                "0.5"
-        "AbilityGoldCost"               "300"
+        "AbilityGoldCost"               "350"
         "AbilitySpecial" {
             "01" {"var_type" "FIELD_FLOAT" "dmg_mult" "1.20"}
-            "02" {"var_type" "FIELD_FLOAT" "dmg_max" "2000"}
+            "02" {"var_type" "FIELD_FLOAT" "dmg_max" "1500"}
         }
         "OnSpellStart" {
             "RunScript" {
