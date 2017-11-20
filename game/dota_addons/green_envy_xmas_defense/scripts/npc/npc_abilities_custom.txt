@@ -47,22 +47,15 @@
         }
     }
 
-    "build_anti_boss_tower"
-    {
+    "build_anti_boss_tower" {
         "BaseClass"                     "ability_lua"
         "ScriptFile"                    "abilities/build_anti_boss_tower.lua"
         "AbilityTextureName"            "denis128"
         "MaxLevel"                         "5"
 
         "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-        "AbilityDamage"                    "500 501 502 503 504"
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"        "FIELD_FLOAT"
-                "dmg_mult"        "1.75"
-            }
+        "AbilitySpecial" {
+            "01" {"var_type" "FIELD_FLOAT" "dmg_mult" "1.75"}
         }
         "AoERadius"                        "60"
         "AbilityCastRange"                "1000"
@@ -70,8 +63,7 @@
         "AbilityManaCost"               "60"
         "AbilityGoldCost"               "150"
     }
-    "build_anti_army_tower"
-    {
+    "build_anti_army_tower" {
         "BaseClass"                     "ability_lua"
         "ScriptFile"                    "abilities/build_anti_army_tower.lua"
         "AbilityTextureName"            "denis_army128"
@@ -84,13 +76,8 @@
         "AbilityManaCost"               "60"
         "AbilityGoldCost"               "600 725 850 975 1100"
 
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"        "FIELD_FLOAT"
-                "dmg_mult"        "1.25"
-            }
+        "AbilitySpecial" {
+            "01" {"var_type" "FIELD_FLOAT" "dmg_mult" "1.25"}
         }
     }
     "build_healing_tower"
@@ -103,10 +90,8 @@
         "AoERadius"                        "60"
         "AbilityCastRange"                "1000"
         "AbilityCooldown"                "6"
-        "OnSpellStart"
-        {
-            "RunScript"
-            {
+        "OnSpellStart" {
+            "RunScript" {
                 "ScriptFile"            "abilities.lua"
                 "Function"                "BuildHealingTower"
                 "Target"                "POINT"
@@ -117,36 +102,20 @@
 
         "AbilitySpecial"
         {
-            "01"
-            {
-                "var_type"        "FIELD_FLOAT"
-                "heal_mult"        "1.25"
-            }
-            "02"
-            {
-                "var_type"        "FIELD_INTEGER"
-                "heal_base"        "25"
-            }
+            "01" {"var_type" "FIELD_FLOAT" "heal_mult" "1.25"}
+            "02" {"var_type" "FIELD_INTEGER" "heal_base" "25"}
         }
     }
     "build_prison_tower"
     {
-        "BaseClass"                     "ability_datadriven"
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/build_prison_tower.lua"
         "AbilityTextureName"            "denis128_prison"
         "MaxLevel"                         "5"
         "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
         "AoERadius"                        "60"
         "AbilityCastRange"                "1000"
         "AbilityCooldown"                "5"
-        "OnSpellStart"
-        {
-            "RunScript"
-            {
-                "ScriptFile"            "abilities.lua"
-                "Function"                "BuildPrisonTower"
-                "Target"                "POINT"
-            }
-        }
 		"AbilityManaCost"               "65"
 		"AbilityGoldCost"               "175"
 	}
