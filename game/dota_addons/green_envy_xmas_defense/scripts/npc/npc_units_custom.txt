@@ -132,6 +132,11 @@
         "BountyGoldMax"                "100"
         "MinimapIcon"					"minimap_siege"
         "MinimapIconSize"				"-1"
+
+        // I guess this is what tells creeps to attack heroes instead of tower
+        "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+        "CombatClassDefend"            "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+        "UnitRelationshipClass"        "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
     }
 
     // tower that deals splash damage
@@ -225,6 +230,11 @@
         "MinimapIcon"					"minimap_siege"
         "MinimapIconSize"				"-1"
         "Ability1"                  "tower_heal"
+
+        // I guess this is what tells creeps to attack heroes instead of tower
+        "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+        "CombatClassDefend"            "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+        "UnitRelationshipClass"        "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
     }
     "npc_dota_spawning_tower"
     {
@@ -245,6 +255,11 @@
         "BountyGoldMax"                "100"
         "MinimapIcon"					"minimap_siege"
         "MinimapIconSize"				"-1"
+
+        // I guess this is what tells creeps to attack heroes instead of tower
+        "CombatClassAttack"            "DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+        "CombatClassDefend"            "DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+        "UnitRelationshipClass"        "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
     }
     "npc_dota_envy_melee_barracks"
     {
