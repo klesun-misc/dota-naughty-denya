@@ -7,6 +7,16 @@ local types = require('types')
 local lastCursorPosition = Vector(0,0,0);
 local defaultTowerRadius = 64
 
+local HasPathFromSpawnPoint = function(point)
+    if Entities and Entities.FindByName and GridNav then
+        local spawnEnt = Entities:FindByName(nil, 'creep_spawn_mark')
+        if spawnEnt and not GridNav:CanFindPath(point, spawnEnt:GetAbsOrigin()) then
+            return false
+        end
+    end
+    return true
+end
+
 local NormalizeTowerPoint = function(castPoint, hullRadius)
     hullRadius = hullRadius or defaultTowerRadius
     local xRest = castPoint.x % (hullRadius * 2)
@@ -60,6 +70,8 @@ local MakeAbility = function(params)
         lastCursorPosition = point + Vector(0,0,0)
         if not CanBuildThere(point, towerRadius) then
             return UF_FAIL_CUSTOM
+        elseif not HasPathFromSpawnPoint(point) then
+            return UF_FAIL_CUSTOM
         else
             local error = CustomPointCheck(point, self)
             if error then
@@ -76,6 +88,8 @@ local MakeAbility = function(params)
             return customError
         elseif not CanBuildThere(point, towerRadius) then
             return 'I can\'t build there'
+        elseif not HasPathFromSpawnPoint(point) then
+            return 'There is no path to this point'
         else
             return nil
         end
