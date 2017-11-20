@@ -110,6 +110,7 @@ SpawnTowerCreep = function(event)
     )
 
     -- to prevent it from being stuck in parent
+    event.caster:AddNewModifier(nil, nil, 'modifier_phased', {duration = 2.00})
     unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 0.05})
     unit:AddNewModifier(builder, nil, 'modifier_kill', {duration = 60.00})
 
