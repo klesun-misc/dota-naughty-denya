@@ -265,6 +265,14 @@ GrantXpToEnemyHeroes = function(event)
     local hero = types:t_hero(event.caster)
     if unit and hero and hero.AddExperience then
         local xp = unit:GetDeathXP() * 1.50
+
+        -- split xp among heroes if there are many
+        local mods = unit:FindAllModifiersByName('modifier_xp_gain_aura_receiver')
+        local modCnt = lang.Size(mods)
+        if modCnt > 1 then
+            xp = xp / modCnt
+        end
+
         hero:AddExperience(xp, DOTA_ModifyXP_Unspecified, false, true)
         local gold = math.max(unit:GetGoldBounty() * 0.1, 1)
         hero:ModifyGold(gold, false, 0)

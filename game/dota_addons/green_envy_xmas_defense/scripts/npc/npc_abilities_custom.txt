@@ -255,7 +255,7 @@
         "Modifiers"
         {
             "modifier_xp_gain_aura_emitter"
-            
+
             {
                 "IsAura"                "1"
                 "Passive"                "1"
@@ -271,7 +271,7 @@
             "modifier_xp_gain_aura_receiver"
             {
                 "IsDebuff"            "1"
-                //"Attributes"         "MODIFIER_ATTRIBUTE_MULTIPLE"
+                "Attributes"         "MODIFIER_ATTRIBUTE_MULTIPLE"
                 "OnDeath"
                 {
                     "RunScript" {
