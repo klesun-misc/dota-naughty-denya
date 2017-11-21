@@ -60,6 +60,7 @@ local Spawn = function()
             or unit:IsAttacking()
             or not unit:IsAlive()
             then --[[skip]] else
+                unit:AddNewModifier(nil, nil, 'modifier_phased', {duration = 5.00})
                 -- creep is either stuck or done moving to the ancient
                 -- if the former - attack nearest tower, if the latter, re-execute order to go to ancient
                 local enemy = GetClosestEnemy(unit)

@@ -437,7 +437,7 @@
         "AbilityCastPoint"                "0.5"
         "AbilityCooldown"                "18.0"
         "AbilityManaCost"                "10"
-        "AbilityGoldCost"               "-25"
+        "AbilityGoldCost"               "-15"
         "OnSpellStart" {
             "RunScript" {
                 "ScriptFile"    "abilities.lua"
