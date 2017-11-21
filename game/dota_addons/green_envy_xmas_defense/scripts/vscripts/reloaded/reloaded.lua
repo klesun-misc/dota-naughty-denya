@@ -140,14 +140,23 @@ local player_chat = function(event) end
 ---@field     userid            number
 ---@field     splitscreenplayer number
 local player_connect_full = function(event)
+    local name = PlayerResource:GetPlayerName(event.PlayerID)
+    local msg = 'Player connected full ' .. name .. ' ' ..
+        event.PlayerID .. '|' .. event.index .. '|' .. event.userid
+    GameRules:SendCustomMessage(msg, DOTA_TEAM_BADGUYS, 0)
+
+    if klesun.playerIdToUserId[event.PlayerID]
+    or userIdToPlayerId[event.userid]
+    then
+        -- player disconnected and reconnected back. userid changed
+    else
+        -- default team/role if player does not choose something
+        local defaultRole = math.random() < 0.5 and 'builder' or 'hero'
+        local defaultTeam = DOTA_TEAM_GOODGUYS
+        PlayerResource:SetCustomTeamAssignment(event.PlayerID, defaultTeam)
+        klesun.playerIdToRole[event.PlayerID] = defaultRole
+    end
     klesun.playerIdToUserId[event.PlayerID] = event.userid
-
-    -- default team/role if player does not choose something
-    local defaultRole = math.random() < 0.5 and 'builder' or 'hero'
-    local defaultTeam = DOTA_TEAM_GOODGUYS
-    PlayerResource:SetCustomTeamAssignment(event.PlayerID, defaultTeam)
-    klesun.playerIdToRole[event.PlayerID] = defaultRole
-
     userIdToPlayerId[event.userid] = event.PlayerID
 end
 
