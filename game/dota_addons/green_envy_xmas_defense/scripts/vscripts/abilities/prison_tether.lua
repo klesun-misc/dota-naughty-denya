@@ -46,6 +46,7 @@ function prison_tether:OnSpellStart ()
 	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster(), "prison_tether_modifier", {})	
 
 	local thinker = CreateModifierThinker( caster, self, "prison_tether_modifier_thinker", kv, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false )
+	
 	thinker.envyCasterTower = self:GetCaster()
 	thinker.envyTargetTower = self:GetCursorTarget()
 	thinker.envyParticleId = particle

@@ -4,10 +4,6 @@ function prison_tether_modifier:IsDebuff()
 	return false
 end	
 
-function prison_tether_modifier:OnCreated(table)
-
-end
-
-function prison_tether_modifier:OnDestroy()
-
+function  prison_tether_modifier:GetTexture()
+	return 'storm_spirit_ball_lightning'
 end

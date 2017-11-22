@@ -116,9 +116,23 @@
         "AoERadius"                        "60"
         "AbilityCastRange"                "1000"
         "AbilityCooldown"                "5"
-		"AbilityManaCost"               "65"
-		"AbilityGoldCost"               "175"
+	"AbilityManaCost"               "65"
+	"AbilityGoldCost"               "245 350 470 690 850"
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"        	"FIELD_INTEGER"
+			"dmg_per_ms"		"5 6 7 9 12"
+		}
+
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"dmg_per_s"		"50 60 70 90 120"
+		}
 	}
+    }
 
     "build_spawning_tower"
     {
