@@ -15,6 +15,10 @@ function prison_tether:CastFilterResultTarget (target)
     if target:HasModifier("prison_tether_modifier") then
     	return UF_FAIL_CUSTOM
 	end
+
+  	if self:GetCaster():HasModifier("prison_tether_modifier") then
+        return UF_FAIL_CUSTOM
+    end
 end
 
 function prison_tether:GetCustomCastErrorTarget(target)
@@ -29,25 +33,28 @@ function prison_tether:GetCustomCastErrorTarget(target)
     if target:HasModifier("prison_tether_modifier") then
     	return "Targeted Tower Is Already Tethered"
 	end
+
+  	if self:GetCaster():HasModifier("prison_tether_modifier") then
+        return "Cannot Cast Laser"
+    end
 end
 
 function prison_tether:OnSpellStart ()
-	local caster = self:GetCaster()
-	local casterTower = caster:GetAbsOrigin()
-	local targetTower = self:GetCursorTarget():GetAbsOrigin()
-	local distance = (targetTower - casterTower):Length2D()
-	local kv = {}
+    local caster = self:GetCaster()
+    local target = self:GetCursorTarget()
+    local casterOrigin = caster:GetAbsOrigin()
+    local targetOrigin = target:GetAbsOrigin()
 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_tether.vpcf", PATTACH_ABSORIGIN, self:GetCursorTarget() )
-	ParticleManager:SetParticleControl(particle, 0, targetTower)
-	ParticleManager:SetParticleControl(particle, 1, casterTower)
+    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_tether.vpcf", PATTACH_ABSORIGIN, caster )
+    ParticleManager:SetParticleControl(particle, 0, casterOrigin)
+    ParticleManager:SetParticleControl(particle, 1, targetOrigin)
 
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self:GetCursorTarget(), "prison_tether_modifier", {})	
-	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster(), "prison_tether_modifier", {})	
+    target:AddNewModifier(caster, target, "prison_tether_modifier", {})
+    caster:AddNewModifier(target, caster, "prison_tether_modifier", {})
 
-	local thinker = CreateModifierThinker( caster, self, "prison_tether_modifier_thinker", kv, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false )
-	
-	thinker.envyCasterTower = self:GetCaster()
-	thinker.envyTargetTower = self:GetCursorTarget()
-	thinker.envyParticleId = particle
+    local thinker = CreateModifierThinker( caster, self, "prison_tether_modifier_thinker", {}, self:GetCursorPosition(), caster:GetTeamNumber(), false )
+
+    thinker.envyCasterTower = caster
+    thinker.envyTargetTower = target
+    thinker.envyParticleId = particle
 end

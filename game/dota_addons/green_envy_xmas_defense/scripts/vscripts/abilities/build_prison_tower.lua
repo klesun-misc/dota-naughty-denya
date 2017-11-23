@@ -5,7 +5,7 @@ local build_tower_base = require('abilities.build_tower_base')
 ---@param tetherSpell CDOTA_Ability_Lua
 local ChooseTetherTarget = function(casterTower, tetherSpell)
     local center = casterTower:GetAbsOrigin()
-    local range = 1100
+    local range = 1200
     local targets = {}
 
     local ent = Entities:FindInSphere(nil, center, range)
@@ -36,9 +36,8 @@ build_prison_tower = build_tower_base.MakeAbility({
     ---@param tower CDOTA_BaseNPC
     ---@param abil CDOTA_Ability_Lua
     OnCreated = function(tower, abil)
-    	local dmg = abil:GetSpecialValueFor('dmg_per_ms')
+    	local dmg = abil:GetSpecialValueFor('dps')
 
-    	tower:SetBaseDamageMin(dmg)
         tower:SetBaseDamageMax(dmg)
 
         tower:SetControllableByPlayer(abil:GetCaster():GetPlayerID(), true)

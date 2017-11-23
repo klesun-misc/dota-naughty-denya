@@ -1,6 +1,6 @@
 prison_tether_modifier_thinker = class({})
 
-local types = require('types')
+LinkLuaModifier( "prison_tether_slow_modifier", "abilities/prison_tether_slow_modifier.lua", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ end
 
 function prison_tether_modifier_thinker:OnCreated( kv )
 	if IsServer() then
-		self:StartIntervalThink( 0.10 )
+		self:StartIntervalThink( 0.05 )
 	end
 end
 
@@ -24,7 +24,7 @@ function prison_tether_modifier_thinker:OnIntervalThink()
 		local targetTower = self:GetParent().envyTargetTower
 		local particleId = self:GetParent().envyParticleId
 
-		local dmg_per_ms = casterTower:GetBaseDamageMax()
+		local dps = casterTower:GetBaseDamageMax() / 20
 
 		if not casterTower:IsAlive() then
 			targetTower:RemoveModifierByName('prison_tether_modifier')
@@ -48,11 +48,13 @@ function prison_tether_modifier_thinker:OnIntervalThink()
 		if #enemies > 0 then
 			for _,enemy in pairs(enemies) do
 				if enemy ~= nil and ( not enemy:IsMagicImmune() ) and ( not enemy:IsInvulnerable() ) then
+					
+					enemy:AddNewModifier(self:GetCaster(), nil, "prison_tether_slow_modifier", {duration = 2} )
 
 					local damage = {
 						victim = enemy,
 						attacker = self:GetCaster(),
-						damage = dmg_per_ms,
+						damage = dps,
 						damage_type = DAMAGE_TYPE_MAGICAL,
 						ability = self:GetAbility()
 					}

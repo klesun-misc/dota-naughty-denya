@@ -3,50 +3,6 @@
 {
     "Version"        "1"
 
-    //=================================================================================================================
-    // Templar Assassin: Refraction Holdout
-    //=================================================================================================================
-    "templar_assassin_refraction_holdout"
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-        "AbilityUnitDamageType"            "DAMAGE_TYPE_PHYSICAL"
-
-        // Casting
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCastPoint"                "0.0 0.0 0.0 0.0"
-
-        // Time
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCooldown"                "17.0 17.0 17.0 17.0"
-
-        // Cost
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityManaCost"                "100"
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                    "FIELD_INTEGER"
-                "damage_absorb"                "200 300 400 500"
-            }
-            "02"
-            {
-                "var_type"                    "FIELD_INTEGER"
-                "bonus_damage"                "20 40 60 80"
-            }
-            "04"
-            {
-                "var_type"                    "FIELD_FLOAT"
-                "duration"                    "17.0 17.0 17.0 17.0"
-            }
-        }
-    }
-
     "build_anti_boss_tower" {
         "BaseClass"                     "ability_lua"
         "ScriptFile"                    "abilities/build_anti_boss_tower.lua"
@@ -122,14 +78,8 @@
 	{
 		"01"
 		{
-			"var_type"        	"FIELD_INTEGER"
-			"dmg_per_ms"		"5 6 7 9 12"
-		}
-
-		"02"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"dmg_per_s"		"50 60 70 90 120"
+			"var_type"		"FIELD_FLOAT"
+			"dps"			"35 42.5 55 70 82.5"
 		}
 	}
     }
@@ -473,23 +423,23 @@
         }
     }
 
-	"prison_tether"	
+    "prison_tether"	
+    {
+	"BaseClass"					"ability_lua"
+	"MaxLevel"					"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_BUILDING"		
+	"AbilityTextureName"				"crystal_maiden_freezing_field"
+	"AbilityCastRange"				"1100"
+	"AbilityCastPoint"				"0.2"
+	"AbilityCooldown"				"15"
+	"precache"
 	{
-		"BaseClass"					"ability_lua"
-		"MaxLevel"					"1"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"		
-		"AbilityTextureName"		"crystal_maiden_freezing_field"
-		"AbilityCastRange"			"1100"
-		"AbilityCastPoint"			"0.2"
-		"AbilityCooldown"			"15"
-		"precache"
-		{
-			"partricle"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
-		}
-		"ScriptFile"				"abilities/prison_tether"	
+		"partricle"					"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 	}
+	"ScriptFile"					"abilities/prison_tether"	
+    }
 
     "buy_damage_increase"
     {
