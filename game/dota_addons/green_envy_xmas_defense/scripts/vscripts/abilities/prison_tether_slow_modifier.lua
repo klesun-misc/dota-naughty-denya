@@ -29,14 +29,10 @@ function prison_tether_slow_modifier:GetModifierMoveSpeedBonus_Percentage()
 	return -30
 end
 
--- function prison_tether_slow_modifier:OnCreated(kv)
--- 	if self:GetParent() and self:GetParent() ~= nil then
--- 		self:GetParent():SetRenderColor(87, 171, 249)
--- 	end
--- end
+function prison_tether_slow_modifier:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost_lich.vpcf"
+end
 
--- function prison_tether_slow_modifier:OnDestroy()
--- 	if self:GetParent() and self:GetParent() ~= nil then
--- 		self:GetParent():SetRenderColor(255, 255, 255)
--- 	end
--- end
+function prison_tether_slow_modifier:StatusEffectPriority()
+	return 10
+end
