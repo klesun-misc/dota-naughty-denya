@@ -73,7 +73,7 @@
         "AbilityCastRange"                "1000"
         "AbilityCooldown"                "5"
 	"AbilityManaCost"               "65"
-	"AbilityGoldCost"               "245 350 470 690 850"
+	"AbilityGoldCost"               "500 600 750 90 1100"
 	"AbilitySpecial"
 	{
 		"01"
@@ -356,6 +356,18 @@
                 }
             }
         }
+    }    
+	"sell_tower"
+    {
+	    "BaseClass"					        "ability_lua"
+	    "MaxLevel"					        "1"
+        "AbilityCastRange"                "500"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"            "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"            "DOTA_UNIT_TARGET_BUILDING"
+	    "AbilityTextureName"				"alchemist_goblins_greed"
+	    "AbilityCooldown"				    "0"
+	    "ScriptFile"					    "abilities/sell_tower.lua"
     }
     "train_envy_melee_creep"
     {

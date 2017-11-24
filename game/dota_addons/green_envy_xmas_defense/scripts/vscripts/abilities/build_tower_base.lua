@@ -106,9 +106,11 @@ local MakeAbility = function(params)
         )
         tower.envyNs = tower.envyNs or {}
         tower.envyNs.builder = caster
+        tower.envyNs.goldCost = self:GetGoldCost(self:GetLevel())
         if tower.SetInvulnCount ~= nil then
             tower:SetInvulnCount(0)
         end
+
         --tower:SetIdleAcquire(true) -- auto-attack ON
         --tower:SetControllableByPlayer(caster:GetMainControllingPlayer(), false)
         tower:SetHullRadius(towerRadius)

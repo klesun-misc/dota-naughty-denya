@@ -120,6 +120,10 @@ local dota_player_pick_hero = function(event)
         local abil = hero:FindAbilityByName('puck_phase_shift')
             or hero:AddAbility('puck_phase_shift')
         abil:SetLevel(4)
+    elseif hero:GetUnitName() == 'npc_dota_hero_vengefulspirit' then
+        local abil = hero:FindAbilityByName('sell_tower')
+            or hero:AddAbility('sell_tower')
+        abil:SetLevel(1)
     end
 end
 
