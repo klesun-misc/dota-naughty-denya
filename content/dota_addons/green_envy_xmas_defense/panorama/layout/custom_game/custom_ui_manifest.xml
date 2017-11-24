@@ -10,8 +10,6 @@
     </script>
 
     <Panel>
-        <!-- Use the Valve-authored multi-team-compatible scoreboard, instead of the default Dota 2-team scoreboard. -->
-        <CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
         <CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/gamesetup_options.xml" />
         <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_timer.xml" />
     </Panel>
