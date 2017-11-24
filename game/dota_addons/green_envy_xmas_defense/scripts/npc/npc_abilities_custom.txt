@@ -470,7 +470,7 @@
         "AbilityGoldCost"               "350"
         "AbilitySpecial" {
             "01" {"var_type" "FIELD_FLOAT" "dmg_mult" "1.20"}
-            "02" {"var_type" "FIELD_FLOAT" "dmg_max" "1500"}
+            "02" {"var_type" "FIELD_FLOAT" "dmg_max" "800"}
         }
         "OnSpellStart" {
             "RunScript" {
